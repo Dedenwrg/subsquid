@@ -9,15 +9,9 @@ import {
 import { assertNotNull } from '@subsquid/util-internal';
 
 const RPC_URL = process.env.RPC_ENDPOINT || 'https://rpc2.mainnet.autonity.org';
-const BLOCKS_FROM = process.env.BLOCKS_RANGE_FROM
-  ? parseInt(process.env.BLOCKS_RANGE_FROM)
-  : 1_000_000;
-
-const BLOCKS_TO = process.env.BLOCKS_RANGE_TO ? parseInt(process.env.BLOCKS_RANGE_TO) : undefined;
 const FINALITY_CONFIRMATIONS = process.env.BLOCKS_FINALITY_CONFIRMATIONS
   ? parseInt(process.env.BLOCKS_FINALITY_CONFIRMATIONS)
   : 10;
-
 
 // === Processor setup ===
 export const processor = new EvmBatchProcessor()
@@ -39,7 +33,7 @@ export const processor = new EvmBatchProcessor()
   .setFinalityConfirmation(FINALITY_CONFIRMATIONS)
   .setFields({
     block: {
-      hash: true, 
+      hash: true,
       timestamp: true,
       miner: true,
       difficulty: true,
@@ -64,10 +58,7 @@ export const processor = new EvmBatchProcessor()
       status: true,
     },
   })
-  .setBlockRange({
-    from: BLOCKS_FROM,
-    to: undefined,
-  })
+  .includeAllBlocks()
   .addTransaction({});
 
 // === Types ===
