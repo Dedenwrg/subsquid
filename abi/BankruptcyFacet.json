@@ -1,0 +1,236 @@
+[
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      }
+    ],
+    "name": "AccountNotBankrupt",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "string",
+        "name": "paramName",
+        "type": "string"
+      }
+    ],
+    "name": "InvalidParameter",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "int256",
+        "name": "neededQuantity",
+        "type": "int256"
+      },
+      {
+        "internalType": "int256",
+        "name": "totalLAAQuantity",
+        "type": "int256"
+      }
+    ],
+    "name": "LAAQuantityMismatch",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "neededCount",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "totalLAASetCount",
+        "type": "uint256"
+      }
+    ],
+    "name": "LAASetIncomplete",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "bytes32",
+        "name": "productId",
+        "type": "bytes32"
+      }
+    ],
+    "name": "NoTradeData",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "QueueIsEmpty",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "bytes32",
+        "name": "productId",
+        "type": "bytes32"
+      },
+      {
+        "internalType": "address",
+        "name": "trader",
+        "type": "address"
+      }
+    ],
+    "name": "lastTradedTimestamp",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "bankruptAccountId",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "collateralToken",
+        "type": "address"
+      },
+      {
+        "internalType": "bytes32[]",
+        "name": "productIds",
+        "type": "bytes32[]"
+      },
+      {
+        "internalType": "address[][]",
+        "name": "laas",
+        "type": "address[][]"
+      }
+    ],
+    "name": "mutualizeLosses",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "bytes32",
+        "name": "productId",
+        "type": "bytes32"
+      }
+    ],
+    "name": "uniqueTraderCount",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "contract IMarginAccount",
+        "name": "marginAccount",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "bankruptAccount",
+        "type": "address"
+      },
+      {
+        "internalType": "bytes32",
+        "name": "productId",
+        "type": "bytes32"
+      },
+      {
+        "internalType": "address[]",
+        "name": "productOwners",
+        "type": "address[]"
+      }
+    ],
+    "name": "validateLAAs",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "bytes32",
+            "name": "positionId",
+            "type": "bytes32"
+          },
+          {
+            "internalType": "int256",
+            "name": "bankruptAccountUPnL",
+            "type": "int256"
+          },
+          {
+            "internalType": "int256",
+            "name": "bankruptAccountQuantity",
+            "type": "int256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "markPrice",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "pointValue",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "tickSize",
+            "type": "uint256"
+          },
+          {
+            "components": [
+              {
+                "internalType": "address",
+                "name": "owner",
+                "type": "address"
+              },
+              {
+                "internalType": "int256",
+                "name": "quantity",
+                "type": "int256"
+              },
+              {
+                "internalType": "uint256",
+                "name": "lastTradedTimestamp",
+                "type": "uint256"
+              },
+              {
+                "internalType": "uint256",
+                "name": "positionAge",
+                "type": "uint256"
+              }
+            ],
+            "internalType": "struct IBankruptcy.LAAData[]",
+            "name": "laaData",
+            "type": "tuple[]"
+          }
+        ],
+        "internalType": "struct IBankruptcy.PositionLossData",
+        "name": "",
+        "type": "tuple"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  }
+]

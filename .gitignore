@@ -1,0 +1,13 @@
+/node_modules
+/lib
+/builds
+
+/**Versions.json
+
+# IDE files
+/.idea
+
+# Environment variables
+.env
+abi.ts
+index-generator.ts

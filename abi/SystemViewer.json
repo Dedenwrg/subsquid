@@ -1,0 +1,812 @@
+[
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "target",
+        "type": "address"
+      }
+    ],
+    "name": "AddressEmptyCode",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "implementation",
+        "type": "address"
+      }
+    ],
+    "name": "ERC1967InvalidImplementation",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "ERC1967NonPayable",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "FailedCall",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "InvalidInitialization",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "string",
+        "name": "reason",
+        "type": "string"
+      }
+    ],
+    "name": "InvalidParameters",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "NotInitializing",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "owner",
+        "type": "address"
+      }
+    ],
+    "name": "OwnableInvalidOwner",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      }
+    ],
+    "name": "OwnableUnauthorizedAccount",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "UUPSUnauthorizedCallContext",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "bytes32",
+        "name": "slot",
+        "type": "bytes32"
+      }
+    ],
+    "name": "UUPSUnsupportedProxiableUUID",
+    "type": "error"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "uint64",
+        "name": "version",
+        "type": "uint64"
+      }
+    ],
+    "name": "Initialized",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "previousOwner",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "newOwner",
+        "type": "address"
+      }
+    ],
+    "name": "OwnershipTransferred",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "implementation",
+        "type": "address"
+      }
+    ],
+    "name": "Upgraded",
+    "type": "event"
+  },
+  {
+    "inputs": [],
+    "name": "UPGRADE_INTERFACE_VERSION",
+    "outputs": [
+      {
+        "internalType": "string",
+        "name": "",
+        "type": "string"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "clearing",
+    "outputs": [
+      {
+        "internalType": "contract IClearingDiamond",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "contract IClearingDiamond",
+        "name": "_clearing",
+        "type": "address"
+      },
+      {
+        "internalType": "contract IProductRegistry",
+        "name": "_productRegistry",
+        "type": "address"
+      },
+      {
+        "internalType": "contract IMarginAccountRegistry",
+        "name": "_marginAccountRegistry",
+        "type": "address"
+      }
+    ],
+    "name": "initialize",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "collateralAsset",
+        "type": "address"
+      },
+      {
+        "internalType": "address[]",
+        "name": "accounts",
+        "type": "address[]"
+      }
+    ],
+    "name": "maeByCollateralAsset",
+    "outputs": [
+      {
+        "internalType": "int256[]",
+        "name": "results",
+        "type": "int256[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address[]",
+        "name": "collateralAssets",
+        "type": "address[]"
+      },
+      {
+        "internalType": "address[]",
+        "name": "accounts",
+        "type": "address[]"
+      }
+    ],
+    "name": "maeByCollateralAssets",
+    "outputs": [
+      {
+        "internalType": "int256[]",
+        "name": "results",
+        "type": "int256[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "collateralAsset",
+        "type": "address"
+      },
+      {
+        "internalType": "address[]",
+        "name": "accounts",
+        "type": "address[]"
+      },
+      {
+        "components": [
+          {
+            "internalType": "bytes32",
+            "name": "positionId",
+            "type": "bytes32"
+          },
+          {
+            "internalType": "int256",
+            "name": "quantity",
+            "type": "int256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "price",
+            "type": "uint256"
+          }
+        ],
+        "internalType": "struct IMarginAccount.Settlement[]",
+        "name": "settlements",
+        "type": "tuple[]"
+      }
+    ],
+    "name": "maeChecksByCollateralAsset",
+    "outputs": [
+      {
+        "internalType": "bool[]",
+        "name": "results",
+        "type": "bool[]"
+      },
+      {
+        "internalType": "int256[]",
+        "name": "maeAfter",
+        "type": "int256[]"
+      },
+      {
+        "internalType": "uint256[]",
+        "name": "mmuAfter",
+        "type": "uint256[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "marginAccountRegistry",
+    "outputs": [
+      {
+        "internalType": "contract IMarginAccountRegistry",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "owner",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "collateralAsset",
+        "type": "address"
+      },
+      {
+        "internalType": "address[]",
+        "name": "accounts",
+        "type": "address[]"
+      }
+    ],
+    "name": "positionsByCollateralAsset",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "bytes32",
+            "name": "positionId",
+            "type": "bytes32"
+          },
+          {
+            "internalType": "int256",
+            "name": "quantity",
+            "type": "int256"
+          },
+          {
+            "internalType": "int256",
+            "name": "costBasis",
+            "type": "int256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "maintenanceMargin",
+            "type": "uint256"
+          },
+          {
+            "internalType": "int256",
+            "name": "pnl",
+            "type": "int256"
+          }
+        ],
+        "internalType": "struct IMarginAccount.PositionData[][]",
+        "name": "results",
+        "type": "tuple[][]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address[]",
+        "name": "collateralAssets",
+        "type": "address[]"
+      },
+      {
+        "internalType": "address[]",
+        "name": "accounts",
+        "type": "address[]"
+      }
+    ],
+    "name": "positionsByCollateralAssets",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "bytes32",
+            "name": "positionId",
+            "type": "bytes32"
+          },
+          {
+            "internalType": "int256",
+            "name": "quantity",
+            "type": "int256"
+          },
+          {
+            "internalType": "int256",
+            "name": "costBasis",
+            "type": "int256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "maintenanceMargin",
+            "type": "uint256"
+          },
+          {
+            "internalType": "int256",
+            "name": "pnl",
+            "type": "int256"
+          }
+        ],
+        "internalType": "struct IMarginAccount.PositionData[][]",
+        "name": "results",
+        "type": "tuple[][]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "bytes32[]",
+        "name": "productIds",
+        "type": "bytes32[]"
+      }
+    ],
+    "name": "productDetails",
+    "outputs": [
+      {
+        "components": [
+          {
+            "components": [
+              {
+                "internalType": "address",
+                "name": "builder",
+                "type": "address"
+              },
+              {
+                "internalType": "string",
+                "name": "symbol",
+                "type": "string"
+              },
+              {
+                "internalType": "string",
+                "name": "description",
+                "type": "string"
+              }
+            ],
+            "internalType": "struct IProductRegistry.ProductMetadata",
+            "name": "metadata",
+            "type": "tuple"
+          },
+          {
+            "components": [
+              {
+                "internalType": "address",
+                "name": "oracleAddress",
+                "type": "address"
+              },
+              {
+                "internalType": "uint8",
+                "name": "fsvDecimals",
+                "type": "uint8"
+              },
+              {
+                "internalType": "int256",
+                "name": "fspAlpha",
+                "type": "int256"
+              },
+              {
+                "internalType": "int256",
+                "name": "fspBeta",
+                "type": "int256"
+              },
+              {
+                "internalType": "bytes",
+                "name": "fsvCalldata",
+                "type": "bytes"
+              }
+            ],
+            "internalType": "struct IProductRegistry.OracleSpecification",
+            "name": "oracleSpec",
+            "type": "tuple"
+          },
+          {
+            "internalType": "string",
+            "name": "priceQuotation",
+            "type": "string"
+          },
+          {
+            "internalType": "address",
+            "name": "collateralAsset",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "startTime",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "earliestFSPSubmissionTime",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "unitValue",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint16",
+            "name": "initialMarginRequirement",
+            "type": "uint16"
+          },
+          {
+            "internalType": "uint16",
+            "name": "maintenanceMarginRequirement",
+            "type": "uint16"
+          },
+          {
+            "internalType": "uint64",
+            "name": "offerPriceBuffer",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "auctionBounty",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint32",
+            "name": "tradeoutInterval",
+            "type": "uint32"
+          },
+          {
+            "internalType": "uint8",
+            "name": "tickSize",
+            "type": "uint8"
+          },
+          {
+            "internalType": "string",
+            "name": "extendedMetadata",
+            "type": "string"
+          }
+        ],
+        "internalType": "struct IProductRegistry.Product[]",
+        "name": "details",
+        "type": "tuple[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "productRegistry",
+    "outputs": [
+      {
+        "internalType": "contract IProductRegistry",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "bytes32[]",
+        "name": "productIds",
+        "type": "bytes32[]"
+      }
+    ],
+    "name": "productStates",
+    "outputs": [
+      {
+        "internalType": "enum ProductState[]",
+        "name": "states",
+        "type": "uint8[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "proxiableUUID",
+    "outputs": [
+      {
+        "internalType": "bytes32",
+        "name": "",
+        "type": "bytes32"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "renounceOwnership",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "newOwner",
+        "type": "address"
+      }
+    ],
+    "name": "transferOwnership",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "newImplementation",
+        "type": "address"
+      },
+      {
+        "internalType": "bytes",
+        "name": "data",
+        "type": "bytes"
+      }
+    ],
+    "name": "upgradeToAndCall",
+    "outputs": [],
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "collateralAsset",
+        "type": "address"
+      },
+      {
+        "internalType": "address[]",
+        "name": "accounts",
+        "type": "address[]"
+      }
+    ],
+    "name": "userMarginDataByCollateralAsset",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "address",
+            "name": "collateralAsset",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "marginAccountId",
+            "type": "address"
+          },
+          {
+            "internalType": "int256",
+            "name": "mae",
+            "type": "int256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "mmu",
+            "type": "uint256"
+          },
+          {
+            "components": [
+              {
+                "internalType": "bytes32",
+                "name": "positionId",
+                "type": "bytes32"
+              },
+              {
+                "internalType": "int256",
+                "name": "quantity",
+                "type": "int256"
+              },
+              {
+                "internalType": "int256",
+                "name": "costBasis",
+                "type": "int256"
+              },
+              {
+                "internalType": "uint256",
+                "name": "maintenanceMargin",
+                "type": "uint256"
+              },
+              {
+                "internalType": "int256",
+                "name": "pnl",
+                "type": "int256"
+              }
+            ],
+            "internalType": "struct IMarginAccount.PositionData[]",
+            "name": "positions",
+            "type": "tuple[]"
+          }
+        ],
+        "internalType": "struct ISystemViewer.UserMarginAccountData[]",
+        "name": "data",
+        "type": "tuple[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address[]",
+        "name": "collateralAssets",
+        "type": "address[]"
+      },
+      {
+        "internalType": "address[]",
+        "name": "accounts",
+        "type": "address[]"
+      }
+    ],
+    "name": "userMarginDataByCollateralAssets",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "address",
+            "name": "collateralAsset",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "marginAccountId",
+            "type": "address"
+          },
+          {
+            "internalType": "int256",
+            "name": "mae",
+            "type": "int256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "mmu",
+            "type": "uint256"
+          },
+          {
+            "components": [
+              {
+                "internalType": "bytes32",
+                "name": "positionId",
+                "type": "bytes32"
+              },
+              {
+                "internalType": "int256",
+                "name": "quantity",
+                "type": "int256"
+              },
+              {
+                "internalType": "int256",
+                "name": "costBasis",
+                "type": "int256"
+              },
+              {
+                "internalType": "uint256",
+                "name": "maintenanceMargin",
+                "type": "uint256"
+              },
+              {
+                "internalType": "int256",
+                "name": "pnl",
+                "type": "int256"
+              }
+            ],
+            "internalType": "struct IMarginAccount.PositionData[]",
+            "name": "positions",
+            "type": "tuple[]"
+          }
+        ],
+        "internalType": "struct ISystemViewer.UserMarginAccountData[]",
+        "name": "data",
+        "type": "tuple[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "bytes32[]",
+        "name": "productIds",
+        "type": "bytes32[]"
+      }
+    ],
+    "name": "valuations",
+    "outputs": [
+      {
+        "internalType": "uint256[]",
+        "name": "prices",
+        "type": "uint256[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  }
+]

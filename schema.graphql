@@ -1,0 +1,42 @@
+type Block @entity {
+  id: ID!
+  number: BigInt! @index @unique
+  timestamp: BigInt! @index
+  parentHash: String
+  author: String
+  difficulty: BigInt
+  totalDifficulty: BigInt
+  gasUsed: BigInt
+  gasLimit: BigInt
+  receiptsRoot: String
+  transactionsRoot: String
+  stateRoot: String
+  size: BigInt
+  unclesHash: String
+
+  txCount: Int!
+  txHashes: [String!]!   
+}
+
+type Transaction @entity {
+  id: ID! @index @unique       # tx hash
+  blockNumber: BigInt! @index
+  blockHash: String
+  timestamp: BigInt!           # block timestamp
+
+  from: String!
+  to: String
+
+  value: BigInt!
+  valueCurrency: String        # "ATN" atau lain
+
+  type: String                 # legacy | contract | transfer
+  transactionTypes: [String!]  # coin_transfer, contract_call, dll
+  method: String               # decoded method name
+  result: String               # success | failed | awaiting_internal_transactions
+
+  gasUsed: BigInt
+  gasPrice: BigInt
+  fee: BigInt                  # gasUsed * gasPrice
+}
+
