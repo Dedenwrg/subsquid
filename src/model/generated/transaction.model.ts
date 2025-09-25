@@ -24,9 +24,11 @@ export class Transaction {
     @Column_("numeric", {transformer: marshal.bigintTransformer, nullable: false})
     timestamp!: bigint
 
+    @Index_()
     @Column_("text", {nullable: false})
     from!: string
 
+    @Index_()
     @Column_("text", {nullable: true})
     to!: string | undefined | null
 
