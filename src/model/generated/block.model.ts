@@ -22,6 +22,12 @@ export class Block {
     parentHash!: string | undefined | null
 
     @Column_("text", {nullable: true})
+    hash!: string | undefined | null
+
+    @Column_("text", {nullable: true})
+    nonce!: string | undefined | null
+
+    @Column_("text", {nullable: true})
     author!: string | undefined | null
 
     @Column_("numeric", {transformer: marshal.bigintTransformer, nullable: true})
@@ -50,6 +56,18 @@ export class Block {
 
     @Column_("text", {nullable: true})
     unclesHash!: string | undefined | null
+
+    @Column_("text", {nullable: true})
+    logsBloom!: string | undefined | null
+
+    @Column_("text", {nullable: true})
+    mixHash!: string | undefined | null
+
+    @Column_("text", {nullable: true})
+    extraData!: string | undefined | null
+
+    @Column_("numeric", {transformer: marshal.bigintTransformer, nullable: true})
+    baseFeePerGas!: bigint | undefined | null
 
     @Column_("int4", {nullable: false})
     txCount!: number

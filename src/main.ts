@@ -1,59 +1,13 @@
-import 'dotenv/config'
-import { TypeormDatabase } from '@subsquid/typeorm-store'
-import { processor, ProcessorContext } from './processor'
-import { Block as BlockModel, Transaction as TransactionModel } from './model'
-
-import { Func } from './abi/abi.support'
-import { abis } from './abi'
-
-type Fn = { name: string; decode: (input: string) => any }
-const selectorMap: Record<string, Fn> = {}
-const methodCache: Record<string, string> = {}
-
-function registerFunctions(funcs: Record<string, any>) {
-  for (const [name, fn] of Object.entries(funcs)) {
-    if (fn instanceof Func) {
-      selectorMap[fn.sighash.toLowerCase()] = {
-        name,
-        decode: fn.decode.bind(fn),
-      }
-    }
-  }
-}
-
-for (const abi of abis as any[]) {
-  if (abi.functions) {
-    registerFunctions(abi.functions)
-  }
-}
-
-function decodeMethodName(input: string): string | null {
-  if (!input || input === '0x') return null
-
-  const selector = input.slice(0, 10).toLowerCase()
-  if (methodCache[selector]) {
-    return methodCache[selector]
-  }
-
-  const fn = selectorMap[selector]
-  if (fn) {
-    try {
-      fn.decode(input)
-      methodCache[selector] = fn.name
-      return fn.name
-    } catch {
-      methodCache[selector] = selector
-      return selector
-    }
-  }
-
-  methodCache[selector] = selector
-  return selector
-}
+import 'dotenv/config';
+import { TypeormDatabase } from '@subsquid/typeorm-store';
+import { processor, ProcessorContext } from './processor';
+import { Block as BlockModel, Transaction as TransactionModel } from './model';
+import { decodeMethodName, buildDecodedInput } from './utils/decoder';
+import { classifyTransaction } from './utils/tx-type';
 
 processor.run(new TypeormDatabase(), async (ctx: ProcessorContext<any>) => {
-  for (let block of ctx.blocks) {
-    const txs = block.transactions
+  for (const block of ctx.blocks) {
+    const txs = block.transactions;
 
     await ctx.store.insert(
       new BlockModel({
@@ -73,21 +27,32 @@ processor.run(new TypeormDatabase(), async (ctx: ProcessorContext<any>) => {
         unclesHash: block.header.sha3Uncles,
         txCount: txs.length,
         txHashes: txs.map((t) => t.hash),
+        hash: block.header.hash,
+        nonce: block.header.nonce,
+        baseFeePerGas: block.header.baseFeePerGas,
+        extraData: block.header.extraData,
+        mixHash: block.header.mixHash,
+        logsBloom: block.header.logsBloom,
       }),
-    )
+    );
 
-    for (let tx of txs) {
-      const fee =
-        tx.gasUsed && tx.gasPrice
-          ? BigInt(tx.gasUsed) * BigInt(tx.gasPrice)
-          : null
+    for (const tx of txs) {
+      const isContractCall = !!tx.to;
+      const methodName = isContractCall ? decodeMethodName(tx.input) : null;
+      const decodedObj = isContractCall ? buildDecodedInput(tx.input) : null;
 
-      const isContractCall = !!tx.to
-      const methodName = isContractCall ? decodeMethodName(tx.input) : null
+      const gasUsed = tx.gasUsed ? BigInt(tx.gasUsed) : null;
+      const gasPriceLike = (tx as any).effectiveGasPrice ?? tx.gasPrice ?? null;
+      const gasPriceBI = gasPriceLike != null ? BigInt(gasPriceLike) : null;
+      const fee = gasUsed != null && gasPriceBI != null ? gasUsed * gasPriceBI : null;
+
+      const baseFee = block.header.baseFeePerGas ? BigInt(block.header.baseFeePerGas) : null;
+      const burnFee = baseFee != null && gasUsed != null ? gasUsed * baseFee : null;
 
       await ctx.store.insert(
         new TransactionModel({
           id: tx.hash,
+          hash: tx.hash,
           blockNumber: BigInt(block.header.height),
           blockHash: block.header.hash,
           timestamp: BigInt(block.header.timestamp),
@@ -95,15 +60,27 @@ processor.run(new TypeormDatabase(), async (ctx: ProcessorContext<any>) => {
           to: tx.to ?? null,
           value: BigInt(tx.value),
           valueCurrency: 'ATN',
-          type: isContractCall ? 'CONTRACT' : 'TRANSFER',
-          transactionTypes: [isContractCall ? 'contract_call' : 'coin_transfer'],
+          type: tx.type != null ? String(tx.type) : null,
+          transactionTypes: classifyTransaction(tx, methodName),
           method: methodName,
+          rawInput: tx.input ?? null,
+          decodedInput: decodedObj,
           result: tx.status ? 'success' : 'failed',
-          gasUsed: tx.gasUsed ? BigInt(tx.gasUsed) : null,
+          gas: tx.gas ? BigInt(tx.gas) : null,
+          gasUsed,
           gasPrice: tx.gasPrice ? BigInt(tx.gasPrice) : null,
+          maxFeePerGas: tx.maxFeePerGas ? BigInt(tx.maxFeePerGas) : null,
+          maxPriorityFeePerGas: tx.maxPriorityFeePerGas ? BigInt(tx.maxPriorityFeePerGas) : null,
+          effectiveGasPrice:
+            (tx as any).effectiveGasPrice != null ? BigInt((tx as any).effectiveGasPrice) : null,
           fee,
+          burnFee: burnFee,
+          nonce: BigInt(tx.nonce),
+          cumulativeGasUsed: tx.cumulativeGasUsed ? BigInt(tx.cumulativeGasUsed) : null,
+          contractAddress: tx.contractAddress ?? null,
+          transactionIndex: tx.transactionIndex,
         }),
-      )
+      );
     }
   }
-})
+});

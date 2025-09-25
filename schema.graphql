@@ -3,6 +3,8 @@ type Block @entity {
   number: BigInt! @index @unique
   timestamp: BigInt! @index
   parentHash: String
+  hash: String
+  nonce: String
   author: String
   difficulty: BigInt
   totalDifficulty: BigInt
@@ -13,30 +15,48 @@ type Block @entity {
   stateRoot: String
   size: BigInt
   unclesHash: String
-
+  logsBloom: String
+  mixHash: String
+  extraData: String
+  baseFeePerGas: BigInt
   txCount: Int!
-  txHashes: [String!]!   
+  txHashes: [String!]!
 }
 
 type Transaction @entity {
-  id: ID! @index @unique       # tx hash
+  id: ID! @index @unique
+  hash: String! @index @unique
   blockNumber: BigInt! @index
   blockHash: String
-  timestamp: BigInt!           # block timestamp
-
+  timestamp: BigInt!
   from: String!
   to: String
-
   value: BigInt!
-  valueCurrency: String        # "ATN" atau lain
+  valueCurrency: String
+  type: String
+  transactionTypes: [String!]
+  method: String
+  result: String
 
-  type: String                 # legacy | contract | transfer
-  transactionTypes: [String!]  # coin_transfer, contract_call, dll
-  method: String               # decoded method name
-  result: String               # success | failed | awaiting_internal_transactions
+  # inputs
+  rawInput: String
+  decodedInput: JSON           
 
+  # gas fields
+  gas: BigInt
   gasUsed: BigInt
   gasPrice: BigInt
-  fee: BigInt                  # gasUsed * gasPrice
-}
+  maxFeePerGas: BigInt
+  maxPriorityFeePerGas: BigInt
+  effectiveGasPrice: BigInt
+  fee: BigInt
+  burnFee: BigInt
 
+  # signature
+  nonce: BigInt
+
+  # receipt
+  cumulativeGasUsed: BigInt
+  contractAddress: String
+  transactionIndex: Int
+}
