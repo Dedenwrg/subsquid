@@ -7,11 +7,14 @@ import {
   Transaction as _Transaction,
 } from '@subsquid/evm-processor';
 import { assertNotNull } from '@subsquid/util-internal';
+import { events } from './abi/autonity';
 
-const RPC_URL = process.env.RPC_ENDPOINT || 'https://rpc2.mainnet.autonity.org';
+const RPC_URL = process.env.RPC_ENDPOINT || 'https://rpc1.bakerloo.autonity.org';
 const FINALITY_CONFIRMATIONS = process.env.BLOCKS_FINALITY_CONFIRMATIONS
   ? parseInt(process.env.BLOCKS_FINALITY_CONFIRMATIONS)
   : 10;
+
+const AUTONITY_CONTRACT = '0xbd770416a3345f91e4b34576cb804a576fa48eb1';
 
 // === Processor setup ===
 export const processor = new EvmBatchProcessor()
@@ -91,7 +94,15 @@ export const processor = new EvmBatchProcessor()
     },
   })
 
-  .includeAllBlocks()
+  .addLog({
+    address: [AUTONITY_CONTRACT],
+    topic0: [events.NewBondingRequest.topic],
+  })
+  .addLog({
+    address: [AUTONITY_CONTRACT],
+    topic0: [events.NewUnbondingRequest.topic],
+  })
+
   .addTransaction({ logs: true });
 
 // === Types ===

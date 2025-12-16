@@ -60,3 +60,23 @@ type Transaction @entity {
   contractAddress: String
   transactionIndex: Int
 }
+
+enum AutonityEventType {
+  BONDING
+  UNBONDING
+}
+
+type AutonityEvent @entity {
+  id: ID! @unique
+  type: String! @index
+  validator: String! @index
+  delegator: String! @index
+  blockNumber: BigInt! @index
+  transactionHash: String! @index
+  logIndex: Int!
+  amount: BigDecimal!
+  selfBonded: Boolean!
+  epoch: BigInt
+  timestamp: BigInt! @index
+  createdAt: DateTime!
+}
