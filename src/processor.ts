@@ -7,15 +7,21 @@ import {
   Transaction as _Transaction,
 } from '@subsquid/evm-processor';
 import { assertNotNull } from '@subsquid/util-internal';
-import { events } from './abi/autonity';
+import { Autonity, Oracle } from './abi';
 
 const RPC_URL = process.env.RPC_ENDPOINT || 'https://rpc1.bakerloo.autonity.org';
 const FINALITY_CONFIRMATIONS = process.env.BLOCKS_FINALITY_CONFIRMATIONS
   ? parseInt(process.env.BLOCKS_FINALITY_CONFIRMATIONS)
   : 10;
 
-const AUTONITY_CONTRACT = '0xbd770416a3345f91e4b34576cb804a576fa48eb1';
-
+const AUTONITY_CONTRACT = assertNotNull(
+  process.env.AUTONITY_CONTRACT,
+  'AUTONITY_CONTRACT must be set in .env',
+);
+const ORACLE_CONTRACT = assertNotNull(
+  process.env.ORACLE_CONTRACT,
+  'ORACLE_CONTRACT must be set in .env',
+);
 // === Processor setup ===
 export const processor = new EvmBatchProcessor()
   .setRpcEndpoint({
@@ -96,11 +102,16 @@ export const processor = new EvmBatchProcessor()
 
   .addLog({
     address: [AUTONITY_CONTRACT],
-    topic0: [events.NewBondingRequest.topic],
+    topic0: [Autonity.events.NewBondingRequest.topic, Autonity.events.NewUnbondingRequest.topic],
   })
   .addLog({
-    address: [AUTONITY_CONTRACT],
-    topic0: [events.NewUnbondingRequest.topic],
+    address: [ORACLE_CONTRACT],
+    topic0: [
+      Oracle.events.PriceUpdated.topic,
+      // Oracle.events.SuccessfulVote.topic,
+      // Oracle.events.InvalidVote.topic,
+      // Oracle.events.TotalOracleRewards.topic,
+    ],
   })
 
   .addTransaction({ logs: true });

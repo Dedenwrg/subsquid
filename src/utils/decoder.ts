@@ -15,7 +15,16 @@ const methodCache: Record<string, string> = {};
 function registerFunctions(funcs: Record<string, any>) {
   for (const [name, fn] of Object.entries(funcs)) {
     if (fn instanceof Func) {
-      selectorMap[fn.sighash.toLowerCase()] = {
+      const selector = fn.sighash.toLowerCase();
+
+      if (selectorMap[selector]) {
+        console.warn(
+          `[ABI] selector collision: ${selector} ` + `(${selectorMap[selector].name} ↔ ${name})`,
+        );
+        continue; 
+      }
+
+      selectorMap[selector] = {
         name,
         decode: fn.decode.bind(fn),
         inputs: (fn as any).fragment?.inputs ?? [],

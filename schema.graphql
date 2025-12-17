@@ -61,11 +61,6 @@ type Transaction @entity {
   transactionIndex: Int
 }
 
-enum AutonityEventType {
-  BONDING
-  UNBONDING
-}
-
 type AutonityEvent @entity {
   id: ID! @unique
   type: String! @index
@@ -79,4 +74,14 @@ type AutonityEvent @entity {
   epoch: BigInt
   timestamp: BigInt! @index
   createdAt: DateTime!
+}
+
+
+type OraclePrice @entity {
+  id: ID!                     # `${symbol}-${round}`
+  symbol: String! @index
+  round: BigInt! @index
+  price: BigDecimal!
+  timestamp: BigInt! @index
+  success: Boolean!
 }

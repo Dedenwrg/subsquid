@@ -3,6 +3,7 @@ import { decodeMethodName, buildDecodedInput } from '../utils/decoder';
 import { classifyTransaction } from '../utils/tx-type';
 import { calculateFees } from '../utils/fee';
 import { handlerStaking } from './autonity.handler';
+import { handleOracle } from './oracle.handler';
 
 export async function handleTransaction(ctx: any, block: any, tx: any) {
   const isContractCall = !!tx.to;
@@ -43,4 +44,5 @@ export async function handleTransaction(ctx: any, block: any, tx: any) {
     }),
   );
   await handlerStaking(ctx, block, tx);
+  await handleOracle(ctx, block, tx);
 }
