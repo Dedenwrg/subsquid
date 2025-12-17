@@ -8,7 +8,6 @@ export async function handlerStaking(ctx: any, block: any, tx: any) {
   if (!tx.logs) return;
 
   const blockNumber = Number(block.header.height);
-  const timestamp = Number(block.header.timestamp);
   const epoch = Math.floor(blockNumber / EPOCH_BLOCK_SIZE);
 
   for (const log of tx.logs) {
@@ -19,7 +18,7 @@ export async function handlerStaking(ctx: any, block: any, tx: any) {
       await ctx.store.upsert(
         new AutonityEvent({
           id: `${tx.hash}-${log.logIndex}`,
-          type: 'NewBondingRequest',
+          type: 'bonding',
           validator: e.validator,
           delegator: e.delegator,
           blockNumber: BigInt(blockNumber),
@@ -28,7 +27,7 @@ export async function handlerStaking(ctx: any, block: any, tx: any) {
           amount: BigDecimal(e.amount.toString()),
           selfBonded: e.selfBonded,
           epoch: BigInt(epoch),
-          timestamp: BigInt(timestamp),
+          timestamp: BigInt(block.header.timestamp),
           createdAt: new Date(),
         }),
       );
@@ -41,7 +40,7 @@ export async function handlerStaking(ctx: any, block: any, tx: any) {
       await ctx.store.insert(
         new AutonityEvent({
           id: `${tx.hash}-${log.logIndex}`,
-          type: 'NewUnbondingRequest',
+          type: 'unbonding',
           validator: e.validator,
           delegator: e.delegator,
           blockNumber: BigInt(blockNumber),
@@ -50,7 +49,7 @@ export async function handlerStaking(ctx: any, block: any, tx: any) {
           amount: BigDecimal(e.amount.toString()),
           selfBonded: e.selfBonded,
           epoch: BigInt(epoch),
-          timestamp: BigInt(timestamp),
+          timestamp: BigInt(block.header.timestamp),
           createdAt: new Date(),
         }),
       );
