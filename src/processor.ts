@@ -4,6 +4,7 @@ import {
   DataHandlerContext,
   EvmBatchProcessor,
   EvmBatchProcessorFields,
+  Log as _Log,
   Transaction as _Transaction,
 } from '@subsquid/evm-processor';
 import { assertNotNull } from '@subsquid/util-internal';
@@ -14,15 +15,16 @@ const FINALITY_CONFIRMATIONS = process.env.BLOCKS_FINALITY_CONFIRMATIONS
   ? parseInt(process.env.BLOCKS_FINALITY_CONFIRMATIONS)
   : 10;
 
-const AUTONITY_CONTRACT = assertNotNull(
+export const AUTONITY_CONTRACT = assertNotNull(
   process.env.AUTONITY_CONTRACT,
   'AUTONITY_CONTRACT must be set in .env',
-);
-const ORACLE_CONTRACT = assertNotNull(
+).toLowerCase();
+
+export const ORACLE_CONTRACT = assertNotNull(
   process.env.ORACLE_CONTRACT,
   'ORACLE_CONTRACT must be set in .env',
-);
-// === Processor setup ===
+).toLowerCase();
+
 export const processor = new EvmBatchProcessor()
   .setRpcEndpoint({
     url: assertNotNull(RPC_URL, 'RPC_ENDPOINT must be set in .env'),
@@ -41,9 +43,15 @@ export const processor = new EvmBatchProcessor()
   })
   .setFinalityConfirmation(FINALITY_CONFIRMATIONS)
   .setFields({
+    log: {
+      topics: true,
+      data: true,
+      transactionHash: true,
+    },
     block: {
       hash: true,
       number: true,
+      height: true,
       parentHash: true,
       nonce: true,
       miner: true,
@@ -61,12 +69,6 @@ export const processor = new EvmBatchProcessor()
       mixHash: true,
       extraData: true,
       baseFeePerGas: true,
-      epoch: true,
-      round: true,
-      proposerSeal: true,
-      quorumCertificate: true,
-      activityProof: true,
-      activityProofRound: true,
     },
     transaction: {
       hash: true,
@@ -83,41 +85,29 @@ export const processor = new EvmBatchProcessor()
       input: true,
       status: true,
       type: true,
-      v: true,
-      r: true,
-      s: true,
       cumulativeGasUsed: true,
       contractAddress: true,
       logsBloom: true,
       blockHash: true,
       blockNumber: true,
       transactionIndex: true,
-      logs: {
-        address: true,
-        topics: true,
-        data: true,
-      },
     },
   })
-
   .addLog({
     address: [AUTONITY_CONTRACT],
     topic0: [Autonity.events.NewBondingRequest.topic, Autonity.events.NewUnbondingRequest.topic],
+    transaction: true,
   })
   .addLog({
     address: [ORACLE_CONTRACT],
-    topic0: [
-      Oracle.events.PriceUpdated.topic,
-      // Oracle.events.SuccessfulVote.topic,
-      // Oracle.events.InvalidVote.topic,
-      // Oracle.events.TotalOracleRewards.topic,
-    ],
+    topic0: [Oracle.events.PriceUpdated.topic],
+    transaction: true,
   })
-
-  .addTransaction({ logs: true });
+  .addTransaction({});
 
 // === Types ===
 export type Fields = EvmBatchProcessorFields<typeof processor>;
 export type Block = BlockHeader<Fields>;
+export type Log = _Log<Fields>;
 export type Transaction = _Transaction<Fields>;
 export type ProcessorContext<Store> = DataHandlerContext<Store, Fields>;

@@ -1,10 +1,11 @@
 import { Block as BlockModel } from '../model';
 import { handleTransaction } from './transaction.handler';
+import { handleOracle } from './oracle.handler';
 
 export async function handleBlock(ctx: any, block: any) {
   const txs = block.transactions;
 
-  await ctx.store.insert(
+  await ctx.store.upsert(
     new BlockModel({
       id: block.header.id,
       number: BigInt(block.header.height),
@@ -30,6 +31,8 @@ export async function handleBlock(ctx: any, block: any) {
       logsBloom: block.header.logsBloom,
     }),
   );
+
+  await handleOracle(ctx, block);
 
   for (const tx of txs) {
     await handleTransaction(ctx, block, tx);

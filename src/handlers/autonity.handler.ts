@@ -16,7 +16,7 @@ export async function handlerStaking(ctx: any, block: any, tx: any) {
     if (log.topics[0] === events.NewBondingRequest.topic) {
       const e = events.NewBondingRequest.decode(log);
 
-      await ctx.store.insert(
+      await ctx.store.upsert(
         new AutonityEvent({
           id: `${tx.hash}-${log.logIndex}`,
           type: 'NewBondingRequest',
