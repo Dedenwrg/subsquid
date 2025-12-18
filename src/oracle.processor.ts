@@ -9,7 +9,6 @@ import { Oracle } from './abi';
 import { RPC_URL, FINALITY_CONFIRMATIONS, ORACLE_CONTRACT } from './configuration/config';
 
 export const oracleProcessor = new EvmBatchProcessor()
-  .setBlockRange({ from: 11465399 })
   .setRpcEndpoint({ url: RPC_URL })
   .setFinalityConfirmation(FINALITY_CONFIRMATIONS)
   .setFields({

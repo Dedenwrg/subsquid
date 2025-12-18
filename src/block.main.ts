@@ -11,6 +11,7 @@ import { Block, Transaction, AutonityEvent } from './model';
 blockProcessor.run(
   new TypeormDatabase({
     supportHotBlocks: true,
+    stateSchema: 'block_processor',
   }),
   async (ctx) => {
     const blocks: Block[] = [];
