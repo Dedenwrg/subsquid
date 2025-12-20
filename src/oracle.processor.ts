@@ -5,8 +5,13 @@ import {
   Log as _Log,
   DataHandlerContext,
 } from '@subsquid/evm-processor';
-import { Oracle } from './abi';
-import { RPC_URL, FINALITY_CONFIRMATIONS, ORACLE_CONTRACT } from './configuration/config';
+import { Oracle, Autonity } from './abi';
+import {
+  RPC_URL,
+  FINALITY_CONFIRMATIONS,
+  ORACLE_CONTRACT,
+  AUTONITY_CONTRACT,
+} from './configuration/config';
 
 export const oracleProcessor = new EvmBatchProcessor()
   .setRpcEndpoint({ url: RPC_URL })
@@ -21,6 +26,11 @@ export const oracleProcessor = new EvmBatchProcessor()
       data: true,
       transactionHash: true,
     },
+  })
+  .addLog({
+    address: [AUTONITY_CONTRACT],
+    topic0: [Autonity.events.NewEpoch.topic],
+    transaction: true,
   })
   .addLog({
     address: [ORACLE_CONTRACT],

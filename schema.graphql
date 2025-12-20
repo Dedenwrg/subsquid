@@ -85,3 +85,72 @@ type OraclePrice @entity {
   timestamp: BigInt! @index
   success: Boolean!
 }
+
+type OracleConfig @entity {
+  id: ID!
+  autonity: String!
+  operator: String!
+  votePeriod: BigInt!
+  outlierDetectionThreshold: BigInt!
+  outlierSlashingThreshold: BigInt!
+  baseSlashingRate: BigInt!
+  nonRevealThreshold: BigInt!
+  revealResetInterval: BigInt!
+  slashingRateCap: BigInt!
+  lastRoundBlock: BigInt!
+  currentRound: BigInt!
+  updatedAt: DateTime! 
+}
+
+type Network @entity {
+  id: ID!
+
+  lastEpoch: String
+  lastEpochBlock: String
+
+  totalSupply: String
+  circulatingSupply: String
+  bondedSupply: String
+  unbondedSupply: String
+
+  unbondedPercentage: String
+  bondedPercentage: String
+  seatPrice: String
+
+  lastEpochTime: String
+  inflationReserve: String
+
+  treasuryFee: String
+  minBaseFee: String
+  delegationRate: String
+  unbondingPeriod: String
+  initialInflationReserve: String
+  withholdingThreshold: String
+  proposerRewardRate: String
+  oracleRewardRate: String
+  withheldRewardsPool: String
+
+  treasuryAccount: String
+  elasticityMultiplier: String
+  accountabilityContract: String
+  oracleContract: String
+  acuContract: String
+  supplyControlContract: String
+  stabilizationContract: String
+  upgradeManagerContract: String
+  inflationControllerContract: String
+  omissionAccountabilityContract: String
+  auctioneerContract: String
+  operatorAccount: String
+
+  epochPeriod: String
+  blockPeriod: String
+  committeeSize: String
+  maxScheduleDuration: String
+  gasLimit: String
+  gasLimitBoundDivisor: String
+  clusteringThreshold: String
+  contractVersion: String
+}
+
+
