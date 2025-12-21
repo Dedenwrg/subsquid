@@ -1,17 +1,17 @@
-import { Autonity, Oracle } from '../abi';
-import { AUTONITY_CONTRACT, ORACLE_CONTRACT } from '../configuration/config';
+import { Oracle } from '../abi';
+import { ORACLE_CONTRACT } from '../configuration/config';
 import { OracleVoter } from '../model';
 
 export async function collectOracleVotersOnEpoch(ctx: any, block: any): Promise<OracleVoter[]> {
   const hasNewEpoch = block.logs.some(
     (log: any) =>
-      log.topics[0] === Autonity.events.NewEpoch.topic &&
-      log.address.toLowerCase() === AUTONITY_CONTRACT.toLowerCase(),
+      log.topics[0] === Oracle.events.PriceUpdated.topic &&
+      log.address.toLowerCase() === ORACLE_CONTRACT.toLowerCase(),
   );
 
   if (!hasNewEpoch) return [];
 
-  ctx.log.info('[ORACLE_VOTER] NewEpoch detected at block', block.header.height);
+  ctx.log.info('[ORACLE_VOTER] PriceUpdated detected at block', block.header.height);
 
   const oracle = new Oracle.Contract(ctx, block.header, ORACLE_CONTRACT);
 
