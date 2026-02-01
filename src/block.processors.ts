@@ -14,6 +14,7 @@ import {
   BLOCK_RANGE_FROM,
 } from './configuration/config';
 
+const ERC20_TRANSFER_TOPIC = '0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef';
 export const blockProcessor = new EvmBatchProcessor()
   .setRpcEndpoint({ url: RPC_URL })
   .setFinalityConfirmation(FINALITY_CONFIRMATIONS)
@@ -75,7 +76,7 @@ export const blockProcessor = new EvmBatchProcessor()
     transaction: true,
   })
   .addLog({
-    topic0: [erc20.events.Transfer.topic],
+    topic0: [ERC20_TRANSFER_TOPIC],
     transaction: true,
   })
   .addTransaction({});

@@ -29,13 +29,11 @@ blockProcessor.run(
         transactions.push(txModel);
 
         const events = collectAutonityEvents(block, tx);
-        if (events.length > 0) autonityEvents.push(...events);
+        if (events.length) autonityEvents.push(...events);
       }
 
-      // === ERC20 Transfers ===
       for (const log of block.logs) {
         if (!log.transactionHash) continue;
-
         const transfer = await collectTokenTransfer(block, log, ctx, tokenCache);
         if (transfer) tokenTransfers.push(transfer);
       }
