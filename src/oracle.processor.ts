@@ -5,7 +5,7 @@ import {
   Log as _Log,
   DataHandlerContext,
 } from '@subsquid/evm-processor';
-import { Oracle, Autonity } from './abi';
+import { oracle, autonity } from './abi';
 import {
   RPC_URL,
   FINALITY_CONFIRMATIONS,
@@ -29,12 +29,12 @@ export const oracleProcessor = new EvmBatchProcessor()
   })
   .addLog({
     address: [AUTONITY_CONTRACT],
-    topic0: [Autonity.events.NewEpoch.topic],
+    topic0: [autonity.events.NewEpoch.topic],
     transaction: true,
   })
   .addLog({
     address: [ORACLE_CONTRACT],
-    topic0: [Oracle.events.PriceUpdated.topic],
+    topic0: [oracle.events.PriceUpdated.topic],
   });
 
 // === Types ===

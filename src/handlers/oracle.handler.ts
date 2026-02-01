@@ -1,5 +1,5 @@
 import { OraclePrice, OracleConfig } from '../model';
-import { Oracle } from '../abi';
+import { oracle } from '../abi';
 import { BigDecimal } from '@subsquid/big-decimal';
 import { ORACLE_CONTRACT } from '../configuration/config';
 import { ethers } from 'ethers';
@@ -12,7 +12,7 @@ export async function ensureSymbolCache(ctx: any, block: any) {
   ctx.log.info('[INFO] Fetching symbols from Oracle contract...');
   symbolMap = new Map<string, string>();
 
-  const contract = new Oracle.Contract(ctx, block.header, ORACLE_CONTRACT);
+  const contract = new oracle.Contract(ctx, block.header, ORACLE_CONTRACT);
   const symbols = await contract.getSymbols();
 
   for (const s of symbols) {
@@ -28,10 +28,10 @@ export function collectOraclePrices(block: any): OraclePrice[] {
 
   for (const log of block.logs) {
     if (log.address.toLowerCase() !== ORACLE_CONTRACT) continue;
-    if (log.topics[0] !== Oracle.events.PriceUpdated.topic) continue;
+    if (log.topics[0] !== oracle.events.PriceUpdated.topic) continue;
 
     try {
-      const decoded = Oracle.events.PriceUpdated.decode(log);
+      const decoded = oracle.events.PriceUpdated.decode(log);
       const { price, round, status, timestamp } = decoded;
 
       const rawSymbolObj = decoded.symbol as any;
@@ -65,7 +65,7 @@ export async function collectOracleConfig(ctx: any, block: any): Promise<OracleC
 
   for (const log of block.logs) {
     if (log.address.toLowerCase() !== ORACLE_CONTRACT) continue;
-    if (log.topics[0] !== Oracle.events.PriceUpdated.topic) continue;
+    if (log.topics[0] !== oracle.events.PriceUpdated.topic) continue;
 
     triggered = true;
     break;
@@ -73,7 +73,7 @@ export async function collectOracleConfig(ctx: any, block: any): Promise<OracleC
 
   if (!triggered) return null;
 
-  const contract = new Oracle.Contract(ctx, block.header, ORACLE_CONTRACT);
+  const contract = new oracle.Contract(ctx, block.header, ORACLE_CONTRACT);
   const config = await contract.getConfig();
   const currentRound = await contract.getRound();
 

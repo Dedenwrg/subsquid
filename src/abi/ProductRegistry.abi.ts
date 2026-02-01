@@ -370,10 +370,6 @@ export const ABI_JSON = [
                     },
                     {
                         "type": "uint64",
-                        "name": "offerPriceBuffer"
-                    },
-                    {
-                        "type": "uint64",
                         "name": "auctionBounty"
                     },
                     {
@@ -428,25 +424,6 @@ export const ABI_JSON = [
     {
         "type": "function",
         "name": "mmr",
-        "constant": true,
-        "stateMutability": "view",
-        "payable": false,
-        "inputs": [
-            {
-                "type": "bytes32",
-                "name": "productId"
-            }
-        ],
-        "outputs": [
-            {
-                "type": "uint256",
-                "name": ""
-            }
-        ]
-    },
-    {
-        "type": "function",
-        "name": "offerPriceBuffer",
         "constant": true,
         "stateMutability": "view",
         "payable": false,
@@ -628,10 +605,6 @@ export const ABI_JSON = [
                     },
                     {
                         "type": "uint64",
-                        "name": "offerPriceBuffer"
-                    },
-                    {
-                        "type": "uint64",
                         "name": "auctionBounty"
                     },
                     {
@@ -745,10 +718,6 @@ export const ABI_JSON = [
                     {
                         "type": "uint16",
                         "name": "maintenanceMarginRequirement"
-                    },
-                    {
-                        "type": "uint64",
-                        "name": "offerPriceBuffer"
                     },
                     {
                         "type": "uint64",

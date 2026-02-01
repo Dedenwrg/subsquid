@@ -11,27 +11,8 @@ export const ABI_JSON = [
     },
     {
         "type": "error",
-        "name": "AdminControlledNotAuthorized",
-        "inputs": [
-            {
-                "type": "bytes4",
-                "name": "selector"
-            },
-            {
-                "type": "address",
-                "name": "sender"
-            }
-        ]
-    },
-    {
-        "type": "error",
-        "name": "AlreadyExists",
-        "inputs": [
-            {
-                "type": "string",
-                "name": "parameter"
-            }
-        ]
+        "name": "AlreadyInitialized",
+        "inputs": []
     },
     {
         "type": "error",
@@ -56,11 +37,6 @@ export const ABI_JSON = [
     {
         "type": "error",
         "name": "InvalidInitialization",
-        "inputs": []
-    },
-    {
-        "type": "error",
-        "name": "NotInitialized",
         "inputs": []
     },
     {
@@ -177,7 +153,7 @@ export const ABI_JSON = [
     },
     {
         "type": "function",
-        "name": "clearing",
+        "name": "beacon",
         "constant": true,
         "stateMutability": "view",
         "payable": false,
@@ -191,7 +167,7 @@ export const ABI_JSON = [
     },
     {
         "type": "function",
-        "name": "getAdmin",
+        "name": "clearing",
         "constant": true,
         "stateMutability": "view",
         "payable": false,
@@ -230,15 +206,7 @@ export const ABI_JSON = [
         "inputs": [
             {
                 "type": "address",
-                "name": "_clearing"
-            },
-            {
-                "type": "address",
-                "name": "_valuation"
-            },
-            {
-                "type": "address",
-                "name": "_productRegistry"
+                "name": "clearing_"
             },
             {
                 "type": "address",
@@ -267,54 +235,7 @@ export const ABI_JSON = [
     },
     {
         "type": "function",
-        "name": "isAdminActive",
-        "constant": true,
-        "stateMutability": "view",
-        "payable": false,
-        "inputs": [],
-        "outputs": [
-            {
-                "type": "bool",
-                "name": ""
-            }
-        ]
-    },
-    {
-        "type": "function",
-        "name": "marginAccounts",
-        "constant": true,
-        "stateMutability": "view",
-        "payable": false,
-        "inputs": [
-            {
-                "type": "address",
-                "name": ""
-            }
-        ],
-        "outputs": [
-            {
-                "type": "address",
-                "name": ""
-            }
-        ]
-    },
-    {
-        "type": "function",
         "name": "owner",
-        "constant": true,
-        "stateMutability": "view",
-        "payable": false,
-        "inputs": [],
-        "outputs": [
-            {
-                "type": "address",
-                "name": ""
-            }
-        ]
-    },
-    {
-        "type": "function",
-        "name": "productRegistry",
         "constant": true,
         "stateMutability": "view",
         "payable": false,
@@ -350,32 +271,6 @@ export const ABI_JSON = [
     },
     {
         "type": "function",
-        "name": "setActive",
-        "constant": false,
-        "payable": false,
-        "inputs": [
-            {
-                "type": "bool",
-                "name": "active"
-            }
-        ],
-        "outputs": []
-    },
-    {
-        "type": "function",
-        "name": "setAdmin",
-        "constant": false,
-        "payable": false,
-        "inputs": [
-            {
-                "type": "address",
-                "name": "newAdmin"
-            }
-        ],
-        "outputs": []
-    },
-    {
-        "type": "function",
         "name": "transferOwnership",
         "constant": false,
         "payable": false,
@@ -404,19 +299,5 @@ export const ABI_JSON = [
             }
         ],
         "outputs": []
-    },
-    {
-        "type": "function",
-        "name": "valuation",
-        "constant": true,
-        "stateMutability": "view",
-        "payable": false,
-        "inputs": [],
-        "outputs": [
-            {
-                "type": "address",
-                "name": ""
-            }
-        ]
     }
 ]

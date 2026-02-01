@@ -54,6 +54,27 @@
     "type": "error"
   },
   {
+    "inputs": [
+      {
+        "internalType": "bytes32",
+        "name": "productId",
+        "type": "bytes32"
+      },
+      {
+        "internalType": "uint256",
+        "name": "currentTime",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "earliestFSPSubmissionTime",
+        "type": "uint256"
+      }
+    ],
+    "name": "FSPTimeNotReached",
+    "type": "error"
+  },
+  {
     "inputs": [],
     "name": "FailedCall",
     "type": "error"
@@ -61,17 +82,6 @@
   {
     "inputs": [],
     "name": "InvalidInitialization",
-    "type": "error"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "enum ProductState",
-        "name": "state",
-        "type": "uint8"
-      }
-    ],
-    "name": "InvalidProductState",
     "type": "error"
   },
   {

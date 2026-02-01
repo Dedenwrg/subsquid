@@ -6,12 +6,18 @@ import {
   Transaction as _Transaction,
   DataHandlerContext,
 } from '@subsquid/evm-processor';
-import { Autonity } from './abi';
-import { RPC_URL, FINALITY_CONFIRMATIONS, AUTONITY_CONTRACT } from './configuration/config';
+import { autonity, erc20 } from './abi';
+import {
+  RPC_URL,
+  FINALITY_CONFIRMATIONS,
+  AUTONITY_CONTRACT,
+  BLOCK_RANGE_FROM,
+} from './configuration/config';
 
 export const blockProcessor = new EvmBatchProcessor()
   .setRpcEndpoint({ url: RPC_URL })
   .setFinalityConfirmation(FINALITY_CONFIRMATIONS)
+  .setBlockRange({ from: BLOCK_RANGE_FROM })
   .setFields({
     block: {
       hash: true,
@@ -65,7 +71,11 @@ export const blockProcessor = new EvmBatchProcessor()
   })
   .addLog({
     address: [AUTONITY_CONTRACT],
-    topic0: [Autonity.events.NewBondingRequest.topic, Autonity.events.NewUnbondingRequest.topic],
+    topic0: [autonity.events.NewBondingRequest.topic, autonity.events.NewUnbondingRequest.topic],
+    transaction: true,
+  })
+  .addLog({
+    topic0: [erc20.events.Transfer.topic],
     transaction: true,
   })
   .addTransaction({});

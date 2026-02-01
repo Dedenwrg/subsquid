@@ -26,6 +26,9 @@ type Block @entity {
 type Transaction @entity {
   id: ID! @index @unique
   hash: String! @index @unique
+
+  tokenTransfers: [TokenTransfer!] @derivedFrom(field: "transaction")
+
   blockNumber: BigInt! @index
   blockHash: String
   timestamp: BigInt!
@@ -38,11 +41,9 @@ type Transaction @entity {
   method: String
   result: String
 
-  # inputs
   rawInput: String
   decodedInput: JSON           
 
-  # gas fields
   gas: BigInt
   gasUsed: BigInt
   gasPrice: BigInt
@@ -52,14 +53,12 @@ type Transaction @entity {
   fee: BigInt
   burnFee: BigInt
 
-  # signature
   nonce: BigInt
-
-  # receipt
   cumulativeGasUsed: BigInt
   contractAddress: String
   transactionIndex: Int
 }
+
 
 type AutonityEvent @entity {
   id: ID! @unique
@@ -154,3 +153,33 @@ type Network @entity {
 }
 
 
+type TokenTransfer @entity {
+  id: ID! @unique
+
+  transaction: Transaction
+  transactionHash: String! @index
+
+  token: Token           
+  tokenAddress: String! @index
+
+  blockNumber: BigInt! @index
+  timestamp: BigInt! @index
+
+  from: String! @index
+  to: String! @index
+  value: BigDecimal!
+
+  logIndex: Int!
+  createdAt: DateTime!
+}
+
+
+type Token @entity {
+  id: ID!                 
+  address: String! @index
+  symbol: String
+  name: String
+  decimals: Int
+  type: String           
+  totalSupply: String
+}

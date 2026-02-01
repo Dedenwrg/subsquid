@@ -4,6 +4,12 @@ import {ABI_JSON} from './BankruptcyFacet.abi'
 
 export const abi = new ethers.Interface(ABI_JSON);
 
+export const events = {
+    LossMutualized: new LogEvent<([bankruptAccount: string, collateralToken: string, caller: string, lossAmount: bigint] & {bankruptAccount: string, collateralToken: string, caller: string, lossAmount: bigint})>(
+        abi, '0x65705e90fa7b3e2b69d8fa0852a42fa2daa34cec0bc64e9bc71d7e79654984aa'
+    ),
+}
+
 export const functions = {
     lastTradedTimestamp: new Func<[productId: string, trader: string], {productId: string, trader: string}, bigint>(
         abi, '0x37990a64'

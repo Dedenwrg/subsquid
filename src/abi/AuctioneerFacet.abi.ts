@@ -11,6 +11,11 @@ export const ABI_JSON = [
     },
     {
         "type": "error",
+        "name": "EVWMA_NotInitialized",
+        "inputs": []
+    },
+    {
+        "type": "error",
         "name": "InvalidParameter",
         "inputs": [
             {
@@ -56,11 +61,11 @@ export const ABI_JSON = [
     },
     {
         "type": "error",
-        "name": "NoTradeData",
+        "name": "PRBMath_SD59x18_IntoUint256_Underflow",
         "inputs": [
             {
-                "type": "bytes32",
-                "name": "productId"
+                "type": "int256",
+                "name": "x"
             }
         ]
     },

@@ -45,12 +45,17 @@
   {
     "inputs": [
       {
-        "internalType": "address",
-        "name": "fspAccount",
-        "type": "address"
+        "internalType": "enum ProductType",
+        "name": "productType",
+        "type": "uint8"
+      },
+      {
+        "internalType": "string",
+        "name": "field",
+        "type": "string"
       }
     ],
-    "name": "InvalidFSPAccount",
+    "name": "InvalidFieldAccess",
     "type": "error"
   },
   {
@@ -67,12 +72,12 @@
   {
     "inputs": [
       {
-        "internalType": "string",
-        "name": "paramName",
-        "type": "string"
+        "internalType": "address",
+        "name": "marginAccount",
+        "type": "address"
       }
     ],
-    "name": "InvalidParameter",
+    "name": "MAECheckFailed",
     "type": "error"
   },
   {
@@ -94,12 +99,45 @@
   {
     "inputs": [
       {
+        "internalType": "string",
+        "name": "parameter",
+        "type": "string"
+      }
+    ],
+    "name": "NotFound",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "string",
+        "name": "feature",
+        "type": "string"
+      }
+    ],
+    "name": "NotImplemented",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      {
         "internalType": "bytes32",
         "name": "productId",
         "type": "bytes32"
       }
     ],
     "name": "ProductNotInFinalSettlement",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "value",
+        "type": "uint256"
+      }
+    ],
+    "name": "SafeCastOverflowedUintToInt",
     "type": "error"
   },
   {
@@ -113,12 +151,74 @@
       },
       {
         "indexed": false,
-        "internalType": "uint256",
+        "internalType": "int256",
         "name": "fsp",
-        "type": "uint256"
+        "type": "int256"
       }
     ],
     "name": "FSPFinalized",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "marginAccountId",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "collateralAsset",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "int256",
+        "name": "capitalAmount",
+        "type": "int256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "id",
+        "type": "uint256"
+      }
+    ],
+    "name": "FeeCollected",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "recipient",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "collateralAsset",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "int256",
+        "name": "capitalAmount",
+        "type": "int256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "id",
+        "type": "uint256"
+      }
+    ],
+    "name": "FeeDispersed",
     "type": "event"
   },
   {
@@ -147,21 +247,51 @@
     "type": "event"
   },
   {
-    "inputs": [],
-    "name": "CLOSEOUT_FEE_RATE",
-    "outputs": [
+    "anonymous": false,
+    "inputs": [
       {
+        "indexed": true,
+        "internalType": "address",
+        "name": "marginAccountId",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "bytes32",
+        "name": "productId",
+        "type": "bytes32"
+      },
+      {
+        "indexed": false,
+        "internalType": "int256",
+        "name": "costBasis",
+        "type": "int256"
+      },
+      {
+        "indexed": false,
+        "internalType": "int256",
+        "name": "price",
+        "type": "int256"
+      },
+      {
+        "indexed": false,
+        "internalType": "int256",
+        "name": "quantity",
+        "type": "int256"
+      },
+      {
+        "indexed": false,
         "internalType": "uint256",
-        "name": "",
+        "name": "id",
         "type": "uint256"
       }
     ],
-    "stateMutability": "pure",
-    "type": "function"
+    "name": "PositionUpdated",
+    "type": "event"
   },
   {
     "inputs": [],
-    "name": "CLOSEOUT_REWARD_RATE",
+    "name": "FINAL_SETTLEMENT_ID",
     "outputs": [
       {
         "internalType": "uint256",
@@ -169,7 +299,7 @@
         "type": "uint256"
       }
     ],
-    "stateMutability": "pure",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -183,9 +313,9 @@
     "name": "finalizeFsp",
     "outputs": [
       {
-        "internalType": "uint256",
+        "internalType": "int256",
         "name": "",
-        "type": "uint256"
+        "type": "int256"
       }
     ],
     "stateMutability": "nonpayable",
@@ -202,14 +332,33 @@
     "name": "getFsp",
     "outputs": [
       {
-        "internalType": "uint256",
+        "internalType": "int256",
         "name": "fsp",
-        "type": "uint256"
+        "type": "int256"
       },
       {
         "internalType": "bool",
         "name": "finalized",
         "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "bytes32",
+        "name": "productId",
+        "type": "bytes32"
+      }
+    ],
+    "name": "getFspFinalizationTime",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
       }
     ],
     "stateMutability": "view",

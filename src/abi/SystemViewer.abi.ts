@@ -222,15 +222,11 @@ export const ABI_JSON = [
     },
     {
         "type": "function",
-        "name": "maeChecksByCollateralAsset",
+        "name": "maeChecks",
         "constant": true,
         "stateMutability": "view",
         "payable": false,
         "inputs": [
-            {
-                "type": "address",
-                "name": "collateralAsset"
-            },
             {
                 "type": "address[]",
                 "name": "accounts"
@@ -241,14 +237,14 @@ export const ABI_JSON = [
                 "components": [
                     {
                         "type": "bytes32",
-                        "name": "positionId"
+                        "name": "productId"
                     },
                     {
                         "type": "int256",
                         "name": "quantity"
                     },
                     {
-                        "type": "uint256",
+                        "type": "int256",
                         "name": "price"
                     }
                 ]
@@ -299,6 +295,52 @@ export const ABI_JSON = [
     },
     {
         "type": "function",
+        "name": "positionQuantitiesByProductId",
+        "constant": true,
+        "stateMutability": "view",
+        "payable": false,
+        "inputs": [
+            {
+                "type": "bytes32",
+                "name": "productId"
+            },
+            {
+                "type": "address[]",
+                "name": "accounts"
+            }
+        ],
+        "outputs": [
+            {
+                "type": "int256[]",
+                "name": "quantity"
+            }
+        ]
+    },
+    {
+        "type": "function",
+        "name": "positionQuantitiesByProductIds",
+        "constant": true,
+        "stateMutability": "view",
+        "payable": false,
+        "inputs": [
+            {
+                "type": "bytes32[]",
+                "name": "productIds"
+            },
+            {
+                "type": "address[]",
+                "name": "accounts"
+            }
+        ],
+        "outputs": [
+            {
+                "type": "int256[]",
+                "name": "quantity"
+            }
+        ]
+    },
+    {
+        "type": "function",
         "name": "positionsByCollateralAsset",
         "constant": true,
         "stateMutability": "view",
@@ -320,7 +362,7 @@ export const ABI_JSON = [
                 "components": [
                     {
                         "type": "bytes32",
-                        "name": "positionId"
+                        "name": "productId"
                     },
                     {
                         "type": "int256",
@@ -365,7 +407,7 @@ export const ABI_JSON = [
                 "components": [
                     {
                         "type": "bytes32",
-                        "name": "positionId"
+                        "name": "productId"
                     },
                     {
                         "type": "int256",
@@ -406,95 +448,95 @@ export const ABI_JSON = [
                 "components": [
                     {
                         "type": "tuple",
-                        "name": "metadata",
+                        "name": "base",
                         "components": [
                             {
+                                "type": "tuple",
+                                "name": "metadata",
+                                "components": [
+                                    {
+                                        "type": "address",
+                                        "name": "builder"
+                                    },
+                                    {
+                                        "type": "string",
+                                        "name": "symbol"
+                                    },
+                                    {
+                                        "type": "string",
+                                        "name": "description"
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "tuple",
+                                "name": "oracleSpec",
+                                "components": [
+                                    {
+                                        "type": "address",
+                                        "name": "oracleAddress"
+                                    },
+                                    {
+                                        "type": "uint8",
+                                        "name": "fsvDecimals"
+                                    },
+                                    {
+                                        "type": "int256",
+                                        "name": "fspAlpha"
+                                    },
+                                    {
+                                        "type": "int256",
+                                        "name": "fspBeta"
+                                    },
+                                    {
+                                        "type": "bytes",
+                                        "name": "fsvCalldata"
+                                    }
+                                ]
+                            },
+                            {
                                 "type": "address",
-                                "name": "builder"
+                                "name": "collateralAsset"
+                            },
+                            {
+                                "type": "uint256",
+                                "name": "startTime"
+                            },
+                            {
+                                "type": "uint256",
+                                "name": "pointValue"
+                            },
+                            {
+                                "type": "uint8",
+                                "name": "priceDecimals"
                             },
                             {
                                 "type": "string",
-                                "name": "symbol"
-                            },
-                            {
-                                "type": "string",
-                                "name": "description"
+                                "name": "extendedMetadata"
                             }
                         ]
                     },
                     {
                         "type": "tuple",
-                        "name": "oracleSpec",
+                        "name": "expirySpec",
                         "components": [
                             {
-                                "type": "address",
-                                "name": "oracleAddress"
+                                "type": "uint256",
+                                "name": "earliestFSPSubmissionTime"
                             },
                             {
-                                "type": "uint8",
-                                "name": "fsvDecimals"
-                            },
-                            {
-                                "type": "int256",
-                                "name": "fspAlpha"
-                            },
-                            {
-                                "type": "int256",
-                                "name": "fspBeta"
-                            },
-                            {
-                                "type": "bytes",
-                                "name": "fsvCalldata"
+                                "type": "uint256",
+                                "name": "tradeoutInterval"
                             }
                         ]
                     },
                     {
-                        "type": "string",
-                        "name": "priceQuotation"
+                        "type": "int256",
+                        "name": "maxPrice"
                     },
                     {
-                        "type": "address",
-                        "name": "collateralAsset"
-                    },
-                    {
-                        "type": "uint256",
-                        "name": "startTime"
-                    },
-                    {
-                        "type": "uint256",
-                        "name": "earliestFSPSubmissionTime"
-                    },
-                    {
-                        "type": "uint256",
-                        "name": "unitValue"
-                    },
-                    {
-                        "type": "uint16",
-                        "name": "initialMarginRequirement"
-                    },
-                    {
-                        "type": "uint16",
-                        "name": "maintenanceMarginRequirement"
-                    },
-                    {
-                        "type": "uint64",
-                        "name": "offerPriceBuffer"
-                    },
-                    {
-                        "type": "uint64",
-                        "name": "auctionBounty"
-                    },
-                    {
-                        "type": "uint32",
-                        "name": "tradeoutInterval"
-                    },
-                    {
-                        "type": "uint8",
-                        "name": "tickSize"
-                    },
-                    {
-                        "type": "string",
-                        "name": "extendedMetadata"
+                        "type": "int256",
+                        "name": "minPrice"
                     }
                 ]
             }
@@ -629,7 +671,7 @@ export const ABI_JSON = [
                         "components": [
                             {
                                 "type": "bytes32",
-                                "name": "positionId"
+                                "name": "productId"
                             },
                             {
                                 "type": "int256",
@@ -696,7 +738,7 @@ export const ABI_JSON = [
                         "components": [
                             {
                                 "type": "bytes32",
-                                "name": "positionId"
+                                "name": "productId"
                             },
                             {
                                 "type": "int256",
@@ -734,7 +776,7 @@ export const ABI_JSON = [
         ],
         "outputs": [
             {
-                "type": "uint256[]",
+                "type": "int256[]",
                 "name": "prices"
             }
         ]

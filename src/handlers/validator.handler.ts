@@ -1,4 +1,4 @@
-import { Autonity } from '../abi';
+import { autonity } from '../abi';
 import { AUTONITY_CONTRACT } from '../configuration/config';
 import { Validator } from '../model/validator.model';
 import { mapValidatorState } from '../utils/validator-state';
@@ -7,7 +7,7 @@ import { calculateCoverage } from '../utils/validator-coverage';
 export async function collectValidatorsOnEpoch(ctx: any, block: any): Promise<Validator[]> {
   const hasNewEpoch = block.logs.some(
     (log: any) =>
-      log.topics[0] === Autonity.events.NewEpoch.topic &&
+      log.topics[0] === autonity.events.NewEpoch.topic &&
       log.address.toLowerCase() === AUTONITY_CONTRACT.toLowerCase(),
   );
 
@@ -15,7 +15,7 @@ export async function collectValidatorsOnEpoch(ctx: any, block: any): Promise<Va
 
   ctx.log.info('[VALIDATOR] NewEpoch detected at block', block.header.height);
 
-  const contract = new Autonity.Contract(ctx, block.header, AUTONITY_CONTRACT);
+  const contract = new autonity.Contract(ctx, block.header, AUTONITY_CONTRACT);
 
   const [validatorAddresses, committeeMembers] = await Promise.all([
     contract.getValidators() as Promise<string[]>,

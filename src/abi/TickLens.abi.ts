@@ -1,0 +1,39 @@
+export const ABI_JSON = [
+    {
+        "type": "function",
+        "name": "getPopulatedTicksInWord",
+        "constant": true,
+        "stateMutability": "view",
+        "payable": false,
+        "inputs": [
+            {
+                "type": "address",
+                "name": "pool"
+            },
+            {
+                "type": "int16",
+                "name": "tickBitmapIndex"
+            }
+        ],
+        "outputs": [
+            {
+                "type": "tuple[]",
+                "name": "populatedTicks",
+                "components": [
+                    {
+                        "type": "int24",
+                        "name": "tick"
+                    },
+                    {
+                        "type": "int128",
+                        "name": "liquidityNet"
+                    },
+                    {
+                        "type": "uint128",
+                        "name": "liquidityGross"
+                    }
+                ]
+            }
+        ]
+    }
+]

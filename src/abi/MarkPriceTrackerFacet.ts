@@ -11,6 +11,9 @@ export const functions = {
     valuationAfterTrade: new Func<[productId: string, price: bigint, quantity: bigint], {productId: string, price: bigint, quantity: bigint}, bigint>(
         abi, '0x68b89fc0'
     ),
+    volume: new Func<[productId: string], {productId: string}, bigint>(
+        abi, '0x1595eea4'
+    ),
 }
 
 export class Contract extends ContractBase {
@@ -21,5 +24,9 @@ export class Contract extends ContractBase {
 
     valuationAfterTrade(productId: string, price: bigint, quantity: bigint): Promise<bigint> {
         return this.eth_call(functions.valuationAfterTrade, [productId, price, quantity])
+    }
+
+    volume(productId: string): Promise<bigint> {
+        return this.eth_call(functions.volume, [productId])
     }
 }

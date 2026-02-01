@@ -39,11 +39,15 @@ export const ABI_JSON = [
     },
     {
         "type": "error",
-        "name": "InvalidFSPAccount",
+        "name": "InvalidFieldAccess",
         "inputs": [
             {
-                "type": "address",
-                "name": "fspAccount"
+                "type": "uint8",
+                "name": "productType"
+            },
+            {
+                "type": "string",
+                "name": "field"
             }
         ]
     },
@@ -59,11 +63,11 @@ export const ABI_JSON = [
     },
     {
         "type": "error",
-        "name": "InvalidParameter",
+        "name": "MAECheckFailed",
         "inputs": [
             {
-                "type": "string",
-                "name": "paramName"
+                "type": "address",
+                "name": "marginAccount"
             }
         ]
     },
@@ -83,11 +87,41 @@ export const ABI_JSON = [
     },
     {
         "type": "error",
+        "name": "NotFound",
+        "inputs": [
+            {
+                "type": "string",
+                "name": "parameter"
+            }
+        ]
+    },
+    {
+        "type": "error",
+        "name": "NotImplemented",
+        "inputs": [
+            {
+                "type": "string",
+                "name": "feature"
+            }
+        ]
+    },
+    {
+        "type": "error",
         "name": "ProductNotInFinalSettlement",
         "inputs": [
             {
                 "type": "bytes32",
                 "name": "productId"
+            }
+        ]
+    },
+    {
+        "type": "error",
+        "name": "SafeCastOverflowedUintToInt",
+        "inputs": [
+            {
+                "type": "uint256",
+                "name": "value"
             }
         ]
     },
@@ -102,8 +136,62 @@ export const ABI_JSON = [
                 "indexed": true
             },
             {
-                "type": "uint256",
+                "type": "int256",
                 "name": "fsp",
+                "indexed": false
+            }
+        ]
+    },
+    {
+        "type": "event",
+        "anonymous": false,
+        "name": "FeeCollected",
+        "inputs": [
+            {
+                "type": "address",
+                "name": "marginAccountId",
+                "indexed": true
+            },
+            {
+                "type": "address",
+                "name": "collateralAsset",
+                "indexed": true
+            },
+            {
+                "type": "int256",
+                "name": "capitalAmount",
+                "indexed": false
+            },
+            {
+                "type": "uint256",
+                "name": "id",
+                "indexed": false
+            }
+        ]
+    },
+    {
+        "type": "event",
+        "anonymous": false,
+        "name": "FeeDispersed",
+        "inputs": [
+            {
+                "type": "address",
+                "name": "recipient",
+                "indexed": true
+            },
+            {
+                "type": "address",
+                "name": "collateralAsset",
+                "indexed": true
+            },
+            {
+                "type": "int256",
+                "name": "capitalAmount",
+                "indexed": false
+            },
+            {
+                "type": "uint256",
+                "name": "id",
                 "indexed": false
             }
         ]
@@ -131,24 +219,47 @@ export const ABI_JSON = [
         ]
     },
     {
-        "type": "function",
-        "name": "CLOSEOUT_FEE_RATE",
-        "constant": true,
-        "stateMutability": "pure",
-        "payable": false,
-        "inputs": [],
-        "outputs": [
+        "type": "event",
+        "anonymous": false,
+        "name": "PositionUpdated",
+        "inputs": [
+            {
+                "type": "address",
+                "name": "marginAccountId",
+                "indexed": true
+            },
+            {
+                "type": "bytes32",
+                "name": "productId",
+                "indexed": true
+            },
+            {
+                "type": "int256",
+                "name": "costBasis",
+                "indexed": false
+            },
+            {
+                "type": "int256",
+                "name": "price",
+                "indexed": false
+            },
+            {
+                "type": "int256",
+                "name": "quantity",
+                "indexed": false
+            },
             {
                 "type": "uint256",
-                "name": ""
+                "name": "id",
+                "indexed": false
             }
         ]
     },
     {
         "type": "function",
-        "name": "CLOSEOUT_REWARD_RATE",
+        "name": "FINAL_SETTLEMENT_ID",
         "constant": true,
-        "stateMutability": "pure",
+        "stateMutability": "view",
         "payable": false,
         "inputs": [],
         "outputs": [
@@ -171,7 +282,7 @@ export const ABI_JSON = [
         ],
         "outputs": [
             {
-                "type": "uint256",
+                "type": "int256",
                 "name": ""
             }
         ]
@@ -190,12 +301,31 @@ export const ABI_JSON = [
         ],
         "outputs": [
             {
-                "type": "uint256",
+                "type": "int256",
                 "name": "fsp"
             },
             {
                 "type": "bool",
                 "name": "finalized"
+            }
+        ]
+    },
+    {
+        "type": "function",
+        "name": "getFspFinalizationTime",
+        "constant": true,
+        "stateMutability": "view",
+        "payable": false,
+        "inputs": [
+            {
+                "type": "bytes32",
+                "name": "productId"
+            }
+        ],
+        "outputs": [
+            {
+                "type": "uint256",
+                "name": ""
             }
         ]
     },

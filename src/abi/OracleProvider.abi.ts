@@ -50,6 +50,24 @@ export const ABI_JSON = [
     },
     {
         "type": "error",
+        "name": "FSPTimeNotReached",
+        "inputs": [
+            {
+                "type": "bytes32",
+                "name": "productId"
+            },
+            {
+                "type": "uint256",
+                "name": "currentTime"
+            },
+            {
+                "type": "uint256",
+                "name": "earliestFSPSubmissionTime"
+            }
+        ]
+    },
+    {
+        "type": "error",
         "name": "FailedCall",
         "inputs": []
     },
@@ -57,16 +75,6 @@ export const ABI_JSON = [
         "type": "error",
         "name": "InvalidInitialization",
         "inputs": []
-    },
-    {
-        "type": "error",
-        "name": "InvalidProductState",
-        "inputs": [
-            {
-                "type": "uint8",
-                "name": "state"
-            }
-        ]
     },
     {
         "type": "error",

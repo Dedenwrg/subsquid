@@ -1,15 +1,15 @@
 import { Network } from '../model';
-import { Autonity } from '../abi';
+import { autonity } from '../abi';
 import { AUTONITY_CONTRACT } from '../configuration/config';
 
 export async function collectNetworkSnapshot(ctx: any, block: any): Promise<Network | null> {
   for (const log of block.logs) {
     if (log.address.toLowerCase() !== AUTONITY_CONTRACT) continue;
-    if (log.topics[0] !== Autonity.events.NewEpoch.topic) continue;
+    if (log.topics[0] !== autonity.events.NewEpoch.topic) continue;
 
-    const decoded = Autonity.events.NewEpoch.decode(log);
+    const decoded = autonity.events.NewEpoch.decode(log);
     const { epoch, inflationReserve } = decoded;
-    const contract = new Autonity.Contract(ctx, block.header, AUTONITY_CONTRACT);
+    const contract = new autonity.Contract(ctx, block.header, AUTONITY_CONTRACT);
     const [totalSupply, circulatingSupply, bondedSupply, committee, lastEpochTime, config] =
       await Promise.all([
         contract.totalSupply(),

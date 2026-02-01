@@ -1,13 +1,157 @@
 [
   {
+    "inputs": [],
+    "name": "EVWMA_NotInitialized",
+    "type": "error"
+  },
+  {
     "inputs": [
       {
-        "internalType": "bytes32",
-        "name": "productId",
-        "type": "bytes32"
+        "internalType": "uint256",
+        "name": "x",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "y",
+        "type": "uint256"
       }
     ],
-    "name": "NoTradeData",
+    "name": "PRBMath_MulDiv18_Overflow",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "x",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "y",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "denominator",
+        "type": "uint256"
+      }
+    ],
+    "name": "PRBMath_MulDiv_Overflow",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "PRBMath_SD59x18_Div_InputTooSmall",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "SD59x18",
+        "name": "x",
+        "type": "int256"
+      },
+      {
+        "internalType": "SD59x18",
+        "name": "y",
+        "type": "int256"
+      }
+    ],
+    "name": "PRBMath_SD59x18_Div_Overflow",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "SD59x18",
+        "name": "x",
+        "type": "int256"
+      }
+    ],
+    "name": "PRBMath_SD59x18_Exp2_InputTooBig",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "SD59x18",
+        "name": "x",
+        "type": "int256"
+      }
+    ],
+    "name": "PRBMath_SD59x18_Exp_InputTooBig",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "SD59x18",
+        "name": "x",
+        "type": "int256"
+      }
+    ],
+    "name": "PRBMath_SD59x18_IntoUint256_Underflow",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "SD59x18",
+        "name": "x",
+        "type": "int256"
+      }
+    ],
+    "name": "PRBMath_SD59x18_Log_InputTooSmall",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "PRBMath_SD59x18_Mul_InputTooSmall",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "SD59x18",
+        "name": "x",
+        "type": "int256"
+      },
+      {
+        "internalType": "SD59x18",
+        "name": "y",
+        "type": "int256"
+      }
+    ],
+    "name": "PRBMath_SD59x18_Mul_Overflow",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "SD59x18",
+        "name": "x",
+        "type": "int256"
+      }
+    ],
+    "name": "PRBMath_SD59x18_Sqrt_NegativeInput",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "SD59x18",
+        "name": "x",
+        "type": "int256"
+      }
+    ],
+    "name": "PRBMath_SD59x18_Sqrt_Overflow",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "QueueIsEmpty",
     "type": "error"
   },
   {
@@ -48,6 +192,25 @@
       }
     ],
     "name": "valuationAfterTrade",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "bytes32",
+        "name": "productId",
+        "type": "bytes32"
+      }
+    ],
+    "name": "volume",
     "outputs": [
       {
         "internalType": "uint256",

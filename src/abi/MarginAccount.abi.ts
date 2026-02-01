@@ -1,50 +1,8 @@
 export const ABI_JSON = [
     {
         "type": "error",
-        "name": "FeeInvariantViolated",
-        "inputs": [
-            {
-                "type": "uint256",
-                "name": "dispersed"
-            },
-            {
-                "type": "int256",
-                "name": "collected"
-            }
-        ]
-    },
-    {
-        "type": "error",
-        "name": "InsufficientBalance",
-        "inputs": [
-            {
-                "type": "address",
-                "name": "account"
-            },
-            {
-                "type": "uint256",
-                "name": "balance"
-            },
-            {
-                "type": "uint256",
-                "name": "required"
-            }
-        ]
-    },
-    {
-        "type": "error",
         "name": "InvalidInitialization",
         "inputs": []
-    },
-    {
-        "type": "error",
-        "name": "InvalidParameter",
-        "inputs": [
-            {
-                "type": "string",
-                "name": "paramName"
-            }
-        ]
     },
     {
         "type": "error",
@@ -53,15 +11,31 @@ export const ABI_JSON = [
     },
     {
         "type": "error",
-        "name": "PositionNotFound",
+        "name": "OwnableInvalidOwner",
         "inputs": [
             {
                 "type": "address",
-                "name": "marginAccount"
-            },
+                "name": "owner"
+            }
+        ]
+    },
+    {
+        "type": "error",
+        "name": "OwnableUnauthorizedAccount",
+        "inputs": [
             {
-                "type": "bytes32",
-                "name": "productId"
+                "type": "address",
+                "name": "account"
+            }
+        ]
+    },
+    {
+        "type": "error",
+        "name": "SafeCastOverflowedIntToUint",
+        "inputs": [
+            {
+                "type": "int256",
+                "name": "value"
             }
         ]
     },
@@ -88,33 +62,16 @@ export const ABI_JSON = [
     {
         "type": "event",
         "anonymous": false,
-        "name": "FeeCollected",
+        "name": "Deposit",
         "inputs": [
             {
                 "type": "address",
-                "name": "marginAccountID",
-                "indexed": true
-            },
-            {
-                "type": "int256",
-                "name": "capitalAmount",
-                "indexed": false
-            }
-        ]
-    },
-    {
-        "type": "event",
-        "anonymous": false,
-        "name": "FeeDispersed",
-        "inputs": [
-            {
-                "type": "address",
-                "name": "recipient",
+                "name": "user",
                 "indexed": true
             },
             {
                 "type": "uint256",
-                "name": "capitalAmount",
+                "name": "amount",
                 "indexed": false
             }
         ]
@@ -134,27 +91,109 @@ export const ABI_JSON = [
     {
         "type": "event",
         "anonymous": false,
-        "name": "PositionUpdated",
+        "name": "IntentAuthorized",
         "inputs": [
             {
                 "type": "address",
-                "name": "marginAccountID",
+                "name": "marginAccountId",
                 "indexed": true
             },
             {
-                "type": "bytes32",
-                "name": "positionId",
+                "type": "address",
+                "name": "intentAccount",
+                "indexed": true
+            }
+        ]
+    },
+    {
+        "type": "event",
+        "anonymous": false,
+        "name": "IntentRevoked",
+        "inputs": [
+            {
+                "type": "address",
+                "name": "marginAccountId",
                 "indexed": true
             },
             {
-                "type": "int256",
-                "name": "totalQuantity",
-                "indexed": false
+                "type": "address",
+                "name": "intentAccount",
+                "indexed": true
+            }
+        ]
+    },
+    {
+        "type": "event",
+        "anonymous": false,
+        "name": "OwnershipTransferred",
+        "inputs": [
+            {
+                "type": "address",
+                "name": "previousOwner",
+                "indexed": true
             },
             {
-                "type": "int256",
-                "name": "costBasis",
+                "type": "address",
+                "name": "newOwner",
+                "indexed": true
+            }
+        ]
+    },
+    {
+        "type": "event",
+        "anonymous": false,
+        "name": "Withdraw",
+        "inputs": [
+            {
+                "type": "address",
+                "name": "user",
+                "indexed": true
+            },
+            {
+                "type": "uint256",
+                "name": "amount",
                 "indexed": false
+            }
+        ]
+    },
+    {
+        "type": "function",
+        "name": "addAllowed",
+        "constant": false,
+        "payable": false,
+        "inputs": [
+            {
+                "type": "address",
+                "name": "addr"
+            }
+        ],
+        "outputs": []
+    },
+    {
+        "type": "function",
+        "name": "admin",
+        "constant": true,
+        "stateMutability": "view",
+        "payable": false,
+        "inputs": [],
+        "outputs": [
+            {
+                "type": "address",
+                "name": ""
+            }
+        ]
+    },
+    {
+        "type": "function",
+        "name": "allowed",
+        "constant": true,
+        "stateMutability": "view",
+        "payable": false,
+        "inputs": [],
+        "outputs": [
+            {
+                "type": "address[]",
+                "name": ""
             }
         ]
     },
@@ -180,96 +219,11 @@ export const ABI_JSON = [
         "inputs": [
             {
                 "type": "address",
-                "name": "marginAccount"
+                "name": "marginAccountId"
             },
             {
                 "type": "address",
                 "name": "intentAccount"
-            }
-        ],
-        "outputs": [
-            {
-                "type": "bool",
-                "name": ""
-            }
-        ]
-    },
-    {
-        "type": "function",
-        "name": "batchMaeCheck",
-        "constant": true,
-        "stateMutability": "view",
-        "payable": false,
-        "inputs": [
-            {
-                "type": "address",
-                "name": "marginAccount"
-            },
-            {
-                "type": "tuple[]",
-                "name": "settlements",
-                "components": [
-                    {
-                        "type": "bytes32",
-                        "name": "positionId"
-                    },
-                    {
-                        "type": "int256",
-                        "name": "quantity"
-                    },
-                    {
-                        "type": "uint256",
-                        "name": "price"
-                    }
-                ]
-            },
-            {
-                "type": "uint256[]",
-                "name": "markPriceIfSettled"
-            }
-        ],
-        "outputs": [
-            {
-                "type": "bool",
-                "name": "checkPassed"
-            },
-            {
-                "type": "int256",
-                "name": "maeAfter"
-            },
-            {
-                "type": "uint256",
-                "name": "mmuAfter"
-            }
-        ]
-    },
-    {
-        "type": "function",
-        "name": "batchSettle",
-        "constant": false,
-        "payable": false,
-        "inputs": [
-            {
-                "type": "address",
-                "name": "marginAccountID"
-            },
-            {
-                "type": "tuple[]",
-                "name": "settlements",
-                "components": [
-                    {
-                        "type": "bytes32",
-                        "name": "positionId"
-                    },
-                    {
-                        "type": "int256",
-                        "name": "quantity"
-                    },
-                    {
-                        "type": "uint256",
-                        "name": "price"
-                    }
-                ]
             }
         ],
         "outputs": [
@@ -288,7 +242,7 @@ export const ABI_JSON = [
         "inputs": [
             {
                 "type": "address",
-                "name": "marginAccount"
+                "name": "marginAccountId"
             }
         ],
         "outputs": [
@@ -328,37 +282,6 @@ export const ABI_JSON = [
     },
     {
         "type": "function",
-        "name": "collateralToken",
-        "constant": true,
-        "stateMutability": "view",
-        "payable": false,
-        "inputs": [],
-        "outputs": [
-            {
-                "type": "address",
-                "name": ""
-            }
-        ]
-    },
-    {
-        "type": "function",
-        "name": "collectFee",
-        "constant": false,
-        "payable": false,
-        "inputs": [
-            {
-                "type": "address",
-                "name": "marginAccount"
-            },
-            {
-                "type": "int256",
-                "name": "capitalAmount"
-            }
-        ],
-        "outputs": []
-    },
-    {
-        "type": "function",
         "name": "deposit",
         "constant": false,
         "payable": false,
@@ -372,74 +295,20 @@ export const ABI_JSON = [
     },
     {
         "type": "function",
-        "name": "disperseFees",
+        "name": "depositFor",
         "constant": false,
         "payable": false,
         "inputs": [
             {
-                "type": "address[]",
-                "name": "recipients"
+                "type": "address",
+                "name": "marginAccountId"
             },
             {
-                "type": "uint256[]",
-                "name": "capitalAmounts"
+                "type": "uint256",
+                "name": "amount"
             }
         ],
         "outputs": []
-    },
-    {
-        "type": "function",
-        "name": "estimateLiquidationPrice",
-        "constant": true,
-        "stateMutability": "view",
-        "payable": false,
-        "inputs": [
-            {
-                "type": "address",
-                "name": "marginAccountId"
-            },
-            {
-                "type": "bytes32",
-                "name": "productId"
-            },
-            {
-                "type": "uint256",
-                "name": "price"
-            },
-            {
-                "type": "int256",
-                "name": "quantity"
-            }
-        ],
-        "outputs": [
-            {
-                "type": "uint256",
-                "name": ""
-            }
-        ]
-    },
-    {
-        "type": "function",
-        "name": "estimateLiquidationPriceForPosition",
-        "constant": true,
-        "stateMutability": "view",
-        "payable": false,
-        "inputs": [
-            {
-                "type": "address",
-                "name": "marginAccountId"
-            },
-            {
-                "type": "bytes32",
-                "name": "positionId"
-            }
-        ],
-        "outputs": [
-            {
-                "type": "uint256",
-                "name": ""
-            }
-        ]
     },
     {
         "type": "function",
@@ -449,19 +318,7 @@ export const ABI_JSON = [
         "inputs": [
             {
                 "type": "address",
-                "name": "_collateralToken"
-            },
-            {
-                "type": "address",
-                "name": "_valuation"
-            },
-            {
-                "type": "address",
-                "name": "_productRegistry"
-            },
-            {
-                "type": "address",
-                "name": "_clearing"
+                "name": "clearing_"
             }
         ],
         "outputs": []
@@ -475,107 +332,13 @@ export const ABI_JSON = [
         "inputs": [
             {
                 "type": "address",
-                "name": "marginAccount"
+                "name": "marginAccountId"
             }
         ],
         "outputs": [
             {
                 "type": "int256",
                 "name": ""
-            }
-        ]
-    },
-    {
-        "type": "function",
-        "name": "maeAndMmuAfterBatchTrade",
-        "constant": true,
-        "stateMutability": "view",
-        "payable": false,
-        "inputs": [
-            {
-                "type": "address",
-                "name": "marginAccount"
-            },
-            {
-                "type": "tuple[]",
-                "name": "settlements",
-                "components": [
-                    {
-                        "type": "bytes32",
-                        "name": "positionId"
-                    },
-                    {
-                        "type": "int256",
-                        "name": "quantity"
-                    },
-                    {
-                        "type": "uint256",
-                        "name": "price"
-                    }
-                ]
-            },
-            {
-                "type": "uint256[]",
-                "name": "markPriceIfSettled"
-            }
-        ],
-        "outputs": [
-            {
-                "type": "int256",
-                "name": "maeAfter"
-            },
-            {
-                "type": "uint256",
-                "name": "mmuAfter"
-            }
-        ]
-    },
-    {
-        "type": "function",
-        "name": "maeCheck",
-        "constant": true,
-        "stateMutability": "view",
-        "payable": false,
-        "inputs": [
-            {
-                "type": "address",
-                "name": "marginAccount"
-            },
-            {
-                "type": "tuple",
-                "name": "settlement",
-                "components": [
-                    {
-                        "type": "bytes32",
-                        "name": "positionId"
-                    },
-                    {
-                        "type": "int256",
-                        "name": "quantity"
-                    },
-                    {
-                        "type": "uint256",
-                        "name": "price"
-                    }
-                ]
-            },
-            {
-                "type": "uint256",
-                "name": "markPriceIfSettled"
-            }
-        ],
-        "outputs": [
-            {
-                "type": "bool",
-                "name": "checkPassed"
-            },
-            {
-                "type": "int256",
-                "name": "maeAfter"
-            },
-            {
-                "type": "uint256",
-                "name": "mmuAfter"
             }
         ]
     },
@@ -588,7 +351,7 @@ export const ABI_JSON = [
         "inputs": [
             {
                 "type": "address",
-                "name": "marginAccount"
+                "name": "marginAccountId"
             }
         ],
         "outputs": [
@@ -607,12 +370,26 @@ export const ABI_JSON = [
         "inputs": [
             {
                 "type": "address",
-                "name": "marginAccount"
+                "name": "marginAccountId"
             }
         ],
         "outputs": [
             {
                 "type": "uint256",
+                "name": ""
+            }
+        ]
+    },
+    {
+        "type": "function",
+        "name": "owner",
+        "constant": true,
+        "stateMutability": "view",
+        "payable": false,
+        "inputs": [],
+        "outputs": [
+            {
+                "type": "address",
                 "name": ""
             }
         ]
@@ -626,35 +403,12 @@ export const ABI_JSON = [
         "inputs": [
             {
                 "type": "address",
-                "name": "marginAccount"
+                "name": "marginAccountId"
             }
         ],
         "outputs": [
             {
                 "type": "int256",
-                "name": ""
-            }
-        ]
-    },
-    {
-        "type": "function",
-        "name": "positionAge",
-        "constant": true,
-        "stateMutability": "view",
-        "payable": false,
-        "inputs": [
-            {
-                "type": "address",
-                "name": "marginAccountId"
-            },
-            {
-                "type": "bytes32",
-                "name": "positionId"
-            }
-        ],
-        "outputs": [
-            {
-                "type": "uint256",
                 "name": ""
             }
         ]
@@ -668,7 +422,7 @@ export const ABI_JSON = [
         "inputs": [
             {
                 "type": "address",
-                "name": "marginAccount"
+                "name": "marginAccountId"
             }
         ],
         "outputs": [
@@ -687,11 +441,11 @@ export const ABI_JSON = [
         "inputs": [
             {
                 "type": "address",
-                "name": "marginAccount"
+                "name": "marginAccountId"
             },
             {
                 "type": "bytes32",
-                "name": "positionId"
+                "name": "productId"
             }
         ],
         "outputs": [
@@ -701,7 +455,7 @@ export const ABI_JSON = [
                 "components": [
                     {
                         "type": "bytes32",
-                        "name": "positionId"
+                        "name": "productId"
                     },
                     {
                         "type": "int256",
@@ -736,7 +490,7 @@ export const ABI_JSON = [
             },
             {
                 "type": "bytes32",
-                "name": "positionId"
+                "name": "productId"
             }
         ],
         "outputs": [
@@ -755,11 +509,11 @@ export const ABI_JSON = [
         "inputs": [
             {
                 "type": "address",
-                "name": "marginAccount"
+                "name": "marginAccountId"
             },
             {
                 "type": "bytes32",
-                "name": "positionId"
+                "name": "productId"
             }
         ],
         "outputs": [
@@ -778,7 +532,7 @@ export const ABI_JSON = [
         "inputs": [
             {
                 "type": "address",
-                "name": "marginAccount"
+                "name": "marginAccountId"
             }
         ],
         "outputs": [
@@ -790,17 +544,24 @@ export const ABI_JSON = [
     },
     {
         "type": "function",
-        "name": "productRegistry",
-        "constant": true,
-        "stateMutability": "view",
+        "name": "removeAllowed",
+        "constant": false,
         "payable": false,
-        "inputs": [],
-        "outputs": [
+        "inputs": [
             {
                 "type": "address",
-                "name": ""
+                "name": "addr"
             }
-        ]
+        ],
+        "outputs": []
+    },
+    {
+        "type": "function",
+        "name": "renounceOwnership",
+        "constant": false,
+        "payable": false,
+        "inputs": [],
+        "outputs": []
     },
     {
         "type": "function",
@@ -817,57 +578,16 @@ export const ABI_JSON = [
     },
     {
         "type": "function",
-        "name": "settle",
+        "name": "transferOwnership",
         "constant": false,
         "payable": false,
         "inputs": [
             {
                 "type": "address",
-                "name": "marginAccount"
-            },
-            {
-                "type": "address",
-                "name": "intentAccount"
-            },
-            {
-                "type": "tuple",
-                "name": "settlement",
-                "components": [
-                    {
-                        "type": "bytes32",
-                        "name": "positionId"
-                    },
-                    {
-                        "type": "int256",
-                        "name": "quantity"
-                    },
-                    {
-                        "type": "uint256",
-                        "name": "price"
-                    }
-                ]
+                "name": "newOwner"
             }
         ],
-        "outputs": [
-            {
-                "type": "bool",
-                "name": ""
-            }
-        ]
-    },
-    {
-        "type": "function",
-        "name": "valuation",
-        "constant": true,
-        "stateMutability": "view",
-        "payable": false,
-        "inputs": [],
-        "outputs": [
-            {
-                "type": "address",
-                "name": ""
-            }
-        ]
+        "outputs": []
     },
     {
         "type": "function",
@@ -891,7 +611,7 @@ export const ABI_JSON = [
         "inputs": [
             {
                 "type": "address",
-                "name": "marginAccount"
+                "name": "marginAccountId"
             }
         ],
         "outputs": [

@@ -1,0 +1,1284 @@
+[
+  {
+    "inputs": [
+      {
+        "internalType": "enum ProductState",
+        "name": "state",
+        "type": "uint8"
+      }
+    ],
+    "name": "DepositNotPossible",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "balance",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "required",
+        "type": "uint256"
+      }
+    ],
+    "name": "InsufficientBalance",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "startTime",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "earliestFSPSubmissionTime",
+        "type": "uint256"
+      }
+    ],
+    "name": "InvalidFSPSubmissionTime",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "enum ProductType",
+        "name": "productType",
+        "type": "uint8"
+      },
+      {
+        "internalType": "string",
+        "name": "field",
+        "type": "string"
+      }
+    ],
+    "name": "InvalidFieldAccess",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "string",
+        "name": "paramName",
+        "type": "string"
+      }
+    ],
+    "name": "InvalidParameter",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "int256",
+        "name": "minPrice",
+        "type": "int256"
+      },
+      {
+        "internalType": "int256",
+        "name": "maxPrice",
+        "type": "int256"
+      }
+    ],
+    "name": "InvalidPriceRange",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "bytes32",
+        "name": "productId",
+        "type": "bytes32"
+      }
+    ],
+    "name": "InvalidProductId",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "startTime",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "blockTimestamp",
+        "type": "uint256"
+      }
+    ],
+    "name": "InvalidStartTime",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "fee",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "requiredFee",
+        "type": "uint256"
+      }
+    ],
+    "name": "NotEnoughFee",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "string",
+        "name": "parameter",
+        "type": "string"
+      }
+    ],
+    "name": "NotFound",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "string",
+        "name": "feature",
+        "type": "string"
+      }
+    ],
+    "name": "NotImplemented",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "bytes32",
+        "name": "productId",
+        "type": "bytes32"
+      }
+    ],
+    "name": "ProductExists",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "value",
+        "type": "uint256"
+      }
+    ],
+    "name": "SafeCastOverflowedUintToInt",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      }
+    ],
+    "name": "Unauthorized",
+    "type": "error"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "builder",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "treasury",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "builderReward",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "treasuryReward",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "bytes32",
+        "name": "productId",
+        "type": "bytes32"
+      }
+    ],
+    "name": "BuilderRewardsClaimed",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "stake",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "bytes32",
+        "name": "productId",
+        "type": "bytes32"
+      }
+    ],
+    "name": "BuilderStakeIncreased",
+    "type": "event"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "bytes32",
+        "name": "productId",
+        "type": "bytes32"
+      }
+    ],
+    "name": "builderStakeData",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "uint256",
+            "name": "payoutRemaining",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "claimableRewards",
+            "type": "uint256"
+          },
+          {
+            "components": [
+              {
+                "internalType": "uint256",
+                "name": "payout",
+                "type": "uint256"
+              },
+              {
+                "internalType": "uint256",
+                "name": "activeAt",
+                "type": "uint256"
+              }
+            ],
+            "internalType": "struct PendingStakeData",
+            "name": "pendingStakeData",
+            "type": "tuple"
+          }
+        ],
+        "internalType": "struct BuilderStakeData",
+        "name": "",
+        "type": "tuple"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "bytes32",
+        "name": "productId",
+        "type": "bytes32"
+      }
+    ],
+    "name": "claimBuilderRewards",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "bytes32",
+        "name": "productId",
+        "type": "bytes32"
+      }
+    ],
+    "name": "claimableBuilderRewards",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "builderRewards",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "treasuryRewads",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "bytes32",
+        "name": "productId",
+        "type": "bytes32"
+      }
+    ],
+    "name": "expirySpecification",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "uint256",
+            "name": "earliestFSPSubmissionTime",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "tradeoutInterval",
+            "type": "uint256"
+          }
+        ],
+        "internalType": "struct ExpirySpecification",
+        "name": "",
+        "type": "tuple"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "bytes32",
+        "name": "productId",
+        "type": "bytes32"
+      }
+    ],
+    "name": "futuresProductV1",
+    "outputs": [
+      {
+        "components": [
+          {
+            "components": [
+              {
+                "components": [
+                  {
+                    "internalType": "address",
+                    "name": "builder",
+                    "type": "address"
+                  },
+                  {
+                    "internalType": "string",
+                    "name": "symbol",
+                    "type": "string"
+                  },
+                  {
+                    "internalType": "string",
+                    "name": "description",
+                    "type": "string"
+                  }
+                ],
+                "internalType": "struct ProductMetadata",
+                "name": "metadata",
+                "type": "tuple"
+              },
+              {
+                "components": [
+                  {
+                    "internalType": "address",
+                    "name": "oracleAddress",
+                    "type": "address"
+                  },
+                  {
+                    "internalType": "uint8",
+                    "name": "fsvDecimals",
+                    "type": "uint8"
+                  },
+                  {
+                    "internalType": "int256",
+                    "name": "fspAlpha",
+                    "type": "int256"
+                  },
+                  {
+                    "internalType": "int256",
+                    "name": "fspBeta",
+                    "type": "int256"
+                  },
+                  {
+                    "internalType": "bytes",
+                    "name": "fsvCalldata",
+                    "type": "bytes"
+                  }
+                ],
+                "internalType": "struct OracleSpecification",
+                "name": "oracleSpec",
+                "type": "tuple"
+              },
+              {
+                "internalType": "address",
+                "name": "collateralAsset",
+                "type": "address"
+              },
+              {
+                "internalType": "uint256",
+                "name": "startTime",
+                "type": "uint256"
+              },
+              {
+                "internalType": "uint256",
+                "name": "pointValue",
+                "type": "uint256"
+              },
+              {
+                "internalType": "uint8",
+                "name": "priceDecimals",
+                "type": "uint8"
+              },
+              {
+                "internalType": "string",
+                "name": "extendedMetadata",
+                "type": "string"
+              }
+            ],
+            "internalType": "struct BaseProduct",
+            "name": "base",
+            "type": "tuple"
+          },
+          {
+            "components": [
+              {
+                "internalType": "uint256",
+                "name": "earliestFSPSubmissionTime",
+                "type": "uint256"
+              },
+              {
+                "internalType": "uint256",
+                "name": "tradeoutInterval",
+                "type": "uint256"
+              }
+            ],
+            "internalType": "struct ExpirySpecification",
+            "name": "expirySpec",
+            "type": "tuple"
+          },
+          {
+            "components": [
+              {
+                "internalType": "uint256",
+                "name": "imr",
+                "type": "uint256"
+              },
+              {
+                "internalType": "uint256",
+                "name": "mmr",
+                "type": "uint256"
+              }
+            ],
+            "internalType": "struct MarginSpecification",
+            "name": "marginSpec",
+            "type": "tuple"
+          }
+        ],
+        "internalType": "struct FuturesProductV1",
+        "name": "",
+        "type": "tuple"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "components": [
+          {
+            "components": [
+              {
+                "internalType": "address",
+                "name": "builder",
+                "type": "address"
+              },
+              {
+                "internalType": "string",
+                "name": "symbol",
+                "type": "string"
+              },
+              {
+                "internalType": "string",
+                "name": "description",
+                "type": "string"
+              }
+            ],
+            "internalType": "struct ProductMetadata",
+            "name": "metadata",
+            "type": "tuple"
+          },
+          {
+            "components": [
+              {
+                "internalType": "address",
+                "name": "oracleAddress",
+                "type": "address"
+              },
+              {
+                "internalType": "uint8",
+                "name": "fsvDecimals",
+                "type": "uint8"
+              },
+              {
+                "internalType": "int256",
+                "name": "fspAlpha",
+                "type": "int256"
+              },
+              {
+                "internalType": "int256",
+                "name": "fspBeta",
+                "type": "int256"
+              },
+              {
+                "internalType": "bytes",
+                "name": "fsvCalldata",
+                "type": "bytes"
+              }
+            ],
+            "internalType": "struct OracleSpecification",
+            "name": "oracleSpec",
+            "type": "tuple"
+          },
+          {
+            "internalType": "address",
+            "name": "collateralAsset",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "startTime",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "pointValue",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint8",
+            "name": "priceDecimals",
+            "type": "uint8"
+          },
+          {
+            "internalType": "string",
+            "name": "extendedMetadata",
+            "type": "string"
+          }
+        ],
+        "internalType": "struct BaseProduct",
+        "name": "product",
+        "type": "tuple"
+      }
+    ],
+    "name": "id",
+    "outputs": [
+      {
+        "internalType": "bytes32",
+        "name": "",
+        "type": "bytes32"
+      }
+    ],
+    "stateMutability": "pure",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "bytes32",
+        "name": "productId",
+        "type": "bytes32"
+      },
+      {
+        "internalType": "uint256",
+        "name": "stakeAmount",
+        "type": "uint256"
+      }
+    ],
+    "name": "increaseBuilderStake",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "stakeAmount",
+        "type": "uint256"
+      },
+      {
+        "internalType": "address",
+        "name": "collateral",
+        "type": "address"
+      }
+    ],
+    "name": "isBuilderStakeValid",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "collateral",
+        "type": "address"
+      }
+    ],
+    "name": "minBuilderStake",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "bytes32",
+        "name": "productId",
+        "type": "bytes32"
+      }
+    ],
+    "name": "mmr",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "bytes32",
+        "name": "productId",
+        "type": "bytes32"
+      }
+    ],
+    "name": "nextInterval",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "bytes32",
+        "name": "productId",
+        "type": "bytes32"
+      }
+    ],
+    "name": "predictionProductV1",
+    "outputs": [
+      {
+        "components": [
+          {
+            "components": [
+              {
+                "components": [
+                  {
+                    "internalType": "address",
+                    "name": "builder",
+                    "type": "address"
+                  },
+                  {
+                    "internalType": "string",
+                    "name": "symbol",
+                    "type": "string"
+                  },
+                  {
+                    "internalType": "string",
+                    "name": "description",
+                    "type": "string"
+                  }
+                ],
+                "internalType": "struct ProductMetadata",
+                "name": "metadata",
+                "type": "tuple"
+              },
+              {
+                "components": [
+                  {
+                    "internalType": "address",
+                    "name": "oracleAddress",
+                    "type": "address"
+                  },
+                  {
+                    "internalType": "uint8",
+                    "name": "fsvDecimals",
+                    "type": "uint8"
+                  },
+                  {
+                    "internalType": "int256",
+                    "name": "fspAlpha",
+                    "type": "int256"
+                  },
+                  {
+                    "internalType": "int256",
+                    "name": "fspBeta",
+                    "type": "int256"
+                  },
+                  {
+                    "internalType": "bytes",
+                    "name": "fsvCalldata",
+                    "type": "bytes"
+                  }
+                ],
+                "internalType": "struct OracleSpecification",
+                "name": "oracleSpec",
+                "type": "tuple"
+              },
+              {
+                "internalType": "address",
+                "name": "collateralAsset",
+                "type": "address"
+              },
+              {
+                "internalType": "uint256",
+                "name": "startTime",
+                "type": "uint256"
+              },
+              {
+                "internalType": "uint256",
+                "name": "pointValue",
+                "type": "uint256"
+              },
+              {
+                "internalType": "uint8",
+                "name": "priceDecimals",
+                "type": "uint8"
+              },
+              {
+                "internalType": "string",
+                "name": "extendedMetadata",
+                "type": "string"
+              }
+            ],
+            "internalType": "struct BaseProduct",
+            "name": "base",
+            "type": "tuple"
+          },
+          {
+            "components": [
+              {
+                "internalType": "uint256",
+                "name": "earliestFSPSubmissionTime",
+                "type": "uint256"
+              },
+              {
+                "internalType": "uint256",
+                "name": "tradeoutInterval",
+                "type": "uint256"
+              }
+            ],
+            "internalType": "struct ExpirySpecification",
+            "name": "expirySpec",
+            "type": "tuple"
+          },
+          {
+            "internalType": "int256",
+            "name": "maxPrice",
+            "type": "int256"
+          },
+          {
+            "internalType": "int256",
+            "name": "minPrice",
+            "type": "int256"
+          }
+        ],
+        "internalType": "struct PredictionProductV1",
+        "name": "",
+        "type": "tuple"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "bytes32",
+        "name": "productId",
+        "type": "bytes32"
+      }
+    ],
+    "name": "productTreasury",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "bytes32",
+        "name": "productId",
+        "type": "bytes32"
+      }
+    ],
+    "name": "products",
+    "outputs": [
+      {
+        "internalType": "enum ProductType",
+        "name": "",
+        "type": "uint8"
+      },
+      {
+        "components": [
+          {
+            "components": [
+              {
+                "internalType": "address",
+                "name": "builder",
+                "type": "address"
+              },
+              {
+                "internalType": "string",
+                "name": "symbol",
+                "type": "string"
+              },
+              {
+                "internalType": "string",
+                "name": "description",
+                "type": "string"
+              }
+            ],
+            "internalType": "struct ProductMetadata",
+            "name": "metadata",
+            "type": "tuple"
+          },
+          {
+            "components": [
+              {
+                "internalType": "address",
+                "name": "oracleAddress",
+                "type": "address"
+              },
+              {
+                "internalType": "uint8",
+                "name": "fsvDecimals",
+                "type": "uint8"
+              },
+              {
+                "internalType": "int256",
+                "name": "fspAlpha",
+                "type": "int256"
+              },
+              {
+                "internalType": "int256",
+                "name": "fspBeta",
+                "type": "int256"
+              },
+              {
+                "internalType": "bytes",
+                "name": "fsvCalldata",
+                "type": "bytes"
+              }
+            ],
+            "internalType": "struct OracleSpecification",
+            "name": "oracleSpec",
+            "type": "tuple"
+          },
+          {
+            "internalType": "address",
+            "name": "collateralAsset",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "startTime",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "pointValue",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint8",
+            "name": "priceDecimals",
+            "type": "uint8"
+          },
+          {
+            "internalType": "string",
+            "name": "extendedMetadata",
+            "type": "string"
+          }
+        ],
+        "internalType": "struct BaseProduct",
+        "name": "",
+        "type": "tuple"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "components": [
+          {
+            "components": [
+              {
+                "components": [
+                  {
+                    "internalType": "address",
+                    "name": "builder",
+                    "type": "address"
+                  },
+                  {
+                    "internalType": "string",
+                    "name": "symbol",
+                    "type": "string"
+                  },
+                  {
+                    "internalType": "string",
+                    "name": "description",
+                    "type": "string"
+                  }
+                ],
+                "internalType": "struct ProductMetadata",
+                "name": "metadata",
+                "type": "tuple"
+              },
+              {
+                "components": [
+                  {
+                    "internalType": "address",
+                    "name": "oracleAddress",
+                    "type": "address"
+                  },
+                  {
+                    "internalType": "uint8",
+                    "name": "fsvDecimals",
+                    "type": "uint8"
+                  },
+                  {
+                    "internalType": "int256",
+                    "name": "fspAlpha",
+                    "type": "int256"
+                  },
+                  {
+                    "internalType": "int256",
+                    "name": "fspBeta",
+                    "type": "int256"
+                  },
+                  {
+                    "internalType": "bytes",
+                    "name": "fsvCalldata",
+                    "type": "bytes"
+                  }
+                ],
+                "internalType": "struct OracleSpecification",
+                "name": "oracleSpec",
+                "type": "tuple"
+              },
+              {
+                "internalType": "address",
+                "name": "collateralAsset",
+                "type": "address"
+              },
+              {
+                "internalType": "uint256",
+                "name": "startTime",
+                "type": "uint256"
+              },
+              {
+                "internalType": "uint256",
+                "name": "pointValue",
+                "type": "uint256"
+              },
+              {
+                "internalType": "uint8",
+                "name": "priceDecimals",
+                "type": "uint8"
+              },
+              {
+                "internalType": "string",
+                "name": "extendedMetadata",
+                "type": "string"
+              }
+            ],
+            "internalType": "struct BaseProduct",
+            "name": "base",
+            "type": "tuple"
+          },
+          {
+            "components": [
+              {
+                "internalType": "uint256",
+                "name": "earliestFSPSubmissionTime",
+                "type": "uint256"
+              },
+              {
+                "internalType": "uint256",
+                "name": "tradeoutInterval",
+                "type": "uint256"
+              }
+            ],
+            "internalType": "struct ExpirySpecification",
+            "name": "expirySpec",
+            "type": "tuple"
+          },
+          {
+            "components": [
+              {
+                "internalType": "uint256",
+                "name": "imr",
+                "type": "uint256"
+              },
+              {
+                "internalType": "uint256",
+                "name": "mmr",
+                "type": "uint256"
+              }
+            ],
+            "internalType": "struct MarginSpecification",
+            "name": "marginSpec",
+            "type": "tuple"
+          }
+        ],
+        "internalType": "struct FuturesProductV1",
+        "name": "",
+        "type": "tuple"
+      },
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "name": "registerFutureProduct",
+    "outputs": [
+      {
+        "internalType": "bytes32",
+        "name": "",
+        "type": "bytes32"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "components": [
+          {
+            "components": [
+              {
+                "components": [
+                  {
+                    "internalType": "address",
+                    "name": "builder",
+                    "type": "address"
+                  },
+                  {
+                    "internalType": "string",
+                    "name": "symbol",
+                    "type": "string"
+                  },
+                  {
+                    "internalType": "string",
+                    "name": "description",
+                    "type": "string"
+                  }
+                ],
+                "internalType": "struct ProductMetadata",
+                "name": "metadata",
+                "type": "tuple"
+              },
+              {
+                "components": [
+                  {
+                    "internalType": "address",
+                    "name": "oracleAddress",
+                    "type": "address"
+                  },
+                  {
+                    "internalType": "uint8",
+                    "name": "fsvDecimals",
+                    "type": "uint8"
+                  },
+                  {
+                    "internalType": "int256",
+                    "name": "fspAlpha",
+                    "type": "int256"
+                  },
+                  {
+                    "internalType": "int256",
+                    "name": "fspBeta",
+                    "type": "int256"
+                  },
+                  {
+                    "internalType": "bytes",
+                    "name": "fsvCalldata",
+                    "type": "bytes"
+                  }
+                ],
+                "internalType": "struct OracleSpecification",
+                "name": "oracleSpec",
+                "type": "tuple"
+              },
+              {
+                "internalType": "address",
+                "name": "collateralAsset",
+                "type": "address"
+              },
+              {
+                "internalType": "uint256",
+                "name": "startTime",
+                "type": "uint256"
+              },
+              {
+                "internalType": "uint256",
+                "name": "pointValue",
+                "type": "uint256"
+              },
+              {
+                "internalType": "uint8",
+                "name": "priceDecimals",
+                "type": "uint8"
+              },
+              {
+                "internalType": "string",
+                "name": "extendedMetadata",
+                "type": "string"
+              }
+            ],
+            "internalType": "struct BaseProduct",
+            "name": "base",
+            "type": "tuple"
+          },
+          {
+            "components": [
+              {
+                "internalType": "uint256",
+                "name": "earliestFSPSubmissionTime",
+                "type": "uint256"
+              },
+              {
+                "internalType": "uint256",
+                "name": "tradeoutInterval",
+                "type": "uint256"
+              }
+            ],
+            "internalType": "struct ExpirySpecification",
+            "name": "expirySpec",
+            "type": "tuple"
+          },
+          {
+            "internalType": "int256",
+            "name": "maxPrice",
+            "type": "int256"
+          },
+          {
+            "internalType": "int256",
+            "name": "minPrice",
+            "type": "int256"
+          }
+        ],
+        "internalType": "struct PredictionProductV1",
+        "name": "product",
+        "type": "tuple"
+      },
+      {
+        "internalType": "uint256",
+        "name": "initialBuilderStake",
+        "type": "uint256"
+      }
+    ],
+    "name": "registerPredictionProduct",
+    "outputs": [
+      {
+        "internalType": "bytes32",
+        "name": "",
+        "type": "bytes32"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "bytes32",
+        "name": "productId",
+        "type": "bytes32"
+      }
+    ],
+    "name": "state",
+    "outputs": [
+      {
+        "internalType": "enum ProductState",
+        "name": "",
+        "type": "uint8"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "bytes32",
+        "name": "productId",
+        "type": "bytes32"
+      }
+    ],
+    "name": "typeOf",
+    "outputs": [
+      {
+        "internalType": "enum ProductType",
+        "name": "",
+        "type": "uint8"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  }
+]

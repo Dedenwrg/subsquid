@@ -1,25 +1,6 @@
 export const ABI_JSON = [
     {
         "type": "error",
-        "name": "AdminControlledNotAuthorized",
-        "inputs": [
-            {
-                "type": "bytes4",
-                "name": "selector"
-            },
-            {
-                "type": "address",
-                "name": "sender"
-            }
-        ]
-    },
-    {
-        "type": "error",
-        "name": "AlreadyInitialized",
-        "inputs": []
-    },
-    {
-        "type": "error",
         "name": "DuplicateMarginAccount",
         "inputs": [
             {
@@ -70,6 +51,20 @@ export const ABI_JSON = [
             {
                 "type": "int256",
                 "name": "feeSum"
+            }
+        ]
+    },
+    {
+        "type": "error",
+        "name": "InvalidFieldAccess",
+        "inputs": [
+            {
+                "type": "uint8",
+                "name": "productType"
+            },
+            {
+                "type": "string",
+                "name": "field"
             }
         ]
     },
@@ -129,25 +124,21 @@ export const ABI_JSON = [
     },
     {
         "type": "error",
-        "name": "MAECheckFailed",
+        "name": "InvalidTradePrice",
         "inputs": [
             {
-                "type": "address",
-                "name": "marginAccount"
+                "type": "int256",
+                "name": "price"
             }
         ]
     },
     {
         "type": "error",
-        "name": "MaxFeeRateExceeded",
+        "name": "MAECheckFailed",
         "inputs": [
             {
-                "type": "int256",
-                "name": "feeRate"
-            },
-            {
-                "type": "uint256",
-                "name": "maxFeeRate"
+                "type": "address",
+                "name": "marginAccount"
             }
         ]
     },
@@ -167,8 +158,123 @@ export const ABI_JSON = [
     },
     {
         "type": "error",
-        "name": "QueueIsEmpty",
+        "name": "NotFound",
+        "inputs": [
+            {
+                "type": "string",
+                "name": "parameter"
+            }
+        ]
+    },
+    {
+        "type": "error",
+        "name": "NotImplemented",
+        "inputs": [
+            {
+                "type": "string",
+                "name": "feature"
+            }
+        ]
+    },
+    {
+        "type": "error",
+        "name": "PRBMath_MulDiv18_Overflow",
+        "inputs": [
+            {
+                "type": "uint256",
+                "name": "x"
+            },
+            {
+                "type": "uint256",
+                "name": "y"
+            }
+        ]
+    },
+    {
+        "type": "error",
+        "name": "PRBMath_MulDiv_Overflow",
+        "inputs": [
+            {
+                "type": "uint256",
+                "name": "x"
+            },
+            {
+                "type": "uint256",
+                "name": "y"
+            },
+            {
+                "type": "uint256",
+                "name": "denominator"
+            }
+        ]
+    },
+    {
+        "type": "error",
+        "name": "PRBMath_SD59x18_Div_InputTooSmall",
         "inputs": []
+    },
+    {
+        "type": "error",
+        "name": "PRBMath_SD59x18_Div_Overflow",
+        "inputs": [
+            {
+                "type": "int256",
+                "name": "x"
+            },
+            {
+                "type": "int256",
+                "name": "y"
+            }
+        ]
+    },
+    {
+        "type": "error",
+        "name": "PRBMath_SD59x18_Exp2_InputTooBig",
+        "inputs": [
+            {
+                "type": "int256",
+                "name": "x"
+            }
+        ]
+    },
+    {
+        "type": "error",
+        "name": "PRBMath_SD59x18_Exp_InputTooBig",
+        "inputs": [
+            {
+                "type": "int256",
+                "name": "x"
+            }
+        ]
+    },
+    {
+        "type": "error",
+        "name": "PRBMath_SD59x18_Mul_InputTooSmall",
+        "inputs": []
+    },
+    {
+        "type": "error",
+        "name": "PRBMath_SD59x18_Mul_Overflow",
+        "inputs": [
+            {
+                "type": "int256",
+                "name": "x"
+            },
+            {
+                "type": "int256",
+                "name": "y"
+            }
+        ]
+    },
+    {
+        "type": "error",
+        "name": "SafeCastOverflowedUintToInt",
+        "inputs": [
+            {
+                "type": "uint256",
+                "name": "value"
+            }
+        ]
     },
     {
         "type": "error",
@@ -197,25 +303,116 @@ export const ABI_JSON = [
     {
         "type": "event",
         "anonymous": false,
+        "name": "FeeCollected",
+        "inputs": [
+            {
+                "type": "address",
+                "name": "marginAccountId",
+                "indexed": true
+            },
+            {
+                "type": "address",
+                "name": "collateralAsset",
+                "indexed": true
+            },
+            {
+                "type": "int256",
+                "name": "capitalAmount",
+                "indexed": false
+            },
+            {
+                "type": "uint256",
+                "name": "id",
+                "indexed": false
+            }
+        ]
+    },
+    {
+        "type": "event",
+        "anonymous": false,
+        "name": "FeeDispersed",
+        "inputs": [
+            {
+                "type": "address",
+                "name": "recipient",
+                "indexed": true
+            },
+            {
+                "type": "address",
+                "name": "collateralAsset",
+                "indexed": true
+            },
+            {
+                "type": "int256",
+                "name": "capitalAmount",
+                "indexed": false
+            },
+            {
+                "type": "uint256",
+                "name": "id",
+                "indexed": false
+            }
+        ]
+    },
+    {
+        "type": "event",
+        "anonymous": false,
+        "name": "PositionUpdated",
+        "inputs": [
+            {
+                "type": "address",
+                "name": "marginAccountId",
+                "indexed": true
+            },
+            {
+                "type": "bytes32",
+                "name": "productId",
+                "indexed": true
+            },
+            {
+                "type": "int256",
+                "name": "costBasis",
+                "indexed": false
+            },
+            {
+                "type": "int256",
+                "name": "price",
+                "indexed": false
+            },
+            {
+                "type": "int256",
+                "name": "quantity",
+                "indexed": false
+            },
+            {
+                "type": "uint256",
+                "name": "id",
+                "indexed": false
+            }
+        ]
+    },
+    {
+        "type": "event",
+        "anonymous": false,
         "name": "TradeExecuted",
         "inputs": [
             {
                 "type": "bytes32",
-                "name": "productID",
+                "name": "productId",
                 "indexed": true
             },
             {
                 "type": "address",
-                "name": "protocolID",
-                "indexed": true
-            },
-            {
-                "type": "address",
-                "name": "marginAccount",
+                "name": "protocolId",
                 "indexed": true
             },
             {
                 "type": "uint256",
+                "name": "id",
+                "indexed": false
+            },
+            {
+                "type": "int256",
                 "name": "price",
                 "indexed": false
             },
@@ -223,74 +420,6 @@ export const ABI_JSON = [
                 "type": "uint256",
                 "name": "quantity",
                 "indexed": false
-            }
-        ]
-    },
-    {
-        "type": "function",
-        "name": "MAX_TRADING_FEE_RATE",
-        "constant": true,
-        "stateMutability": "pure",
-        "payable": false,
-        "inputs": [],
-        "outputs": [
-            {
-                "type": "uint256",
-                "name": ""
-            }
-        ]
-    },
-    {
-        "type": "function",
-        "name": "clearingFeeRate",
-        "constant": true,
-        "stateMutability": "view",
-        "payable": false,
-        "inputs": [],
-        "outputs": [
-            {
-                "type": "uint256",
-                "name": ""
-            }
-        ]
-    },
-    {
-        "type": "function",
-        "name": "config",
-        "constant": true,
-        "stateMutability": "view",
-        "payable": false,
-        "inputs": [],
-        "outputs": [
-            {
-                "type": "tuple",
-                "name": "",
-                "components": [
-                    {
-                        "type": "tuple",
-                        "name": "auctionConfig",
-                        "components": [
-                            {
-                                "type": "uint64",
-                                "name": "restorationBuffer"
-                            },
-                            {
-                                "type": "uint256",
-                                "name": "liquidationDuration"
-                            }
-                        ]
-                    },
-                    {
-                        "type": "tuple",
-                        "name": "clearingConfig",
-                        "components": [
-                            {
-                                "type": "uint32",
-                                "name": "clearingFeeRate"
-                            }
-                        ]
-                    }
-                ]
             }
         ]
     },
@@ -306,7 +435,7 @@ export const ABI_JSON = [
                 "name": "productID"
             },
             {
-                "type": "uint256",
+                "type": "int256",
                 "name": "price"
             },
             {
@@ -321,11 +450,11 @@ export const ABI_JSON = [
         "outputs": [
             {
                 "type": "uint256",
-                "name": "clearingFee"
+                "name": ""
             },
             {
                 "type": "int256",
-                "name": "tradingFee"
+                "name": ""
             }
         ]
     },
@@ -341,23 +470,27 @@ export const ABI_JSON = [
                 "components": [
                     {
                         "type": "bytes32",
-                        "name": "productID"
+                        "name": "productId"
                     },
                     {
                         "type": "address",
-                        "name": "protocolID"
+                        "name": "protocolId"
                     },
                     {
                         "type": "uint256",
-                        "name": "tradeID"
+                        "name": "tradeId"
                     },
                     {
-                        "type": "uint256",
+                        "type": "int256",
                         "name": "price"
                     },
                     {
                         "type": "uint256",
                         "name": "timestamp"
+                    },
+                    {
+                        "type": "uint256",
+                        "name": "quantity"
                     },
                     {
                         "type": "address[]",
@@ -368,7 +501,7 @@ export const ABI_JSON = [
                         "name": "quantities"
                     },
                     {
-                        "type": "int256[]",
+                        "type": "int32[]",
                         "name": "feeRates"
                     },
                     {
@@ -377,11 +510,11 @@ export const ABI_JSON = [
                         "components": [
                             {
                                 "type": "address",
-                                "name": "marginAccountID"
+                                "name": "marginAccountId"
                             },
                             {
                                 "type": "address",
-                                "name": "intentAccountID"
+                                "name": "intentAccountId"
                             },
                             {
                                 "type": "bytes32",
@@ -397,14 +530,14 @@ export const ABI_JSON = [
                                     },
                                     {
                                         "type": "address",
-                                        "name": "tradingProtocolID"
+                                        "name": "tradingProtocolId"
                                     },
                                     {
                                         "type": "bytes32",
-                                        "name": "productID"
+                                        "name": "productId"
                                     },
                                     {
-                                        "type": "uint256",
+                                        "type": "int256",
                                         "name": "limitPrice"
                                     },
                                     {
@@ -412,7 +545,7 @@ export const ABI_JSON = [
                                         "name": "quantity"
                                     },
                                     {
-                                        "type": "uint256",
+                                        "type": "uint32",
                                         "name": "maxTradingFeeRate"
                                     },
                                     {
@@ -422,6 +555,10 @@ export const ABI_JSON = [
                                     {
                                         "type": "uint8",
                                         "name": "side"
+                                    },
+                                    {
+                                        "type": "address",
+                                        "name": "referral"
                                     }
                                 ]
                             },
@@ -439,272 +576,5 @@ export const ABI_JSON = [
             }
         ],
         "outputs": []
-    },
-    {
-        "type": "function",
-        "name": "finalizeInitialization",
-        "constant": false,
-        "payable": false,
-        "inputs": [
-            {
-                "type": "address",
-                "name": "marginAccountRegistry"
-            }
-        ],
-        "outputs": []
-    },
-    {
-        "type": "function",
-        "name": "getAdmin",
-        "constant": true,
-        "stateMutability": "view",
-        "payable": false,
-        "inputs": [],
-        "outputs": [
-            {
-                "type": "address",
-                "name": ""
-            }
-        ]
-    },
-    {
-        "type": "function",
-        "name": "getMarginAccountRegistry",
-        "constant": true,
-        "stateMutability": "view",
-        "payable": false,
-        "inputs": [],
-        "outputs": [
-            {
-                "type": "address",
-                "name": ""
-            }
-        ]
-    },
-    {
-        "type": "function",
-        "name": "getProductRegistry",
-        "constant": true,
-        "stateMutability": "view",
-        "payable": false,
-        "inputs": [],
-        "outputs": [
-            {
-                "type": "address",
-                "name": ""
-            }
-        ]
-    },
-    {
-        "type": "function",
-        "name": "getTreasury",
-        "constant": true,
-        "stateMutability": "view",
-        "payable": false,
-        "inputs": [],
-        "outputs": [
-            {
-                "type": "address",
-                "name": ""
-            }
-        ]
-    },
-    {
-        "type": "function",
-        "name": "hashIntent",
-        "constant": true,
-        "stateMutability": "pure",
-        "payable": false,
-        "inputs": [
-            {
-                "type": "tuple",
-                "name": "intent",
-                "components": [
-                    {
-                        "type": "address",
-                        "name": "marginAccountID"
-                    },
-                    {
-                        "type": "address",
-                        "name": "intentAccountID"
-                    },
-                    {
-                        "type": "bytes32",
-                        "name": "hash"
-                    },
-                    {
-                        "type": "tuple",
-                        "name": "data",
-                        "components": [
-                            {
-                                "type": "uint256",
-                                "name": "nonce"
-                            },
-                            {
-                                "type": "address",
-                                "name": "tradingProtocolID"
-                            },
-                            {
-                                "type": "bytes32",
-                                "name": "productID"
-                            },
-                            {
-                                "type": "uint256",
-                                "name": "limitPrice"
-                            },
-                            {
-                                "type": "uint256",
-                                "name": "quantity"
-                            },
-                            {
-                                "type": "uint256",
-                                "name": "maxTradingFeeRate"
-                            },
-                            {
-                                "type": "uint256",
-                                "name": "goodUntil"
-                            },
-                            {
-                                "type": "uint8",
-                                "name": "side"
-                            }
-                        ]
-                    },
-                    {
-                        "type": "bytes",
-                        "name": "signature"
-                    }
-                ]
-            }
-        ],
-        "outputs": [
-            {
-                "type": "bytes32",
-                "name": ""
-            }
-        ]
-    },
-    {
-        "type": "function",
-        "name": "initialize",
-        "constant": false,
-        "payable": false,
-        "inputs": [
-            {
-                "type": "address",
-                "name": "_productRegistry"
-            },
-            {
-                "type": "address",
-                "name": "_treasury"
-            }
-        ],
-        "outputs": []
-    },
-    {
-        "type": "function",
-        "name": "isAdminActive",
-        "constant": true,
-        "stateMutability": "view",
-        "payable": false,
-        "inputs": [],
-        "outputs": [
-            {
-                "type": "bool",
-                "name": ""
-            }
-        ]
-    },
-    {
-        "type": "function",
-        "name": "setActive",
-        "constant": false,
-        "payable": false,
-        "inputs": [
-            {
-                "type": "bool",
-                "name": "active"
-            }
-        ],
-        "outputs": []
-    },
-    {
-        "type": "function",
-        "name": "setAdmin",
-        "constant": false,
-        "payable": false,
-        "inputs": [
-            {
-                "type": "address",
-                "name": "newAdmin"
-            }
-        ],
-        "outputs": []
-    },
-    {
-        "type": "function",
-        "name": "setConfig",
-        "constant": false,
-        "payable": false,
-        "inputs": [
-            {
-                "type": "tuple",
-                "name": "_config",
-                "components": [
-                    {
-                        "type": "tuple",
-                        "name": "auctionConfig",
-                        "components": [
-                            {
-                                "type": "uint64",
-                                "name": "restorationBuffer"
-                            },
-                            {
-                                "type": "uint256",
-                                "name": "liquidationDuration"
-                            }
-                        ]
-                    },
-                    {
-                        "type": "tuple",
-                        "name": "clearingConfig",
-                        "components": [
-                            {
-                                "type": "uint32",
-                                "name": "clearingFeeRate"
-                            }
-                        ]
-                    }
-                ]
-            }
-        ],
-        "outputs": []
-    },
-    {
-        "type": "function",
-        "name": "setTreasury",
-        "constant": false,
-        "payable": false,
-        "inputs": [
-            {
-                "type": "address",
-                "name": "newTreasury"
-            }
-        ],
-        "outputs": []
-    },
-    {
-        "type": "function",
-        "name": "version",
-        "constant": true,
-        "stateMutability": "pure",
-        "payable": false,
-        "inputs": [],
-        "outputs": [
-            {
-                "type": "string",
-                "name": ""
-            }
-        ]
     }
 ]

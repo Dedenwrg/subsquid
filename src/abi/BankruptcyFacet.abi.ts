@@ -11,6 +11,11 @@ export const ABI_JSON = [
     },
     {
         "type": "error",
+        "name": "EVWMA_NotInitialized",
+        "inputs": []
+    },
+    {
+        "type": "error",
         "name": "InvalidParameter",
         "inputs": [
             {
@@ -49,11 +54,11 @@ export const ABI_JSON = [
     },
     {
         "type": "error",
-        "name": "NoTradeData",
+        "name": "PRBMath_SD59x18_IntoUint256_Underflow",
         "inputs": [
             {
-                "type": "bytes32",
-                "name": "productId"
+                "type": "int256",
+                "name": "x"
             }
         ]
     },
@@ -61,6 +66,33 @@ export const ABI_JSON = [
         "type": "error",
         "name": "QueueIsEmpty",
         "inputs": []
+    },
+    {
+        "type": "event",
+        "anonymous": false,
+        "name": "LossMutualized",
+        "inputs": [
+            {
+                "type": "address",
+                "name": "bankruptAccount",
+                "indexed": true
+            },
+            {
+                "type": "address",
+                "name": "collateralToken",
+                "indexed": true
+            },
+            {
+                "type": "address",
+                "name": "caller",
+                "indexed": false
+            },
+            {
+                "type": "int256",
+                "name": "lossAmount",
+                "indexed": false
+            }
+        ]
     },
     {
         "type": "function",

@@ -285,23 +285,27 @@ export const ABI_JSON = [
                 "components": [
                     {
                         "type": "bytes32",
-                        "name": "productID"
+                        "name": "productId"
                     },
                     {
                         "type": "address",
-                        "name": "protocolID"
+                        "name": "protocolId"
                     },
                     {
                         "type": "uint256",
-                        "name": "tradeID"
+                        "name": "tradeId"
                     },
                     {
-                        "type": "uint256",
+                        "type": "int256",
                         "name": "price"
                     },
                     {
                         "type": "uint256",
                         "name": "timestamp"
+                    },
+                    {
+                        "type": "uint256",
+                        "name": "quantity"
                     },
                     {
                         "type": "address[]",
@@ -312,7 +316,7 @@ export const ABI_JSON = [
                         "name": "quantities"
                     },
                     {
-                        "type": "int256[]",
+                        "type": "int32[]",
                         "name": "feeRates"
                     },
                     {
@@ -321,11 +325,11 @@ export const ABI_JSON = [
                         "components": [
                             {
                                 "type": "address",
-                                "name": "marginAccountID"
+                                "name": "marginAccountId"
                             },
                             {
                                 "type": "address",
-                                "name": "intentAccountID"
+                                "name": "intentAccountId"
                             },
                             {
                                 "type": "bytes32",
@@ -341,14 +345,14 @@ export const ABI_JSON = [
                                     },
                                     {
                                         "type": "address",
-                                        "name": "tradingProtocolID"
+                                        "name": "tradingProtocolId"
                                     },
                                     {
                                         "type": "bytes32",
-                                        "name": "productID"
+                                        "name": "productId"
                                     },
                                     {
-                                        "type": "uint256",
+                                        "type": "int256",
                                         "name": "limitPrice"
                                     },
                                     {
@@ -356,7 +360,7 @@ export const ABI_JSON = [
                                         "name": "quantity"
                                     },
                                     {
-                                        "type": "uint256",
+                                        "type": "uint32",
                                         "name": "maxTradingFeeRate"
                                     },
                                     {
@@ -366,6 +370,10 @@ export const ABI_JSON = [
                                     {
                                         "type": "uint8",
                                         "name": "side"
+                                    },
+                                    {
+                                        "type": "address",
+                                        "name": "referral"
                                     }
                                 ]
                             },
@@ -396,23 +404,27 @@ export const ABI_JSON = [
                 "components": [
                     {
                         "type": "bytes32",
-                        "name": "productID"
+                        "name": "productId"
                     },
                     {
                         "type": "address",
-                        "name": "protocolID"
+                        "name": "protocolId"
                     },
                     {
                         "type": "uint256",
-                        "name": "tradeID"
+                        "name": "tradeId"
                     },
                     {
-                        "type": "uint256",
+                        "type": "int256",
                         "name": "price"
                     },
                     {
                         "type": "uint256",
                         "name": "timestamp"
+                    },
+                    {
+                        "type": "uint256",
+                        "name": "quantity"
                     },
                     {
                         "type": "address[]",
@@ -423,7 +435,7 @@ export const ABI_JSON = [
                         "name": "quantities"
                     },
                     {
-                        "type": "int256[]",
+                        "type": "int32[]",
                         "name": "feeRates"
                     },
                     {
@@ -432,11 +444,11 @@ export const ABI_JSON = [
                         "components": [
                             {
                                 "type": "address",
-                                "name": "marginAccountID"
+                                "name": "marginAccountId"
                             },
                             {
                                 "type": "address",
-                                "name": "intentAccountID"
+                                "name": "intentAccountId"
                             },
                             {
                                 "type": "bytes32",
@@ -452,14 +464,14 @@ export const ABI_JSON = [
                                     },
                                     {
                                         "type": "address",
-                                        "name": "tradingProtocolID"
+                                        "name": "tradingProtocolId"
                                     },
                                     {
                                         "type": "bytes32",
-                                        "name": "productID"
+                                        "name": "productId"
                                     },
                                     {
-                                        "type": "uint256",
+                                        "type": "int256",
                                         "name": "limitPrice"
                                     },
                                     {
@@ -467,7 +479,7 @@ export const ABI_JSON = [
                                         "name": "quantity"
                                     },
                                     {
-                                        "type": "uint256",
+                                        "type": "uint32",
                                         "name": "maxTradingFeeRate"
                                     },
                                     {
@@ -477,6 +489,10 @@ export const ABI_JSON = [
                                     {
                                         "type": "uint8",
                                         "name": "side"
+                                    },
+                                    {
+                                        "type": "address",
+                                        "name": "referral"
                                     }
                                 ]
                             },
@@ -707,6 +723,19 @@ export const ABI_JSON = [
                 "name": ""
             }
         ]
+    },
+    {
+        "type": "function",
+        "name": "updateClearingAddress",
+        "constant": false,
+        "payable": false,
+        "inputs": [
+            {
+                "type": "address",
+                "name": "newClearingAddress"
+            }
+        ],
+        "outputs": []
     },
     {
         "type": "function",

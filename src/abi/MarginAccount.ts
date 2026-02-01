@@ -5,34 +5,43 @@ import {ABI_JSON} from './MarginAccount.abi'
 export const abi = new ethers.Interface(ABI_JSON);
 
 export const events = {
-    FeeCollected: new LogEvent<([marginAccountID: string, capitalAmount: bigint] & {marginAccountID: string, capitalAmount: bigint})>(
-        abi, '0x9cece6e5319f3ec44f6adc2261557c73eb9c2d2e661efe8b1385054f68c628b6'
-    ),
-    FeeDispersed: new LogEvent<([recipient: string, capitalAmount: bigint] & {recipient: string, capitalAmount: bigint})>(
-        abi, '0xd9d6e400d261dbba0fc9ca4b3f88845b23264de027b9d75896a570487209773d'
+    Deposit: new LogEvent<([user: string, amount: bigint] & {user: string, amount: bigint})>(
+        abi, '0xe1fffcc4923d04b559f4d29a8bfc6cda04eb5b0d3c460751c2402c5c5cc9109c'
     ),
     Initialized: new LogEvent<([version: bigint] & {version: bigint})>(
         abi, '0xc7f505b2f371ae2175ee4913f4499e1f2633a7b5936321eed1cdaeb6115181d2'
     ),
-    PositionUpdated: new LogEvent<([marginAccountID: string, positionId: string, totalQuantity: bigint, costBasis: bigint] & {marginAccountID: string, positionId: string, totalQuantity: bigint, costBasis: bigint})>(
-        abi, '0x7bae7103f921e5aaaa3f3bd61d5867903a3dc5ab4b91f7857080d8e548302979'
+    IntentAuthorized: new LogEvent<([marginAccountId: string, intentAccount: string] & {marginAccountId: string, intentAccount: string})>(
+        abi, '0x89a5329232b6f6ec08af805aa3b0b7a874301482cdbf1f02030875842a1da813'
+    ),
+    IntentRevoked: new LogEvent<([marginAccountId: string, intentAccount: string] & {marginAccountId: string, intentAccount: string})>(
+        abi, '0xdbafe28567e6f1efc7af5e9e18f8a6c7dc3eb896d09eaa69ab5a8b7768882978'
+    ),
+    OwnershipTransferred: new LogEvent<([previousOwner: string, newOwner: string] & {previousOwner: string, newOwner: string})>(
+        abi, '0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0'
+    ),
+    Withdraw: new LogEvent<([user: string, amount: bigint] & {user: string, amount: bigint})>(
+        abi, '0x884edad9ce6fa2440d8a54cc123490eb96d2768479d49ff9c7366125a9424364'
     ),
 }
 
 export const functions = {
+    addAllowed: new Func<[addr: string], {addr: string}, []>(
+        abi, '0xcb8523c6'
+    ),
+    admin: new Func<[], {}, string>(
+        abi, '0xf851a440'
+    ),
+    allowed: new Func<[], {}, Array<string>>(
+        abi, '0x19e1fca4'
+    ),
     authorize: new Func<[intentAccount: string], {intentAccount: string}, []>(
         abi, '0xb6a5d7de'
     ),
-    authorized: new Func<[marginAccount: string, intentAccount: string], {marginAccount: string, intentAccount: string}, boolean>(
+    authorized: new Func<[marginAccountId: string, intentAccount: string], {marginAccountId: string, intentAccount: string}, boolean>(
         abi, '0x8e6cc087'
     ),
-    batchMaeCheck: new Func<[marginAccount: string, settlements: Array<([positionId: string, quantity: bigint, price: bigint] & {positionId: string, quantity: bigint, price: bigint})>, markPriceIfSettled: Array<bigint>], {marginAccount: string, settlements: Array<([positionId: string, quantity: bigint, price: bigint] & {positionId: string, quantity: bigint, price: bigint})>, markPriceIfSettled: Array<bigint>}, ([checkPassed: boolean, maeAfter: bigint, mmuAfter: bigint] & {checkPassed: boolean, maeAfter: bigint, mmuAfter: bigint})>(
-        abi, '0x9ede1c71'
-    ),
-    batchSettle: new Func<[marginAccountID: string, settlements: Array<([positionId: string, quantity: bigint, price: bigint] & {positionId: string, quantity: bigint, price: bigint})>], {marginAccountID: string, settlements: Array<([positionId: string, quantity: bigint, price: bigint] & {positionId: string, quantity: bigint, price: bigint})>}, boolean>(
-        abi, '0x141da77e'
-    ),
-    capital: new Func<[marginAccount: string], {marginAccount: string}, bigint>(
+    capital: new Func<[marginAccountId: string], {marginAccountId: string}, bigint>(
         abi, '0x7905c05f'
     ),
     clearing: new Func<[], {}, string>(
@@ -41,95 +50,81 @@ export const functions = {
     collateralAsset: new Func<[], {}, string>(
         abi, '0xaabaecd6'
     ),
-    collateralToken: new Func<[], {}, string>(
-        abi, '0xb2016bd4'
-    ),
-    collectFee: new Func<[marginAccount: string, capitalAmount: bigint], {marginAccount: string, capitalAmount: bigint}, []>(
-        abi, '0xf51461f0'
-    ),
     deposit: new Func<[amount: bigint], {amount: bigint}, []>(
         abi, '0xb6b55f25'
     ),
-    disperseFees: new Func<[recipients: Array<string>, capitalAmounts: Array<bigint>], {recipients: Array<string>, capitalAmounts: Array<bigint>}, []>(
-        abi, '0xdc6427fd'
+    depositFor: new Func<[marginAccountId: string, amount: bigint], {marginAccountId: string, amount: bigint}, []>(
+        abi, '0x2f4f21e2'
     ),
-    estimateLiquidationPrice: new Func<[marginAccountId: string, productId: string, price: bigint, quantity: bigint], {marginAccountId: string, productId: string, price: bigint, quantity: bigint}, bigint>(
-        abi, '0x9e3f89a9'
+    initialize: new Func<[clearing_: string], {clearing_: string}, []>(
+        abi, '0xc4d66de8'
     ),
-    estimateLiquidationPriceForPosition: new Func<[marginAccountId: string, positionId: string], {marginAccountId: string, positionId: string}, bigint>(
-        abi, '0xab014bb7'
-    ),
-    initialize: new Func<[_collateralToken: string, _valuation: string, _productRegistry: string, _clearing: string], {_collateralToken: string, _valuation: string, _productRegistry: string, _clearing: string}, []>(
-        abi, '0xf8c8765e'
-    ),
-    mae: new Func<[marginAccount: string], {marginAccount: string}, bigint>(
+    mae: new Func<[marginAccountId: string], {marginAccountId: string}, bigint>(
         abi, '0xa27e1329'
     ),
-    maeAndMmuAfterBatchTrade: new Func<[marginAccount: string, settlements: Array<([positionId: string, quantity: bigint, price: bigint] & {positionId: string, quantity: bigint, price: bigint})>, markPriceIfSettled: Array<bigint>], {marginAccount: string, settlements: Array<([positionId: string, quantity: bigint, price: bigint] & {positionId: string, quantity: bigint, price: bigint})>, markPriceIfSettled: Array<bigint>}, ([maeAfter: bigint, mmuAfter: bigint] & {maeAfter: bigint, mmuAfter: bigint})>(
-        abi, '0x2470ca1b'
-    ),
-    maeCheck: new Func<[marginAccount: string, settlement: ([positionId: string, quantity: bigint, price: bigint] & {positionId: string, quantity: bigint, price: bigint}), markPriceIfSettled: bigint], {marginAccount: string, settlement: ([positionId: string, quantity: bigint, price: bigint] & {positionId: string, quantity: bigint, price: bigint}), markPriceIfSettled: bigint}, ([checkPassed: boolean, maeAfter: bigint, mmuAfter: bigint] & {checkPassed: boolean, maeAfter: bigint, mmuAfter: bigint})>(
-        abi, '0xeca125e9'
-    ),
-    mma: new Func<[marginAccount: string], {marginAccount: string}, bigint>(
+    mma: new Func<[marginAccountId: string], {marginAccountId: string}, bigint>(
         abi, '0x7aec0b5a'
     ),
-    mmu: new Func<[marginAccount: string], {marginAccount: string}, bigint>(
+    mmu: new Func<[marginAccountId: string], {marginAccountId: string}, bigint>(
         abi, '0x3b039358'
     ),
-    pnl: new Func<[marginAccount: string], {marginAccount: string}, bigint>(
+    owner: new Func<[], {}, string>(
+        abi, '0x8da5cb5b'
+    ),
+    pnl: new Func<[marginAccountId: string], {marginAccountId: string}, bigint>(
         abi, '0x2b316a0b'
     ),
-    positionAge: new Func<[marginAccountId: string, positionId: string], {marginAccountId: string, positionId: string}, bigint>(
-        abi, '0x8b5abf72'
-    ),
-    positionCount: new Func<[marginAccount: string], {marginAccount: string}, bigint>(
+    positionCount: new Func<[marginAccountId: string], {marginAccountId: string}, bigint>(
         abi, '0x42fd3880'
     ),
-    positionData: new Func<[marginAccount: string, positionId: string], {marginAccount: string, positionId: string}, ([positionId: string, quantity: bigint, costBasis: bigint, maintenanceMargin: bigint, pnl: bigint] & {positionId: string, quantity: bigint, costBasis: bigint, maintenanceMargin: bigint, pnl: bigint})>(
+    positionData: new Func<[marginAccountId: string, productId: string], {marginAccountId: string, productId: string}, ([productId: string, quantity: bigint, costBasis: bigint, maintenanceMargin: bigint, pnl: bigint] & {productId: string, quantity: bigint, costBasis: bigint, maintenanceMargin: bigint, pnl: bigint})>(
         abi, '0x0cc7b24f'
     ),
-    positionPnL: new Func<[marginAccount: string, positionId: string], {marginAccount: string, positionId: string}, bigint>(
+    positionPnL: new Func<[marginAccount: string, productId: string], {marginAccount: string, productId: string}, bigint>(
         abi, '0xb9508b32'
     ),
-    positionQuantity: new Func<[marginAccount: string, positionId: string], {marginAccount: string, positionId: string}, bigint>(
+    positionQuantity: new Func<[marginAccountId: string, productId: string], {marginAccountId: string, productId: string}, bigint>(
         abi, '0x91208b69'
     ),
-    positions: new Func<[marginAccount: string], {marginAccount: string}, Array<string>>(
+    positions: new Func<[marginAccountId: string], {marginAccountId: string}, Array<string>>(
         abi, '0x55f57510'
     ),
-    productRegistry: new Func<[], {}, string>(
-        abi, '0xfff218c3'
+    removeAllowed: new Func<[addr: string], {addr: string}, []>(
+        abi, '0x6470db2f'
+    ),
+    renounceOwnership: new Func<[], {}, []>(
+        abi, '0x715018a6'
     ),
     revokeAuthorization: new Func<[intentAccount: string], {intentAccount: string}, []>(
         abi, '0xb48028e3'
     ),
-    settle: new Func<[marginAccount: string, intentAccount: string, settlement: ([positionId: string, quantity: bigint, price: bigint] & {positionId: string, quantity: bigint, price: bigint})], {marginAccount: string, intentAccount: string, settlement: ([positionId: string, quantity: bigint, price: bigint] & {positionId: string, quantity: bigint, price: bigint})}, boolean>(
-        abi, '0xf6c0447f'
-    ),
-    valuation: new Func<[], {}, string>(
-        abi, '0x21a7cfe4'
+    transferOwnership: new Func<[newOwner: string], {newOwner: string}, []>(
+        abi, '0xf2fde38b'
     ),
     withdraw: new Func<[amount: bigint], {amount: bigint}, []>(
         abi, '0x2e1a7d4d'
     ),
-    withdrawable: new Func<[marginAccount: string], {marginAccount: string}, bigint>(
+    withdrawable: new Func<[marginAccountId: string], {marginAccountId: string}, bigint>(
         abi, '0xce513b6f'
     ),
 }
 
 export class Contract extends ContractBase {
 
-    authorized(marginAccount: string, intentAccount: string): Promise<boolean> {
-        return this.eth_call(functions.authorized, [marginAccount, intentAccount])
+    admin(): Promise<string> {
+        return this.eth_call(functions.admin, [])
     }
 
-    batchMaeCheck(marginAccount: string, settlements: Array<([positionId: string, quantity: bigint, price: bigint] & {positionId: string, quantity: bigint, price: bigint})>, markPriceIfSettled: Array<bigint>): Promise<([checkPassed: boolean, maeAfter: bigint, mmuAfter: bigint] & {checkPassed: boolean, maeAfter: bigint, mmuAfter: bigint})> {
-        return this.eth_call(functions.batchMaeCheck, [marginAccount, settlements, markPriceIfSettled])
+    allowed(): Promise<Array<string>> {
+        return this.eth_call(functions.allowed, [])
     }
 
-    capital(marginAccount: string): Promise<bigint> {
-        return this.eth_call(functions.capital, [marginAccount])
+    authorized(marginAccountId: string, intentAccount: string): Promise<boolean> {
+        return this.eth_call(functions.authorized, [marginAccountId, intentAccount])
+    }
+
+    capital(marginAccountId: string): Promise<bigint> {
+        return this.eth_call(functions.capital, [marginAccountId])
     }
 
     clearing(): Promise<string> {
@@ -140,75 +135,47 @@ export class Contract extends ContractBase {
         return this.eth_call(functions.collateralAsset, [])
     }
 
-    collateralToken(): Promise<string> {
-        return this.eth_call(functions.collateralToken, [])
+    mae(marginAccountId: string): Promise<bigint> {
+        return this.eth_call(functions.mae, [marginAccountId])
     }
 
-    estimateLiquidationPrice(marginAccountId: string, productId: string, price: bigint, quantity: bigint): Promise<bigint> {
-        return this.eth_call(functions.estimateLiquidationPrice, [marginAccountId, productId, price, quantity])
+    mma(marginAccountId: string): Promise<bigint> {
+        return this.eth_call(functions.mma, [marginAccountId])
     }
 
-    estimateLiquidationPriceForPosition(marginAccountId: string, positionId: string): Promise<bigint> {
-        return this.eth_call(functions.estimateLiquidationPriceForPosition, [marginAccountId, positionId])
+    mmu(marginAccountId: string): Promise<bigint> {
+        return this.eth_call(functions.mmu, [marginAccountId])
     }
 
-    mae(marginAccount: string): Promise<bigint> {
-        return this.eth_call(functions.mae, [marginAccount])
+    owner(): Promise<string> {
+        return this.eth_call(functions.owner, [])
     }
 
-    maeAndMmuAfterBatchTrade(marginAccount: string, settlements: Array<([positionId: string, quantity: bigint, price: bigint] & {positionId: string, quantity: bigint, price: bigint})>, markPriceIfSettled: Array<bigint>): Promise<([maeAfter: bigint, mmuAfter: bigint] & {maeAfter: bigint, mmuAfter: bigint})> {
-        return this.eth_call(functions.maeAndMmuAfterBatchTrade, [marginAccount, settlements, markPriceIfSettled])
+    pnl(marginAccountId: string): Promise<bigint> {
+        return this.eth_call(functions.pnl, [marginAccountId])
     }
 
-    maeCheck(marginAccount: string, settlement: ([positionId: string, quantity: bigint, price: bigint] & {positionId: string, quantity: bigint, price: bigint}), markPriceIfSettled: bigint): Promise<([checkPassed: boolean, maeAfter: bigint, mmuAfter: bigint] & {checkPassed: boolean, maeAfter: bigint, mmuAfter: bigint})> {
-        return this.eth_call(functions.maeCheck, [marginAccount, settlement, markPriceIfSettled])
+    positionCount(marginAccountId: string): Promise<bigint> {
+        return this.eth_call(functions.positionCount, [marginAccountId])
     }
 
-    mma(marginAccount: string): Promise<bigint> {
-        return this.eth_call(functions.mma, [marginAccount])
+    positionData(marginAccountId: string, productId: string): Promise<([productId: string, quantity: bigint, costBasis: bigint, maintenanceMargin: bigint, pnl: bigint] & {productId: string, quantity: bigint, costBasis: bigint, maintenanceMargin: bigint, pnl: bigint})> {
+        return this.eth_call(functions.positionData, [marginAccountId, productId])
     }
 
-    mmu(marginAccount: string): Promise<bigint> {
-        return this.eth_call(functions.mmu, [marginAccount])
+    positionPnL(marginAccount: string, productId: string): Promise<bigint> {
+        return this.eth_call(functions.positionPnL, [marginAccount, productId])
     }
 
-    pnl(marginAccount: string): Promise<bigint> {
-        return this.eth_call(functions.pnl, [marginAccount])
+    positionQuantity(marginAccountId: string, productId: string): Promise<bigint> {
+        return this.eth_call(functions.positionQuantity, [marginAccountId, productId])
     }
 
-    positionAge(marginAccountId: string, positionId: string): Promise<bigint> {
-        return this.eth_call(functions.positionAge, [marginAccountId, positionId])
+    positions(marginAccountId: string): Promise<Array<string>> {
+        return this.eth_call(functions.positions, [marginAccountId])
     }
 
-    positionCount(marginAccount: string): Promise<bigint> {
-        return this.eth_call(functions.positionCount, [marginAccount])
-    }
-
-    positionData(marginAccount: string, positionId: string): Promise<([positionId: string, quantity: bigint, costBasis: bigint, maintenanceMargin: bigint, pnl: bigint] & {positionId: string, quantity: bigint, costBasis: bigint, maintenanceMargin: bigint, pnl: bigint})> {
-        return this.eth_call(functions.positionData, [marginAccount, positionId])
-    }
-
-    positionPnL(marginAccount: string, positionId: string): Promise<bigint> {
-        return this.eth_call(functions.positionPnL, [marginAccount, positionId])
-    }
-
-    positionQuantity(marginAccount: string, positionId: string): Promise<bigint> {
-        return this.eth_call(functions.positionQuantity, [marginAccount, positionId])
-    }
-
-    positions(marginAccount: string): Promise<Array<string>> {
-        return this.eth_call(functions.positions, [marginAccount])
-    }
-
-    productRegistry(): Promise<string> {
-        return this.eth_call(functions.productRegistry, [])
-    }
-
-    valuation(): Promise<string> {
-        return this.eth_call(functions.valuation, [])
-    }
-
-    withdrawable(marginAccount: string): Promise<bigint> {
-        return this.eth_call(functions.withdrawable, [marginAccount])
+    withdrawable(marginAccountId: string): Promise<bigint> {
+        return this.eth_call(functions.withdrawable, [marginAccountId])
     }
 }

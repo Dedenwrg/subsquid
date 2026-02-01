@@ -5,8 +5,9 @@ import { blockProcessor } from './block.processors';
 import { collectBlock } from './handlers/block.handler';
 import { collectTransaction } from './handlers/transaction.handler';
 import { collectAutonityEvents } from './handlers/autonity.handler';
+import { collectTokenTransfer } from './handlers/tokenTransfer.handler';
 
-import { Block, Transaction, AutonityEvent } from './model';
+import { Block, Transaction, AutonityEvent, TokenTransfer, Token } from './model';
 
 blockProcessor.run(
   new TypeormDatabase({
@@ -17,28 +18,32 @@ blockProcessor.run(
     const blocks: Block[] = [];
     const transactions: Transaction[] = [];
     const autonityEvents: AutonityEvent[] = [];
+    const tokenTransfers: TokenTransfer[] = [];
+    const tokenCache = new Map<string, Token | null>();
+
     for (const block of ctx.blocks) {
       blocks.push(collectBlock(block));
+
       for (const tx of block.transactions) {
-        transactions.push(collectTransaction(block, tx));
+        const txModel = collectTransaction(block, tx);
+        transactions.push(txModel);
 
         const events = collectAutonityEvents(block, tx);
-        if (events.length > 0) {
-          autonityEvents.push(...events);
-        }
+        if (events.length > 0) autonityEvents.push(...events);
+      }
+
+      // === ERC20 Transfers ===
+      for (const log of block.logs) {
+        if (!log.transactionHash) continue;
+
+        const transfer = await collectTokenTransfer(block, log, ctx, tokenCache);
+        if (transfer) tokenTransfers.push(transfer);
       }
     }
 
-    if (blocks.length > 0) {
-      await ctx.store.save(blocks);
-    }
-
-    if (transactions.length > 0) {
-      await ctx.store.save(transactions);
-    }
-
-    if (autonityEvents.length > 0) {
-      await ctx.store.save(autonityEvents);
-    }
+    if (blocks.length) await ctx.store.save(blocks);
+    if (transactions.length) await ctx.store.save(transactions);
+    if (autonityEvents.length) await ctx.store.save(autonityEvents);
+    if (tokenTransfers.length) await ctx.store.save(tokenTransfers);
   },
 );

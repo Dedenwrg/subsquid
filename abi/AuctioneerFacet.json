@@ -10,6 +10,11 @@
     "type": "error"
   },
   {
+    "inputs": [],
+    "name": "EVWMA_NotInitialized",
+    "type": "error"
+  },
+  {
     "inputs": [
       {
         "internalType": "string",
@@ -60,12 +65,12 @@
   {
     "inputs": [
       {
-        "internalType": "bytes32",
-        "name": "productId",
-        "type": "bytes32"
+        "internalType": "SD59x18",
+        "name": "x",
+        "type": "int256"
       }
     ],
-    "name": "NoTradeData",
+    "name": "PRBMath_SD59x18_IntoUint256_Underflow",
     "type": "error"
   },
   {

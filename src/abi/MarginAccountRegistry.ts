@@ -23,32 +23,23 @@ export const functions = {
     UPGRADE_INTERFACE_VERSION: new Func<[], {}, string>(
         abi, '0xad3cb1cc'
     ),
+    beacon: new Func<[], {}, string>(
+        abi, '0x59659e90'
+    ),
     clearing: new Func<[], {}, string>(
         abi, '0x027cb7c6'
-    ),
-    getAdmin: new Func<[], {}, string>(
-        abi, '0x6e9960c3'
     ),
     getMarginAccount: new Func<[collateralAsset: string], {collateralAsset: string}, string>(
         abi, '0x002bc164'
     ),
-    initialize: new Func<[_clearing: string, _valuation: string, _productRegistry: string, beacon_: string], {_clearing: string, _valuation: string, _productRegistry: string, beacon_: string}, []>(
-        abi, '0xf8c8765e'
+    initialize: new Func<[clearing_: string, beacon_: string], {clearing_: string, beacon_: string}, []>(
+        abi, '0x485cc955'
     ),
     initializeMarginAccount: new Func<[collateralAsset: string], {collateralAsset: string}, string>(
         abi, '0x166fdb38'
     ),
-    isAdminActive: new Func<[], {}, boolean>(
-        abi, '0x8ea36936'
-    ),
-    marginAccounts: new Func<[_: string], {}, string>(
-        abi, '0x9c498bc3'
-    ),
     owner: new Func<[], {}, string>(
         abi, '0x8da5cb5b'
-    ),
-    productRegistry: new Func<[], {}, string>(
-        abi, '0xfff218c3'
     ),
     proxiableUUID: new Func<[], {}, string>(
         abi, '0x52d1902d'
@@ -56,20 +47,11 @@ export const functions = {
     renounceOwnership: new Func<[], {}, []>(
         abi, '0x715018a6'
     ),
-    setActive: new Func<[active: boolean], {active: boolean}, []>(
-        abi, '0xacec338a'
-    ),
-    setAdmin: new Func<[newAdmin: string], {newAdmin: string}, []>(
-        abi, '0x704b6c02'
-    ),
     transferOwnership: new Func<[newOwner: string], {newOwner: string}, []>(
         abi, '0xf2fde38b'
     ),
     upgradeToAndCall: new Func<[newImplementation: string, data: string], {newImplementation: string, data: string}, []>(
         abi, '0x4f1ef286'
-    ),
-    valuation: new Func<[], {}, string>(
-        abi, '0x21a7cfe4'
     ),
 }
 
@@ -79,39 +61,23 @@ export class Contract extends ContractBase {
         return this.eth_call(functions.UPGRADE_INTERFACE_VERSION, [])
     }
 
-    clearing(): Promise<string> {
-        return this.eth_call(functions.clearing, [])
+    beacon(): Promise<string> {
+        return this.eth_call(functions.beacon, [])
     }
 
-    getAdmin(): Promise<string> {
-        return this.eth_call(functions.getAdmin, [])
+    clearing(): Promise<string> {
+        return this.eth_call(functions.clearing, [])
     }
 
     getMarginAccount(collateralAsset: string): Promise<string> {
         return this.eth_call(functions.getMarginAccount, [collateralAsset])
     }
 
-    isAdminActive(): Promise<boolean> {
-        return this.eth_call(functions.isAdminActive, [])
-    }
-
-    marginAccounts(arg0: string): Promise<string> {
-        return this.eth_call(functions.marginAccounts, [arg0])
-    }
-
     owner(): Promise<string> {
         return this.eth_call(functions.owner, [])
     }
 
-    productRegistry(): Promise<string> {
-        return this.eth_call(functions.productRegistry, [])
-    }
-
     proxiableUUID(): Promise<string> {
         return this.eth_call(functions.proxiableUUID, [])
-    }
-
-    valuation(): Promise<string> {
-        return this.eth_call(functions.valuation, [])
     }
 }

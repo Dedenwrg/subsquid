@@ -1,0 +1,653 @@
+[
+  {
+    "inputs": [],
+    "name": "EVWMA_NotInitialized",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "balance",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "required",
+        "type": "uint256"
+      }
+    ],
+    "name": "InsufficientBalance",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "enum ProductType",
+        "name": "productType",
+        "type": "uint8"
+      },
+      {
+        "internalType": "string",
+        "name": "field",
+        "type": "string"
+      }
+    ],
+    "name": "InvalidFieldAccess",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "string",
+        "name": "parameter",
+        "type": "string"
+      }
+    ],
+    "name": "NotFound",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "string",
+        "name": "feature",
+        "type": "string"
+      }
+    ],
+    "name": "NotImplemented",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "x",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "y",
+        "type": "uint256"
+      }
+    ],
+    "name": "PRBMath_MulDiv18_Overflow",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "x",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "y",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "denominator",
+        "type": "uint256"
+      }
+    ],
+    "name": "PRBMath_MulDiv_Overflow",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "PRBMath_SD59x18_Div_InputTooSmall",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "SD59x18",
+        "name": "x",
+        "type": "int256"
+      },
+      {
+        "internalType": "SD59x18",
+        "name": "y",
+        "type": "int256"
+      }
+    ],
+    "name": "PRBMath_SD59x18_Div_Overflow",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "SD59x18",
+        "name": "x",
+        "type": "int256"
+      }
+    ],
+    "name": "PRBMath_SD59x18_Exp2_InputTooBig",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "SD59x18",
+        "name": "x",
+        "type": "int256"
+      }
+    ],
+    "name": "PRBMath_SD59x18_Exp_InputTooBig",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "PRBMath_SD59x18_Mul_InputTooSmall",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "SD59x18",
+        "name": "x",
+        "type": "int256"
+      },
+      {
+        "internalType": "SD59x18",
+        "name": "y",
+        "type": "int256"
+      }
+    ],
+    "name": "PRBMath_SD59x18_Mul_Overflow",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "int256",
+        "name": "value",
+        "type": "int256"
+      }
+    ],
+    "name": "SafeCastOverflowedIntToUint",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "value",
+        "type": "uint256"
+      }
+    ],
+    "name": "SafeCastOverflowedUintToInt",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      }
+    ],
+    "name": "Unauthorized",
+    "type": "error"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "marginAccountId",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "collateralAsset",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "int256",
+        "name": "capitalAmount",
+        "type": "int256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "id",
+        "type": "uint256"
+      }
+    ],
+    "name": "FeeCollected",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "recipient",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "collateralAsset",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "int256",
+        "name": "capitalAmount",
+        "type": "int256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "id",
+        "type": "uint256"
+      }
+    ],
+    "name": "FeeDispersed",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "marginAccountId",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "bytes32",
+        "name": "productId",
+        "type": "bytes32"
+      },
+      {
+        "indexed": false,
+        "internalType": "int256",
+        "name": "costBasis",
+        "type": "int256"
+      },
+      {
+        "indexed": false,
+        "internalType": "int256",
+        "name": "price",
+        "type": "int256"
+      },
+      {
+        "indexed": false,
+        "internalType": "int256",
+        "name": "quantity",
+        "type": "int256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "id",
+        "type": "uint256"
+      }
+    ],
+    "name": "PositionUpdated",
+    "type": "event"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "owner",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "intentAccount",
+        "type": "address"
+      }
+    ],
+    "name": "authorize",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "collateral",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "owner",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "deposit",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "marginAccountId",
+        "type": "address"
+      },
+      {
+        "components": [
+          {
+            "internalType": "bytes32",
+            "name": "productId",
+            "type": "bytes32"
+          },
+          {
+            "internalType": "int256",
+            "name": "quantity",
+            "type": "int256"
+          },
+          {
+            "internalType": "int256",
+            "name": "price",
+            "type": "int256"
+          }
+        ],
+        "internalType": "struct Settlement",
+        "name": "settlement",
+        "type": "tuple"
+      }
+    ],
+    "name": "estimateAdditionalMargin",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "additionalMargin",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "marginAccountId",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "intentAccount",
+        "type": "address"
+      }
+    ],
+    "name": "isAuthorized",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "marginAccountId",
+        "type": "address"
+      },
+      {
+        "components": [
+          {
+            "internalType": "bytes32",
+            "name": "productId",
+            "type": "bytes32"
+          },
+          {
+            "internalType": "int256",
+            "name": "quantity",
+            "type": "int256"
+          },
+          {
+            "internalType": "int256",
+            "name": "price",
+            "type": "int256"
+          }
+        ],
+        "internalType": "struct Settlement",
+        "name": "settlement",
+        "type": "tuple"
+      }
+    ],
+    "name": "maeCheck",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "checkPassed",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "marginAccountId",
+        "type": "address"
+      }
+    ],
+    "name": "marginData",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "int256",
+            "name": "capital",
+            "type": "int256"
+          },
+          {
+            "internalType": "int256",
+            "name": "mae",
+            "type": "int256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "mmu",
+            "type": "uint256"
+          },
+          {
+            "internalType": "int256",
+            "name": "pnl",
+            "type": "int256"
+          }
+        ],
+        "internalType": "struct IMarginAccountFacet.MarginData",
+        "name": "",
+        "type": "tuple"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "marginAccountId",
+        "type": "address"
+      },
+      {
+        "internalType": "bytes32",
+        "name": "productId",
+        "type": "bytes32"
+      }
+    ],
+    "name": "position",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "bytes32",
+            "name": "productId",
+            "type": "bytes32"
+          },
+          {
+            "internalType": "int256",
+            "name": "quantity",
+            "type": "int256"
+          },
+          {
+            "internalType": "int256",
+            "name": "costBasis",
+            "type": "int256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "maintenanceMargin",
+            "type": "uint256"
+          },
+          {
+            "internalType": "int256",
+            "name": "pnl",
+            "type": "int256"
+          }
+        ],
+        "internalType": "struct PositionData",
+        "name": "",
+        "type": "tuple"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "marginAccountId",
+        "type": "address"
+      }
+    ],
+    "name": "products",
+    "outputs": [
+      {
+        "internalType": "bytes32[]",
+        "name": "",
+        "type": "bytes32[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "owner",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "intentAccount",
+        "type": "address"
+      }
+    ],
+    "name": "revoke",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "marginAccountId",
+        "type": "address"
+      },
+      {
+        "components": [
+          {
+            "internalType": "bytes32",
+            "name": "productId",
+            "type": "bytes32"
+          },
+          {
+            "internalType": "int256",
+            "name": "quantity",
+            "type": "int256"
+          },
+          {
+            "internalType": "int256",
+            "name": "price",
+            "type": "int256"
+          }
+        ],
+        "internalType": "struct Settlement",
+        "name": "settlement",
+        "type": "tuple"
+      }
+    ],
+    "name": "stateAfterSettlement",
+    "outputs": [
+      {
+        "internalType": "int256",
+        "name": "maeAfter",
+        "type": "int256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "mmuAfter",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "owner",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "withdraw",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  }
+]

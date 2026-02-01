@@ -1,11 +1,11 @@
-import { Oracle } from '../abi';
+import { oracle } from '../abi';
 import { ORACLE_CONTRACT } from '../configuration/config';
 import { OracleVoter } from '../model';
 
 export async function collectOracleVotersOnEpoch(ctx: any, block: any): Promise<OracleVoter[]> {
   const hasNewEpoch = block.logs.some(
     (log: any) =>
-      log.topics[0] === Oracle.events.PriceUpdated.topic &&
+      log.topics[0] === oracle.events.PriceUpdated.topic &&
       log.address.toLowerCase() === ORACLE_CONTRACT.toLowerCase(),
   );
 
@@ -13,11 +13,11 @@ export async function collectOracleVotersOnEpoch(ctx: any, block: any): Promise<
 
   ctx.log.info('[ORACLE_VOTER] PriceUpdated detected at block', block.header.height);
 
-  const oracle = new Oracle.Contract(ctx, block.header, ORACLE_CONTRACT);
+  const Oracle = new oracle.Contract(ctx, block.header, ORACLE_CONTRACT);
 
   const [voters, round] = await Promise.all([
-    oracle.getVoters() as Promise<string[]>,
-    oracle.getRound(),
+    Oracle.getVoters() as Promise<string[]>,
+    Oracle.getRound(),
   ]);
 
   ctx.log.info(`[ORACLE_VOTER] fetching ${voters.length} voters for round ${round}`);
@@ -26,7 +26,7 @@ export async function collectOracleVotersOnEpoch(ctx: any, block: any): Promise<
 
   for (const addr of voters) {
     try {
-      const info = await oracle.getVoterInfo(addr);
+      const info = await Oracle.getVoterInfo(addr);
 
       results.push(
         new OracleVoter({

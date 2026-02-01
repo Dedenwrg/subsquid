@@ -1,55 +1,7 @@
 [
   {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "dispersed",
-        "type": "uint256"
-      },
-      {
-        "internalType": "int256",
-        "name": "collected",
-        "type": "int256"
-      }
-    ],
-    "name": "FeeInvariantViolated",
-    "type": "error"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "account",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "balance",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "required",
-        "type": "uint256"
-      }
-    ],
-    "name": "InsufficientBalance",
-    "type": "error"
-  },
-  {
     "inputs": [],
     "name": "InvalidInitialization",
-    "type": "error"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "string",
-        "name": "paramName",
-        "type": "string"
-      }
-    ],
-    "name": "InvalidParameter",
     "type": "error"
   },
   {
@@ -61,16 +13,33 @@
     "inputs": [
       {
         "internalType": "address",
-        "name": "marginAccount",
+        "name": "owner",
         "type": "address"
-      },
-      {
-        "internalType": "bytes32",
-        "name": "productId",
-        "type": "bytes32"
       }
     ],
-    "name": "PositionNotFound",
+    "name": "OwnableInvalidOwner",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      }
+    ],
+    "name": "OwnableUnauthorizedAccount",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "int256",
+        "name": "value",
+        "type": "int256"
+      }
+    ],
+    "name": "SafeCastOverflowedIntToUint",
     "type": "error"
   },
   {
@@ -101,36 +70,17 @@
       {
         "indexed": true,
         "internalType": "address",
-        "name": "marginAccountID",
-        "type": "address"
-      },
-      {
-        "indexed": false,
-        "internalType": "int256",
-        "name": "capitalAmount",
-        "type": "int256"
-      }
-    ],
-    "name": "FeeCollected",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "recipient",
+        "name": "user",
         "type": "address"
       },
       {
         "indexed": false,
         "internalType": "uint256",
-        "name": "capitalAmount",
+        "name": "amount",
         "type": "uint256"
       }
     ],
-    "name": "FeeDispersed",
+    "name": "Deposit",
     "type": "event"
   },
   {
@@ -152,30 +102,114 @@
       {
         "indexed": true,
         "internalType": "address",
-        "name": "marginAccountID",
+        "name": "marginAccountId",
         "type": "address"
       },
       {
         "indexed": true,
-        "internalType": "bytes32",
-        "name": "positionId",
-        "type": "bytes32"
-      },
-      {
-        "indexed": false,
-        "internalType": "int256",
-        "name": "totalQuantity",
-        "type": "int256"
-      },
-      {
-        "indexed": false,
-        "internalType": "int256",
-        "name": "costBasis",
-        "type": "int256"
+        "internalType": "address",
+        "name": "intentAccount",
+        "type": "address"
       }
     ],
-    "name": "PositionUpdated",
+    "name": "IntentAuthorized",
     "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "marginAccountId",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "intentAccount",
+        "type": "address"
+      }
+    ],
+    "name": "IntentRevoked",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "previousOwner",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "newOwner",
+        "type": "address"
+      }
+    ],
+    "name": "OwnershipTransferred",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "user",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "Withdraw",
+    "type": "event"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "addr",
+        "type": "address"
+      }
+    ],
+    "name": "addAllowed",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "admin",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "allowed",
+    "outputs": [
+      {
+        "internalType": "address[]",
+        "name": "",
+        "type": "address[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
   },
   {
     "inputs": [
@@ -194,7 +228,7 @@
     "inputs": [
       {
         "internalType": "address",
-        "name": "marginAccount",
+        "name": "marginAccountId",
         "type": "address"
       },
       {
@@ -218,104 +252,7 @@
     "inputs": [
       {
         "internalType": "address",
-        "name": "marginAccount",
-        "type": "address"
-      },
-      {
-        "components": [
-          {
-            "internalType": "bytes32",
-            "name": "positionId",
-            "type": "bytes32"
-          },
-          {
-            "internalType": "int256",
-            "name": "quantity",
-            "type": "int256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "price",
-            "type": "uint256"
-          }
-        ],
-        "internalType": "struct IMarginAccount.Settlement[]",
-        "name": "settlements",
-        "type": "tuple[]"
-      },
-      {
-        "internalType": "uint256[]",
-        "name": "markPriceIfSettled",
-        "type": "uint256[]"
-      }
-    ],
-    "name": "batchMaeCheck",
-    "outputs": [
-      {
-        "internalType": "bool",
-        "name": "checkPassed",
-        "type": "bool"
-      },
-      {
-        "internalType": "int256",
-        "name": "maeAfter",
-        "type": "int256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "mmuAfter",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "marginAccountID",
-        "type": "address"
-      },
-      {
-        "components": [
-          {
-            "internalType": "bytes32",
-            "name": "positionId",
-            "type": "bytes32"
-          },
-          {
-            "internalType": "int256",
-            "name": "quantity",
-            "type": "int256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "price",
-            "type": "uint256"
-          }
-        ],
-        "internalType": "struct IMarginAccount.Settlement[]",
-        "name": "settlements",
-        "type": "tuple[]"
-      }
-    ],
-    "name": "batchSettle",
-    "outputs": [
-      {
-        "internalType": "bool",
-        "name": "",
-        "type": "bool"
-      }
-    ],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "marginAccount",
+        "name": "marginAccountId",
         "type": "address"
       }
     ],
@@ -335,7 +272,7 @@
     "name": "clearing",
     "outputs": [
       {
-        "internalType": "address",
+        "internalType": "contract IMarginAccountFacet",
         "name": "",
         "type": "address"
       }
@@ -357,37 +294,6 @@
     "type": "function"
   },
   {
-    "inputs": [],
-    "name": "collateralToken",
-    "outputs": [
-      {
-        "internalType": "contract IERC20",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "marginAccount",
-        "type": "address"
-      },
-      {
-        "internalType": "int256",
-        "name": "capitalAmount",
-        "type": "int256"
-      }
-    ],
-    "name": "collectFee",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
     "inputs": [
       {
         "internalType": "uint256",
@@ -403,17 +309,17 @@
   {
     "inputs": [
       {
-        "internalType": "address[]",
-        "name": "recipients",
-        "type": "address[]"
+        "internalType": "address",
+        "name": "marginAccountId",
+        "type": "address"
       },
       {
-        "internalType": "uint256[]",
-        "name": "capitalAmounts",
-        "type": "uint256[]"
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
       }
     ],
-    "name": "disperseFees",
+    "name": "depositFor",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -422,80 +328,7 @@
     "inputs": [
       {
         "internalType": "address",
-        "name": "marginAccountId",
-        "type": "address"
-      },
-      {
-        "internalType": "bytes32",
-        "name": "productId",
-        "type": "bytes32"
-      },
-      {
-        "internalType": "uint256",
-        "name": "price",
-        "type": "uint256"
-      },
-      {
-        "internalType": "int256",
-        "name": "quantity",
-        "type": "int256"
-      }
-    ],
-    "name": "estimateLiquidationPrice",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "marginAccountId",
-        "type": "address"
-      },
-      {
-        "internalType": "bytes32",
-        "name": "positionId",
-        "type": "bytes32"
-      }
-    ],
-    "name": "estimateLiquidationPriceForPosition",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "_collateralToken",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "_valuation",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "_productRegistry",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "_clearing",
+        "name": "clearing_",
         "type": "address"
       }
     ],
@@ -508,7 +341,7 @@
     "inputs": [
       {
         "internalType": "address",
-        "name": "marginAccount",
+        "name": "marginAccountId",
         "type": "address"
       }
     ],
@@ -527,114 +360,7 @@
     "inputs": [
       {
         "internalType": "address",
-        "name": "marginAccount",
-        "type": "address"
-      },
-      {
-        "components": [
-          {
-            "internalType": "bytes32",
-            "name": "positionId",
-            "type": "bytes32"
-          },
-          {
-            "internalType": "int256",
-            "name": "quantity",
-            "type": "int256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "price",
-            "type": "uint256"
-          }
-        ],
-        "internalType": "struct IMarginAccount.Settlement[]",
-        "name": "settlements",
-        "type": "tuple[]"
-      },
-      {
-        "internalType": "uint256[]",
-        "name": "markPriceIfSettled",
-        "type": "uint256[]"
-      }
-    ],
-    "name": "maeAndMmuAfterBatchTrade",
-    "outputs": [
-      {
-        "internalType": "int256",
-        "name": "maeAfter",
-        "type": "int256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "mmuAfter",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "marginAccount",
-        "type": "address"
-      },
-      {
-        "components": [
-          {
-            "internalType": "bytes32",
-            "name": "positionId",
-            "type": "bytes32"
-          },
-          {
-            "internalType": "int256",
-            "name": "quantity",
-            "type": "int256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "price",
-            "type": "uint256"
-          }
-        ],
-        "internalType": "struct IMarginAccount.Settlement",
-        "name": "settlement",
-        "type": "tuple"
-      },
-      {
-        "internalType": "uint256",
-        "name": "markPriceIfSettled",
-        "type": "uint256"
-      }
-    ],
-    "name": "maeCheck",
-    "outputs": [
-      {
-        "internalType": "bool",
-        "name": "checkPassed",
-        "type": "bool"
-      },
-      {
-        "internalType": "int256",
-        "name": "maeAfter",
-        "type": "int256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "mmuAfter",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "marginAccount",
+        "name": "marginAccountId",
         "type": "address"
       }
     ],
@@ -653,7 +379,7 @@
     "inputs": [
       {
         "internalType": "address",
-        "name": "marginAccount",
+        "name": "marginAccountId",
         "type": "address"
       }
     ],
@@ -669,10 +395,23 @@
     "type": "function"
   },
   {
+    "inputs": [],
+    "name": "owner",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
     "inputs": [
       {
         "internalType": "address",
-        "name": "marginAccount",
+        "name": "marginAccountId",
         "type": "address"
       }
     ],
@@ -693,30 +432,6 @@
         "internalType": "address",
         "name": "marginAccountId",
         "type": "address"
-      },
-      {
-        "internalType": "bytes32",
-        "name": "positionId",
-        "type": "bytes32"
-      }
-    ],
-    "name": "positionAge",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "marginAccount",
-        "type": "address"
       }
     ],
     "name": "positionCount",
@@ -734,12 +449,12 @@
     "inputs": [
       {
         "internalType": "address",
-        "name": "marginAccount",
+        "name": "marginAccountId",
         "type": "address"
       },
       {
         "internalType": "bytes32",
-        "name": "positionId",
+        "name": "productId",
         "type": "bytes32"
       }
     ],
@@ -749,7 +464,7 @@
         "components": [
           {
             "internalType": "bytes32",
-            "name": "positionId",
+            "name": "productId",
             "type": "bytes32"
           },
           {
@@ -773,7 +488,7 @@
             "type": "int256"
           }
         ],
-        "internalType": "struct IMarginAccount.PositionData",
+        "internalType": "struct PositionData",
         "name": "",
         "type": "tuple"
       }
@@ -790,7 +505,7 @@
       },
       {
         "internalType": "bytes32",
-        "name": "positionId",
+        "name": "productId",
         "type": "bytes32"
       }
     ],
@@ -809,12 +524,12 @@
     "inputs": [
       {
         "internalType": "address",
-        "name": "marginAccount",
+        "name": "marginAccountId",
         "type": "address"
       },
       {
         "internalType": "bytes32",
-        "name": "positionId",
+        "name": "productId",
         "type": "bytes32"
       }
     ],
@@ -833,7 +548,7 @@
     "inputs": [
       {
         "internalType": "address",
-        "name": "marginAccount",
+        "name": "marginAccountId",
         "type": "address"
       }
     ],
@@ -849,16 +564,23 @@
     "type": "function"
   },
   {
-    "inputs": [],
-    "name": "productRegistry",
-    "outputs": [
+    "inputs": [
       {
-        "internalType": "contract IProductRegistry",
-        "name": "",
+        "internalType": "address",
+        "name": "addr",
         "type": "address"
       }
     ],
-    "stateMutability": "view",
+    "name": "removeAllowed",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "renounceOwnership",
+    "outputs": [],
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -878,59 +600,13 @@
     "inputs": [
       {
         "internalType": "address",
-        "name": "marginAccount",
+        "name": "newOwner",
         "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "intentAccount",
-        "type": "address"
-      },
-      {
-        "components": [
-          {
-            "internalType": "bytes32",
-            "name": "positionId",
-            "type": "bytes32"
-          },
-          {
-            "internalType": "int256",
-            "name": "quantity",
-            "type": "int256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "price",
-            "type": "uint256"
-          }
-        ],
-        "internalType": "struct IMarginAccount.Settlement",
-        "name": "settlement",
-        "type": "tuple"
       }
     ],
-    "name": "settle",
-    "outputs": [
-      {
-        "internalType": "bool",
-        "name": "",
-        "type": "bool"
-      }
-    ],
+    "name": "transferOwnership",
+    "outputs": [],
     "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "valuation",
-    "outputs": [
-      {
-        "internalType": "contract IValuation",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -950,7 +626,7 @@
     "inputs": [
       {
         "internalType": "address",
-        "name": "marginAccount",
+        "name": "marginAccountId",
         "type": "address"
       }
     ],

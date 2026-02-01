@@ -1,23 +1,28 @@
 export const ABI_JSON = [
     {
-        "type": "constructor",
-        "stateMutability": "undefined",
-        "payable": false,
-        "inputs": []
+        "type": "error",
+        "name": "AddressEmptyCode",
+        "inputs": [
+            {
+                "type": "address",
+                "name": "target"
+            }
+        ]
     },
     {
         "type": "error",
-        "name": "AdminControlledNotAuthorized",
+        "name": "ERC1967InvalidImplementation",
         "inputs": [
             {
-                "type": "bytes4",
-                "name": "selector"
-            },
-            {
                 "type": "address",
-                "name": "sender"
+                "name": "implementation"
             }
         ]
+    },
+    {
+        "type": "error",
+        "name": "ERC1967NonPayable",
+        "inputs": []
     },
     {
         "type": "error",
@@ -97,6 +102,11 @@ export const ABI_JSON = [
     },
     {
         "type": "error",
+        "name": "FailedCall",
+        "inputs": []
+    },
+    {
+        "type": "error",
         "name": "InvalidInitialization",
         "inputs": []
     },
@@ -104,6 +114,51 @@ export const ABI_JSON = [
         "type": "error",
         "name": "NotInitializing",
         "inputs": []
+    },
+    {
+        "type": "error",
+        "name": "OwnableInvalidOwner",
+        "inputs": [
+            {
+                "type": "address",
+                "name": "owner"
+            }
+        ]
+    },
+    {
+        "type": "error",
+        "name": "OwnableUnauthorizedAccount",
+        "inputs": [
+            {
+                "type": "address",
+                "name": "account"
+            }
+        ]
+    },
+    {
+        "type": "error",
+        "name": "UUPSUnauthorizedCallContext",
+        "inputs": []
+    },
+    {
+        "type": "error",
+        "name": "UUPSUnsupportedProxiableUUID",
+        "inputs": [
+            {
+                "type": "bytes32",
+                "name": "slot"
+            }
+        ]
+    },
+    {
+        "type": "error",
+        "name": "Unauthorized",
+        "inputs": [
+            {
+                "type": "address",
+                "name": "account"
+            }
+        ]
     },
     {
         "type": "event",
@@ -142,6 +197,23 @@ export const ABI_JSON = [
     {
         "type": "event",
         "anonymous": false,
+        "name": "OwnershipTransferred",
+        "inputs": [
+            {
+                "type": "address",
+                "name": "previousOwner",
+                "indexed": true
+            },
+            {
+                "type": "address",
+                "name": "newOwner",
+                "indexed": true
+            }
+        ]
+    },
+    {
+        "type": "event",
+        "anonymous": false,
         "name": "Transfer",
         "inputs": [
             {
@@ -158,6 +230,59 @@ export const ABI_JSON = [
                 "type": "uint256",
                 "name": "value",
                 "indexed": false
+            }
+        ]
+    },
+    {
+        "type": "event",
+        "anonymous": false,
+        "name": "Upgraded",
+        "inputs": [
+            {
+                "type": "address",
+                "name": "implementation",
+                "indexed": true
+            }
+        ]
+    },
+    {
+        "type": "function",
+        "name": "UPGRADE_INTERFACE_VERSION",
+        "constant": true,
+        "stateMutability": "view",
+        "payable": false,
+        "inputs": [],
+        "outputs": [
+            {
+                "type": "string",
+                "name": ""
+            }
+        ]
+    },
+    {
+        "type": "function",
+        "name": "addAllowed",
+        "constant": false,
+        "payable": false,
+        "inputs": [
+            {
+                "type": "address",
+                "name": "addr"
+            }
+        ],
+        "outputs": []
+    },
+    {
+        "type": "function",
+        "name": "admin",
+        "constant": true,
+        "stateMutability": "view",
+        "payable": false,
+        "inputs": [],
+        "outputs": [
+            {
+                "type": "address",
+                "name": ""
             }
         ]
     },
@@ -180,6 +305,20 @@ export const ABI_JSON = [
         "outputs": [
             {
                 "type": "uint256",
+                "name": ""
+            }
+        ]
+    },
+    {
+        "type": "function",
+        "name": "allowed",
+        "constant": true,
+        "stateMutability": "view",
+        "payable": false,
+        "inputs": [],
+        "outputs": [
+            {
+                "type": "address[]",
                 "name": ""
             }
         ]
@@ -241,31 +380,11 @@ export const ABI_JSON = [
     },
     {
         "type": "function",
-        "name": "getAdmin",
-        "constant": true,
-        "stateMutability": "view",
+        "name": "initialize",
+        "constant": false,
         "payable": false,
         "inputs": [],
-        "outputs": [
-            {
-                "type": "address",
-                "name": ""
-            }
-        ]
-    },
-    {
-        "type": "function",
-        "name": "isAdminActive",
-        "constant": true,
-        "stateMutability": "view",
-        "payable": false,
-        "inputs": [],
-        "outputs": [
-            {
-                "type": "bool",
-                "name": ""
-            }
-        ]
+        "outputs": []
     },
     {
         "type": "function",
@@ -300,28 +419,51 @@ export const ABI_JSON = [
     },
     {
         "type": "function",
-        "name": "setActive",
+        "name": "owner",
+        "constant": true,
+        "stateMutability": "view",
+        "payable": false,
+        "inputs": [],
+        "outputs": [
+            {
+                "type": "address",
+                "name": ""
+            }
+        ]
+    },
+    {
+        "type": "function",
+        "name": "proxiableUUID",
+        "constant": true,
+        "stateMutability": "view",
+        "payable": false,
+        "inputs": [],
+        "outputs": [
+            {
+                "type": "bytes32",
+                "name": ""
+            }
+        ]
+    },
+    {
+        "type": "function",
+        "name": "removeAllowed",
         "constant": false,
         "payable": false,
         "inputs": [
             {
-                "type": "bool",
-                "name": "active"
+                "type": "address",
+                "name": "addr"
             }
         ],
         "outputs": []
     },
     {
         "type": "function",
-        "name": "setAdmin",
+        "name": "renounceOwnership",
         "constant": false,
         "payable": false,
-        "inputs": [
-            {
-                "type": "address",
-                "name": "newAdmin"
-            }
-        ],
+        "inputs": [],
         "outputs": []
     },
     {
@@ -364,7 +506,7 @@ export const ABI_JSON = [
             },
             {
                 "type": "uint256",
-                "name": "value"
+                "name": "amount"
             }
         ],
         "outputs": [
@@ -390,7 +532,7 @@ export const ABI_JSON = [
             },
             {
                 "type": "uint256",
-                "name": "value"
+                "name": "amount"
             }
         ],
         "outputs": [
@@ -399,5 +541,36 @@ export const ABI_JSON = [
                 "name": ""
             }
         ]
+    },
+    {
+        "type": "function",
+        "name": "transferOwnership",
+        "constant": false,
+        "payable": false,
+        "inputs": [
+            {
+                "type": "address",
+                "name": "newOwner"
+            }
+        ],
+        "outputs": []
+    },
+    {
+        "type": "function",
+        "name": "upgradeToAndCall",
+        "constant": false,
+        "stateMutability": "payable",
+        "payable": true,
+        "inputs": [
+            {
+                "type": "address",
+                "name": "newImplementation"
+            },
+            {
+                "type": "bytes",
+                "name": "data"
+            }
+        ],
+        "outputs": []
     }
 ]

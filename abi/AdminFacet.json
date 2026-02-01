@@ -1,0 +1,561 @@
+[
+  {
+    "inputs": [
+      {
+        "internalType": "string",
+        "name": "paramName",
+        "type": "string"
+      }
+    ],
+    "name": "InvalidParameter",
+    "type": "error"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "string",
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "oldAddress",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "newAddress",
+        "type": "address"
+      }
+    ],
+    "name": "AddressUpdated",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "components": [
+          {
+            "components": [
+              {
+                "internalType": "uint32",
+                "name": "clearingFeeRate",
+                "type": "uint32"
+              },
+              {
+                "internalType": "uint32",
+                "name": "maxTradingFeeRate",
+                "type": "uint32"
+              }
+            ],
+            "internalType": "struct ClearingConfig",
+            "name": "clearingConfig",
+            "type": "tuple"
+          },
+          {
+            "components": [
+              {
+                "internalType": "uint256",
+                "name": "markPriceInterval",
+                "type": "uint256"
+              }
+            ],
+            "internalType": "struct MarkPriceConfig",
+            "name": "markPriceConfig",
+            "type": "tuple"
+          },
+          {
+            "components": [
+              {
+                "internalType": "uint256",
+                "name": "closeoutFeeRate",
+                "type": "uint256"
+              },
+              {
+                "internalType": "uint256",
+                "name": "closeoutRewardRate",
+                "type": "uint256"
+              }
+            ],
+            "internalType": "struct FinalSettlementConfig",
+            "name": "finalSettlementConfig",
+            "type": "tuple"
+          },
+          {
+            "components": [
+              {
+                "internalType": "uint32",
+                "name": "clearingPayoutRatio",
+                "type": "uint32"
+              },
+              {
+                "internalType": "uint32",
+                "name": "maintenanceDepositInterval",
+                "type": "uint32"
+              },
+              {
+                "internalType": "uint64",
+                "name": "minProductMaintenanceFee",
+                "type": "uint64"
+              }
+            ],
+            "internalType": "struct ProductConfig",
+            "name": "productConfig",
+            "type": "tuple"
+          }
+        ],
+        "indexed": false,
+        "internalType": "struct Config",
+        "name": "oldConfig",
+        "type": "tuple"
+      },
+      {
+        "components": [
+          {
+            "components": [
+              {
+                "internalType": "uint32",
+                "name": "clearingFeeRate",
+                "type": "uint32"
+              },
+              {
+                "internalType": "uint32",
+                "name": "maxTradingFeeRate",
+                "type": "uint32"
+              }
+            ],
+            "internalType": "struct ClearingConfig",
+            "name": "clearingConfig",
+            "type": "tuple"
+          },
+          {
+            "components": [
+              {
+                "internalType": "uint256",
+                "name": "markPriceInterval",
+                "type": "uint256"
+              }
+            ],
+            "internalType": "struct MarkPriceConfig",
+            "name": "markPriceConfig",
+            "type": "tuple"
+          },
+          {
+            "components": [
+              {
+                "internalType": "uint256",
+                "name": "closeoutFeeRate",
+                "type": "uint256"
+              },
+              {
+                "internalType": "uint256",
+                "name": "closeoutRewardRate",
+                "type": "uint256"
+              }
+            ],
+            "internalType": "struct FinalSettlementConfig",
+            "name": "finalSettlementConfig",
+            "type": "tuple"
+          },
+          {
+            "components": [
+              {
+                "internalType": "uint32",
+                "name": "clearingPayoutRatio",
+                "type": "uint32"
+              },
+              {
+                "internalType": "uint32",
+                "name": "maintenanceDepositInterval",
+                "type": "uint32"
+              },
+              {
+                "internalType": "uint64",
+                "name": "minProductMaintenanceFee",
+                "type": "uint64"
+              }
+            ],
+            "internalType": "struct ProductConfig",
+            "name": "productConfig",
+            "type": "tuple"
+          }
+        ],
+        "indexed": false,
+        "internalType": "struct Config",
+        "name": "newConfig",
+        "type": "tuple"
+      }
+    ],
+    "name": "ConfigUpdated",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "previousOwner",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "newOwner",
+        "type": "address"
+      }
+    ],
+    "name": "OwnershipTransferred",
+    "type": "event"
+  },
+  {
+    "inputs": [],
+    "name": "clearingFeeRate",
+    "outputs": [
+      {
+        "internalType": "uint32",
+        "name": "",
+        "type": "uint32"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "closeoutFeeRate",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "closeoutRewardRate",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "config",
+    "outputs": [
+      {
+        "components": [
+          {
+            "components": [
+              {
+                "internalType": "uint32",
+                "name": "clearingFeeRate",
+                "type": "uint32"
+              },
+              {
+                "internalType": "uint32",
+                "name": "maxTradingFeeRate",
+                "type": "uint32"
+              }
+            ],
+            "internalType": "struct ClearingConfig",
+            "name": "clearingConfig",
+            "type": "tuple"
+          },
+          {
+            "components": [
+              {
+                "internalType": "uint256",
+                "name": "markPriceInterval",
+                "type": "uint256"
+              }
+            ],
+            "internalType": "struct MarkPriceConfig",
+            "name": "markPriceConfig",
+            "type": "tuple"
+          },
+          {
+            "components": [
+              {
+                "internalType": "uint256",
+                "name": "closeoutFeeRate",
+                "type": "uint256"
+              },
+              {
+                "internalType": "uint256",
+                "name": "closeoutRewardRate",
+                "type": "uint256"
+              }
+            ],
+            "internalType": "struct FinalSettlementConfig",
+            "name": "finalSettlementConfig",
+            "type": "tuple"
+          },
+          {
+            "components": [
+              {
+                "internalType": "uint32",
+                "name": "clearingPayoutRatio",
+                "type": "uint32"
+              },
+              {
+                "internalType": "uint32",
+                "name": "maintenanceDepositInterval",
+                "type": "uint32"
+              },
+              {
+                "internalType": "uint64",
+                "name": "minProductMaintenanceFee",
+                "type": "uint64"
+              }
+            ],
+            "internalType": "struct ProductConfig",
+            "name": "productConfig",
+            "type": "tuple"
+          }
+        ],
+        "internalType": "struct Config",
+        "name": "",
+        "type": "tuple"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getMarginAccountRegistry",
+    "outputs": [
+      {
+        "internalType": "contract IMarginAccountRegistry",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getMarkPriceInterval",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getProductRegistry",
+    "outputs": [
+      {
+        "internalType": "contract IProductRegistry",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getTreasury",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "treasury",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "productRegistry",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "marginAccountRegistry",
+        "type": "address"
+      }
+    ],
+    "name": "initialize",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "maxTradingFeeRate",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "owner",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "components": [
+          {
+            "components": [
+              {
+                "internalType": "uint32",
+                "name": "clearingFeeRate",
+                "type": "uint32"
+              },
+              {
+                "internalType": "uint32",
+                "name": "maxTradingFeeRate",
+                "type": "uint32"
+              }
+            ],
+            "internalType": "struct ClearingConfig",
+            "name": "clearingConfig",
+            "type": "tuple"
+          },
+          {
+            "components": [
+              {
+                "internalType": "uint256",
+                "name": "markPriceInterval",
+                "type": "uint256"
+              }
+            ],
+            "internalType": "struct MarkPriceConfig",
+            "name": "markPriceConfig",
+            "type": "tuple"
+          },
+          {
+            "components": [
+              {
+                "internalType": "uint256",
+                "name": "closeoutFeeRate",
+                "type": "uint256"
+              },
+              {
+                "internalType": "uint256",
+                "name": "closeoutRewardRate",
+                "type": "uint256"
+              }
+            ],
+            "internalType": "struct FinalSettlementConfig",
+            "name": "finalSettlementConfig",
+            "type": "tuple"
+          },
+          {
+            "components": [
+              {
+                "internalType": "uint32",
+                "name": "clearingPayoutRatio",
+                "type": "uint32"
+              },
+              {
+                "internalType": "uint32",
+                "name": "maintenanceDepositInterval",
+                "type": "uint32"
+              },
+              {
+                "internalType": "uint64",
+                "name": "minProductMaintenanceFee",
+                "type": "uint64"
+              }
+            ],
+            "internalType": "struct ProductConfig",
+            "name": "productConfig",
+            "type": "tuple"
+          }
+        ],
+        "internalType": "struct Config",
+        "name": "config_",
+        "type": "tuple"
+      }
+    ],
+    "name": "setConfig",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "marginAccountRegistry",
+        "type": "address"
+      }
+    ],
+    "name": "setMarginAccountRegistry",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "treasury",
+        "type": "address"
+      }
+    ],
+    "name": "setTreasury",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "newOwner",
+        "type": "address"
+      }
+    ],
+    "name": "transferOwnership",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  }
+]

@@ -1,6 +1,9 @@
 import { assertNotNull } from '@subsquid/util-internal';
 
 export const RPC_URL = process.env.RPC_ENDPOINT || 'https://rpc1.bakerloo.autonity.org';
+export const BLOCK_RANGE_FROM = process.env.BLOCKS_RANGE_FROM
+  ? parseInt(process.env.BLOCKS_RANGE_FROM)
+  : 1000;
 export const FINALITY_CONFIRMATIONS = process.env.BLOCKS_FINALITY_CONFIRMATIONS
   ? parseInt(process.env.BLOCKS_FINALITY_CONFIRMATIONS)
   : 10;

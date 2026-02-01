@@ -396,11 +396,6 @@
           },
           {
             "internalType": "uint64",
-            "name": "offerPriceBuffer",
-            "type": "uint64"
-          },
-          {
-            "internalType": "uint64",
             "name": "auctionBounty",
             "type": "uint64"
           },
@@ -471,25 +466,6 @@
       }
     ],
     "name": "mmr",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "bytes32",
-        "name": "productId",
-        "type": "bytes32"
-      }
-    ],
-    "name": "offerPriceBuffer",
     "outputs": [
       {
         "internalType": "uint256",
@@ -681,11 +657,6 @@
           },
           {
             "internalType": "uint64",
-            "name": "offerPriceBuffer",
-            "type": "uint64"
-          },
-          {
-            "internalType": "uint64",
             "name": "auctionBounty",
             "type": "uint64"
           },
@@ -818,11 +789,6 @@
             "internalType": "uint16",
             "name": "maintenanceMarginRequirement",
             "type": "uint16"
-          },
-          {
-            "internalType": "uint64",
-            "name": "offerPriceBuffer",
-            "type": "uint64"
           },
           {
             "internalType": "uint64",
