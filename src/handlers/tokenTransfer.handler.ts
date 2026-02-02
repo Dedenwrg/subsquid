@@ -11,12 +11,26 @@ export async function collectTokenTransfer(
   tokenCache: Map<string, Token | null>,
 ) {
   if (!log.topics?.length) return null;
+
   if (log.topics[0].toLowerCase() !== ERC20_TRANSFER_TOPIC) return null;
 
-  const { from, to, value } = erc20.events.Transfer.decode(log);
+  if (log.topics.length !== 3) return null;
+  if (!log.data || log.data === '0x') return null;
+
+  let decoded;
+  try {
+    decoded = erc20.events.Transfer.decode(log);
+  } catch (e) {
+    ctx.log?.warn?.(`Skip malformed ERC20 Transfer at ${log.address} tx=${log.transactionHash}`);
+    return null;
+  }
+
+  const { from, to, value } = decoded;
+
   const tokenAddress = log.address.toLowerCase();
   const txHash = log.transactionHash!;
 
+  // token cache
   let token = tokenCache.get(tokenAddress);
   if (token === undefined) {
     token = await ctx.store.get(Token, tokenAddress);
